@@ -195,6 +195,258 @@ class CenaPontoCurvas(Scene):
         play(*[FadeOut(mobject) for mobject in self.mobjects if mobject != self.plano])
 
 
+    def explicar_elipse(self):
+        # ---------------------- Dados ----------------------
+        textos = self.m_textos
+        play: Callable = self.play
+        c2p = self.plano.c2p
+        a, b = 4, 3
+        c = np.sqrt(a**2 - b**2) if a >= b else np.sqrt(b**2 - a**2)
+        focos = [c2p(-c, 0), c2p(c, 0)] if a >= b else [c2p(0, c), c2p(0, -c)]
+        
+        # ---------------------- Mobjects ----------------------
+        
+        # ---------------------- plano ----------------------
+        plano = self.plano
+        label_x, label_y = self.plano.get_axis_labels(x_label='x', y_label='y')
+        label_x.scale(0.7).shift(0.4*LEFT + 0.1*UP).set_color(BLUE_B)
+        label_y.scale(0.7).shift(0.4*DOWN + 0.1*RIGHT).set_color(GREEN_B)
+        # ---------------------- Elipse ----------------------
+        m_elipse = Ellipse(
+            (c2p(a, 0)[0] - c2p(0, 0)[0])*2,
+            (c2p(0, b)[1] - c2p(0, 0)[1])*2
+        ).move_to(c2p(0, 0))
+        # ---------------------- focos ----------------------
+        focos_text = Tex('Focos').scale(0.7).move_to(5*LEFT+2*UP)
+        m_focos = VGroup(Dot(focos[0]), Dot(focos[1]))
+        f1, f2 = m_focos
+        f1_label = Tex('F1').move_to(f1.get_center() + 0.3*UP + 0.3*LEFT ).scale(0.6).set_color(ORANGE)
+        f2_label = Tex('F2').move_to(f2.get_center() + 0.3*UP + 0.3*RIGHT).scale(0.6).set_color(MAROON)
+        f1.set_color(ORANGE)
+        f2.set_color(MAROON)
+        # ---------------------- eixo maior ----------------------
+        eixo_maior_text = Tex('Eixo maior').scale(0.7).move_to(5*LEFT+2*UP)
+        comprimento_a = VGroup(
+            Line(c2p(0, 0), c2p(-a, 0)), 
+            Tex('a').next_to(Line(c2p(0, 0), c2p(-a, 0)), DOWN, 0.5).scale(0.8),
+            Line(c2p(0, 0), c2p(a, 0)),
+            Tex('a').next_to(Line(c2p(0, 0), c2p( a, 0)), DOWN, 0.5).scale(0.8),
+        ).set_color(DARK_BLUE)
+        # ---------------------- eixo menor ----------------------
+        eixo_menor_text = Tex('Eixo menor').scale(0.7).move_to(5*LEFT+2*UP)
+        comprimento_b = VGroup(
+            Line(c2p(0, 0), c2p(0,  b)), 
+            Tex('b').next_to(Line(c2p(0, 0), c2p(0,  b)), RIGHT, 0.5).scale(0.8),
+            Line(c2p(0, 0), c2p(0, -b)),
+            Tex('b').next_to(Line(c2p(0, 0), c2p(0, -b)), RIGHT, 0.5).scale(0.8),
+        ).set_color(PURPLE)
+        
+        # ---------------------- c ----------------------
+        comprimento_c = VGroup(
+            Line(c2p(0, 0), focos[0]), 
+            Tex('c').next_to(Line(c2p(0, 0), focos[0]), DOWN, 0.5).scale(0.8), 
+            Line(c2p(0, 0), focos[1]),
+            Tex('c').next_to(Line(c2p(0, 0), focos[1]), DOWN, 0.5).scale(0.8)
+        ).set_color(YELLOW)
+
+        # ---------------------- Equação c ----------------------
+        eq_c1 = MathTex('a^2', '=', 'b^2', '+', 'c^2').scale(0.7).move_to(5*LEFT+2*UP)
+        eq_c1[0].set_color(DARK_BLUE) # a^2
+        eq_c1[2].set_color(PURPLE) # b^2
+        eq_c1[4].set_color(YELLOW) # c^2
+        
+        eq_c2 = MathTex('-c^2', '=', 'b^2', '-a^2').scale(0.7).move_to(5*LEFT+1.5*UP)
+        eq_c2[0].set_color(YELLOW) # -c^2
+        eq_c2[2].set_color(PURPLE) # b^2
+        eq_c2[3].set_color(DARK_BLUE) # -a^2
+        
+        eq_c3 = MathTex('c^2', '=', '-b^2', '+', 'a^2').scale(0.7).move_to(5*LEFT+1*UP)
+        eq_c3[0].set_color(YELLOW) # c^2
+        eq_c3[2].set_color(PURPLE) # -b^2
+        eq_c3[4].set_color(DARK_BLUE) # a^2
+        
+        eq_c4 = MathTex('c^2', '=', 'a^2', '-b^2').scale(0.7).move_to(5*LEFT+0.5*UP)
+        eq_c4[0].set_color(YELLOW) # c^2
+        eq_c4[2].set_color(DARK_BLUE) # -b^2
+        eq_c4[3].set_color(PURPLE) # a^2
+        
+        eq_c5 = MathTex('c', '=', '\sqrt{', 'a^2', '-b^2', '}').scale(0.7).move_to(5*LEFT+0*UP)
+        eq_c5[0].set_color(YELLOW) # c^2
+        eq_c5[3].set_color(DARK_BLUE) # -b^2
+        eq_c5[4].set_color(PURPLE) # a^2
+        
+        # ---------------------- Equação da elipse ----------------------
+        eq_elipse = MathTex('{x^2', '\over', 'a^2}', '+', '{y^2', '\over', 'b^2}', '=', '1').scale(0.7).move_to(5*LEFT+2*UP)
+        eq_elipse[0].set_color(BLUE_B)
+        eq_elipse[2].set_color(DARK_BLUE)
+        eq_elipse[4].set_color(GREEN_B)
+        eq_elipse[6].set_color(PURPLE)
+        
+        # ---------------------- Relação da elipse ----------------------
+        relacao_elipse = MathTex(
+            'dist(',  # 0
+            'P',      # 1
+            ',',      # 2
+            'F1',     # 3
+            ')',      # 4
+            '+',      # 5
+            'dist(',  # 6
+            'P',      # 7
+            ',',      # 8  
+            'F2',     # 9  
+            ')',      # 10
+            '=',      # 11
+            '2',      # 12
+            'a'       # 13
+        ).scale(0.6).move_to(2.5*UP + 4*RIGHT)
+        relacao_elipse[1].set_color(GOLD)
+        relacao_elipse[3].set_color(ORANGE)
+        relacao_elipse[7].set_color(GOLD)
+        relacao_elipse[9].set_color(MAROON)
+        relacao_elipse[13].set_color(DARK_BLUE)
+        
+        # relacao_elipse_algebrica = MathTex(
+        #     '\\sqrt{(', # 0     
+        #     'x',        # 1
+        #     '+',        # 2
+        #     'c',        # 3   
+        #     ')^2 - (',  # 4  
+        #     'y',        # 5 
+        #     '- 0)^2}',  # 6
+        #     '+',        # 7
+        #     '\\sqrt{('  # 8
+        #     'x',        # 9
+        #     '-',        # 10
+        #     'c',        # 11
+        #     ')^2 - (',  # 12    
+        #     'y',        # 13
+        #     '- 0)^2}',  # 14  
+        #     '= 2',      # 15
+        #     'a'         # 16
+        # ).scale(0.6).move_to(2*UP + 4*RIGHT)
+        # relacao_elipse_algebrica[1].set_color(BLUE_B)
+        # relacao_elipse_algebrica[9].set_color(BLUE_B)
+        # relacao_elipse_algebrica[3].set_color(YELLOW)
+        # relacao_elipse_algebrica[11].set_color(YELLOW)
+        # relacao_elipse_algebrica[5].set_color(GREEN_B)
+        # relacao_elipse_algebrica[13].set_color(GREEN_B)
+        # relacao_elipse_algebrica[15].set_color(DARK_BLUE)
+        
+        # ---------------------- ponto ----------------------
+        ponto_exemplo = Dot(m_elipse.point_from_proportion(0.35)).set_color(GOLD)
+        ponto_exemplo_label = Tex('P').scale(0.6).move_to(ponto_exemplo.get_center() + 0.3*LEFT + 0.3*UP).set_color(GOLD)
+        linha_f1 = Line(f1.get_center(), ponto_exemplo.get_center())
+        linha_f2 = Line(f2.get_center(), ponto_exemplo.get_center())
+        
+        # ---------------------- Aimação do ponto seguindo a elipse ----------------------
+        self.offset = 0
+        ponto = Dot(m_elipse.point_from_proportion(self.offset)).set_color(GOLD)
+        linha1 = Line(f1, ponto)
+        linha2 = Line(f2, ponto)
+        ponto_label = MathTex('P').scale(0.6).move_to(ponto.get_center() + 0.3*UP + 0.3*RIGHT)
+                       
+        # ---------------------- Animações ----------------------        
+        self.add(plano, label_x, label_y)
+        play(Write(textos[6]))
+        play(Write(m_elipse))
+        play(FadeOut(textos[6]))
+        play(Write(textos[7]))
+        play(Write(focos_text))
+        play(ReplacementTransform(focos_text, VGroup(m_focos, f1_label, f2_label)))
+        play(Write(comprimento_c))
+        play(Write(eixo_maior_text))
+        play(ReplacementTransform(eixo_maior_text, comprimento_a))
+        play(comprimento_a.animate.shift((c2p(0, b)[1] - c2p(0, 0))*DOWN))
+        play(Write(eixo_menor_text))
+        play(ReplacementTransform(eixo_menor_text, comprimento_b))
+        play(comprimento_b.animate.shift((c2p(a, 0)[0] - c2p(0, 0))*RIGHT))
+        play(FadeOut(comprimento_a[2:4]), FadeOut(comprimento_b[2:4]), FadeOut(comprimento_c[2:4]))
+        play(comprimento_b[0:2].animate.shift((c2p(a, 0)[0] - c2p(0, 0))*LEFT),)
+        play(Transform(comprimento_a[0:2], VGroup(Line(c2p(-c, 0), c2p(0, b)), Tex('a').move_to(0.9*UP+1.7*LEFT)).set_color(DARK_BLUE)))
+        
+        play(ReplacementTransform(comprimento_a[1].copy(), eq_c1[0]))
+        play(ReplacementTransform(comprimento_b[1].copy(), eq_c1[2]))
+        play(ReplacementTransform(comprimento_c[1].copy(), eq_c1[4]))
+        play(FadeIn(eq_c1[1]), FadeIn(eq_c1[3]))    
+      
+        # # # eq_c1 -> eq_c2
+        play(FadeIn(eq_c2[1]))
+        play(ReplacementTransform(eq_c1[0].copy(), eq_c2[3]))
+        play(ReplacementTransform(eq_c1[2].copy(), eq_c2[2]))
+        play(ReplacementTransform(eq_c1[4].copy(), eq_c2[0]))
+        
+        # # # eq_c2 -> eq_c3
+        play(FadeIn(eq_c3[1], eq_c3[3]))
+        play(ReplacementTransform(eq_c2[0].copy(), eq_c3[0]))
+        play(ReplacementTransform(eq_c2[2].copy(), eq_c3[2]))
+        play(ReplacementTransform(eq_c2[3].copy(), eq_c3[4]))
+    
+        # # # eq_c3 -> eq_c4
+        play(FadeIn(eq_c4[1]))
+        play(ReplacementTransform(eq_c3[0].copy(), eq_c4[0]))
+        play(ReplacementTransform(eq_c3[2].copy(), eq_c4[3]))
+        play(ReplacementTransform(eq_c3[4].copy(), eq_c4[2]))
+        
+        # # # eq_c4 -> eq_c5
+        play(FadeIn(eq_c5[1], eq_c5[2], eq_c5[5]))
+        play(ReplacementTransform(eq_c4[0].copy(), eq_c5[0]))
+        play(ReplacementTransform(eq_c4[2:5].copy(), eq_c5[3:5]))
+        play(FadeOut(eq_c1, eq_c2, eq_c3, eq_c4), eq_c5.animate.shift(1*UP))
+        
+        play(FadeOut(textos[7]))
+        play(Write(textos[8]))
+        play(Write(eq_elipse))
+        play(ReplacementTransform(comprimento_a[1].copy(), eq_elipse[2]))
+        play(ReplacementTransform(comprimento_b[1].copy(), eq_elipse[6]))
+        play(FadeOut(textos[8]))
+        play(Write(textos[9]))
+        play(Write(relacao_elipse))
+        
+        play(FadeOut(comprimento_a[0:2], comprimento_b[0:2], comprimento_c[0:2]))
+        play(FadeIn(ponto_exemplo, ponto_exemplo_label))
+        play(ReplacementTransform(relacao_elipse[1].copy(), ponto_exemplo))
+        play(ReplacementTransform(relacao_elipse[3].copy(), m_focos[0]))
+        play(ReplacementTransform(relacao_elipse[7].copy(), ponto_exemplo))
+        play(ReplacementTransform(relacao_elipse[9].copy(), m_focos[1]))
+        play(Write(linha_f1))
+        play(Write(linha_f2))
+        
+        # ---------------------- Animação do ponto com as retas seguindo  ----------------------
+        
+        play(FadeOut(ponto_exemplo, ponto_exemplo_label, linha_f1, linha_f2))
+        play(FadeIn(ponto))
+        play(Write(linha1))
+        play(Write(linha2))
+        play(Write(ponto_label))
+        
+        def ponto_updater(mob: Mobject, dt: float):
+            if self.offset < 1:
+                self.offset = round(self.offset + 0.01, 2)
+                mob.move_to(m_elipse.point_from_proportion(self.offset % 1))
+
+        def linha1_updater(mob: Mobject, dt: float):
+            mob.become(Line(f1.get_center(), ponto))
+        
+        def linha2_updater(mob: Mobject, dt: float):
+            mob.become(Line(f2.get_center(), ponto))
+        
+        def ponto_label_updater(mob: Mobject, dt:float):
+            mob.move_to(ponto.get_center() + 0.3*UP + 0.3*RIGHT)
+
+        ponto.add_updater(ponto_updater)
+        linha1.add_updater(linha1_updater)
+        linha2.add_updater(linha2_updater)
+        ponto_label.add_updater(ponto_label_updater)
+        
+        self.wait(8)
+        
+        # print([mob for mob in self.mobjects if mob != self.plano])
+        play(*[FadeOut(mob) for mob in self.mobjects if mob != plano])
+    
+        
+
+
+
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
