@@ -442,7 +442,146 @@ class CenaPontoCurvas(Scene):
         
         # print([mob for mob in self.mobjects if mob != self.plano])
         play(*[FadeOut(mob) for mob in self.mobjects if mob != plano])
-    
+
+
+
+    def explicar_parabola(self):
+        # ---------------------- Dados ----------------------
+        play = self.play
+        plano = self.plano
+        c2p = plano.c2p
+        textos = self.m_textos
+        p = 1.5
+        x_limits = 4/p**(1/2)
+        func = lambda x: (x**2)/4*p
+        cor_parabola = RED
+        cor_reta = DARK_BLUE
+        cor_foco = YELLOW
+        cor_p = ORANGE
+        cor_ponto = PURPLE
+        cor_linhas = PINK
+
+        # ---------------------- Mobjects ----------------------
+        label_x, label_y = self.plano.get_axis_labels(x_label='x', y_label='y')
+        label_x.scale(0.7).shift(0.4*LEFT + 0.1*UP).set_color(BLUE_B)
+        label_y.scale(0.7).shift(0.4*DOWN + 0.1*RIGHT).set_color(GREEN_B)
+        parabola = plano.get_graph(func, x_range=[-x_limits, x_limits, 1]).set_color(cor_parabola)
+        reta_diretriz = Line(c2p(-7, 0), c2p(7, 0)).move_to(c2p(0, -p)).set_color(cor_reta)
+        reta_diretriz_texto = Tex('Reta Diretriz').scale(0.7).move_to(5*LEFT+2*UP)
+        reta_diretriz_label = Tex('r').scale(0.7).set_color(cor_reta).move_to(reta_diretriz.get_center() + 0.3*UP + 6*RIGHT)
+        foco = Dot(c2p(0, p)).set_color(cor_foco)
+        foco_texto = Tex('Foco').scale(0.7).move_to(5*LEFT+2*UP)
+        foco_label = Tex('F').scale(0.7).set_color(cor_foco).move_to(foco.get_center() + 0.3*LEFT + 0.3*UP)
+        aux_top, aux_down = Line(c2p(0, 0), c2p(0, p)), Line(c2p(0, 0), c2p(0, -p))
+        p_top = VGroup(Brace(aux_top, RIGHT), Tex('p').scale(0.7).move_to(aux_top.get_center() + 0.7*RIGHT)).set_color(cor_p)
+        p_down = VGroup(Brace(aux_down, RIGHT), Tex('p').scale(0.7).move_to(aux_down.get_center() + 0.7*RIGHT)).set_color(cor_p)
+        eq_parabola = MathTex(
+            'y',        # 0
+            '=',        # 1
+            '{1',       # 2
+            '\\over',   # 3
+            '4',        # 4
+            'p}',       # 5
+            'x^2'       # 6
+        ).scale(0.7).move_to(5*LEFT+2*UP)
+        eq_parabola[0].set_color(GREEN_B)
+        eq_parabola[5].set_color(cor_p)
+        eq_parabola[6].set_color(BLUE_B)
+        relacao_parabola = MathTex(
+            'dist(',        # 0
+            'P',            # 1
+            ',',            # 2
+            'r',            # 3
+            ')',            # 4
+            '=',            # 5
+            'dist(',        # 6
+            'P',            # 7
+            ',',            # 8
+            'F',            # 9
+            ')'             # 10
+        ).scale(0.7).move_to(5*RIGHT+2*UP)
+        relacao_parabola[1].set_color(cor_ponto)
+        relacao_parabola[3].set_color(cor_reta)
+        relacao_parabola[7].set_color(cor_ponto)
+        relacao_parabola[9].set_color(cor_foco)
+        
+        pos_ponto_exemplo = parabola.point_from_proportion(0.3)
+        ponto_exemplo = Dot(pos_ponto_exemplo).set_color(cor_ponto)
+        linha_reta_exemplo = Line(pos_ponto_exemplo, [pos_ponto_exemplo[0], c2p(0, -p)[1], 0]).set_color(cor_linhas)
+        linha_foco_exemplo = Line(pos_ponto_exemplo, foco.get_center()).set_color(cor_linhas)
+        ponto_label_exemplo = Tex('P').set_color(cor_ponto).move_to(ponto_exemplo.get_center() + 0.5*UP).scale(0.7)
+        
+        pos_ponto_inicio = parabola.point_from_proportion(0) 
+        ponto = Dot(pos_ponto_inicio).set_color(cor_ponto)
+        linha_horizontal = Line(pos_ponto_inicio, foco.get_center()).set_color(cor_linhas)
+        linha_vertical = Line(pos_ponto_inicio, [pos_ponto_inicio[0], c2p(0, -p)[1], 0]).set_color(cor_linhas)
+        ponto_label = Tex('P').move_to(ponto.get_center() + 0.5*UP).scale(0.6).set_color(cor_ponto)
+        
+        # ---------------------- Animações ----------------------
+        self.add(plano, label_x, label_y)
+        play(Write(textos[10]))
+        play(Write(parabola))
+        play(FadeOut(textos[10]))
+        play(Write(textos[11]))
+        play(Write(foco_texto))
+        play(ReplacementTransform(foco_texto, foco))
+        play(Write(foco_label))
+        play(Write(reta_diretriz_texto))
+        play(ReplacementTransform(reta_diretriz_texto, reta_diretriz))
+        play(Write(reta_diretriz_label))
+        play(Write(p_top))
+        play(Write(p_down))
+        play(FadeOut(textos[11]))
+        play(Write(textos[12]))
+        play(Write(eq_parabola))
+        play(FadeOut(textos[12]))
+        play(Write(textos[13]))
+        play(Write(relacao_parabola))
+        play(Write(linha_reta_exemplo))
+        play(Write(linha_foco_exemplo))
+        play(Write(ponto_exemplo))
+        play(Write(ponto_label_exemplo))
+        play(ReplacementTransform(VGroup(relacao_parabola[1].copy(), relacao_parabola[7].copy()), ponto_exemplo))
+        play(ReplacementTransform(relacao_parabola[3].copy(), reta_diretriz))
+        play(ReplacementTransform(relacao_parabola[9].copy(), foco))
+        play(ReplacementTransform(relacao_parabola[0:5].copy(), linha_reta_exemplo))
+        play(ReplacementTransform(relacao_parabola[6:11].copy(), linha_foco_exemplo))
+        play(FadeOut(linha_reta_exemplo, linha_foco_exemplo, ponto_exemplo, ponto_label_exemplo))
+        play(FadeIn(ponto))
+        play(Write(linha_horizontal))
+        play(Write(linha_vertical))
+        play(Write(ponto_label))
+        
+        self.offset = 0
+        
+        def ponto_updater(mob: Mobject, dt: float):
+            if self.offset < 1:
+                self.offset = round(self.offset + 0.01, 2)
+                mob.move_to(parabola.point_from_proportion(self.offset))
+                
+        def linha_vertical_updater(mob: Mobject, dt: float):
+            mob.become(Line(ponto.get_center(), [ponto.get_center()[0], c2p(0, -p)[1], 0])).set_color(cor_linhas)
+            
+        def linha_horizontal_updater(mob: Mobject, dt: float):
+            mob.become(Line(ponto.get_center(), foco.get_center())).set_color(cor_linhas)
+            
+        def ponto_label_updater(mob: Mobject, dt: float):
+            mob.move_to(ponto.get_center() + 0.5*UP)
+            
+        ponto.add_updater(ponto_updater)
+        linha_vertical.add_updater(linha_vertical_updater)
+        linha_horizontal.add_updater(linha_horizontal_updater)
+        ponto_label.add_updater(ponto_label_updater)
+        
+        self.wait(7)
+        
+        ponto.clear_updaters()
+        linha_vertical.clear_updaters()
+        linha_horizontal.clear_updaters()
+        ponto_label.clear_updaters()
+        
+        play(FadeOut(*[mobject for mobject in self.mobjects if mobject != plano], linha_horizontal, linha_vertical))
+        
         
 
 
