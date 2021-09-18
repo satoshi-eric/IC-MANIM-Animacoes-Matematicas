@@ -26,7 +26,8 @@ class CenaPontoCurvas(Scene):
         # self.explicar_plano_ponto()
         # self.explicar_reta()
         # self.explicar_elipse()
-        self.explicar_parabola()
+        # self.explicar_parabola()
+        self.explicar_hiperbole()
     #################################################################    
         
 
@@ -193,7 +194,6 @@ class CenaPontoCurvas(Scene):
         play(ReplacementTransform(delta_y_x[5].copy(), tex_eq_reta[1]))
         play(ReplacementTransform(coef_linear_eixo.copy(), tex_eq_reta[3]))
         play(*[FadeOut(mobject) for mobject in self.mobjects if mobject != self.plano])
-
 
     def explicar_elipse(self):
         # ---------------------- Dados ----------------------
@@ -443,8 +443,6 @@ class CenaPontoCurvas(Scene):
         # print([mob for mob in self.mobjects if mob != self.plano])
         play(*[FadeOut(mob) for mob in self.mobjects if mob != plano])
 
-
-
     def explicar_parabola(self):
         # ---------------------- Dados ----------------------
         play = self.play
@@ -581,15 +579,207 @@ class CenaPontoCurvas(Scene):
         ponto_label.clear_updaters()
         
         play(FadeOut(*[mobject for mobject in self.mobjects if mobject != plano], linha_horizontal, linha_vertical))
+    
+    def explicar_hiperbole(self):
+        # ---------------------- Dados ----------------------
+        play = self.play
+        plano = self.plano
+        textos = self.m_textos
+        c2p = plano.c2p
+        cor_hiperbole = PURPLE
+        cor_foco = ORANGE
+        cor_c = YELLOW
+        cor_a = DARK_BLUE
+        cor_ponto = GREEN
         
+        a, b = 3, 2
+        c = np.sqrt(a**2 + b**2)
+        func = lambda x: np.sqrt((((x**(2))/(a**(2)))-1)*b**(2)) if x**2/a**2 >= 1 else 0
+        # ---------------------- Mobjects ----------------------
+        hiperbole = VGroup(
+            VGroup(
+                *[Line(c2p(x, func(x)), c2p(x+0.01, func(x+0.01))) for x in np.arange(plano.x_range[0]+1, -a-0.01, 0.01)],
+                *[Line(c2p(x, -func(x)), c2p(x+0.01, -func(x+0.01))) for x in np.arange(-a-0.01, plano.x_range[0]+1, -0.01)]
+            ),
+            VGroup(
+                *[Line(c2p(x, func(x)), c2p(x+0.01, func(x+0.01))) for x in np.arange(plano.x_range[1]-1, a-0.01, -0.01)],
+                *[Line(c2p(x, -func(x)), c2p(x+0.01, -func(x+0.01))) for x in np.arange(a, plano.x_range[1]-1, 0.01)]
+            )
+        ).set_color(cor_hiperbole)
+                
+        comprimento_c = VGroup(
+            Line(c2p(0, 0), c2p(-c, 0)), 
+            Tex('c').move_to(Line(c2p(0, 0), c2p(-c, 0)).get_center() + 0.3*UP),
+            Line(c2p(0, 0), c2p(c, 0)),
+            Tex('c').move_to(Line(c2p(0, 0), c2p(c, 0)).get_center() + 0.3*UP),
+        ).set_color(cor_c)
         
+        linha_vertical_c = [
+            DashedLine(start=c2p(-c, 2), end=c2p(-c, 0)).set_color(cor_c),
+            DashedLine(start=c2p(c, 2), end=c2p(c, 0)).set_color(cor_c)
+        ]
+        
+        comprimento_a = VGroup(
+            Line(c2p(0, 0), c2p(-a, 0)), 
+            Tex('a').move_to(Line(c2p(0, 0), c2p(-a, 0)).get_center() + 0.3*DOWN),
+            Line(c2p(0, 0), c2p(a, 0)),
+            Tex('a').move_to(Line(c2p(0, 0), c2p(a, 0)).get_center() + 0.3*DOWN),
+        ).set_color(cor_a)
+        
+        linha_vertical_a = [
+            DashedLine(start=c2p(-a, -2), end=c2p(-a, 0)).set_color(cor_a),
+            DashedLine(start=c2p(a, -2), end=c2p(a, 0)).set_color(cor_a)
+        ]
+        
+        focos = VGroup(Dot(c2p(-c, 0)), Dot(c2p(c, 0))).set_color(cor_foco)
+        
+        eq_hiperbole = MathTex(
+            '{x^2', 
+            '\\over', 
+            'a^2}', 
+            '-', 
+            '{y^2', 
+            '\\over', 
+            'b^2}', 
+            '=', 
+            '1'
+        ).scale(0.7).move_to(4*RIGHT+2.5*UP)
+        
+        eq_hiperbole[0].set_color(BLUE_B)
+        eq_hiperbole[2].set_color(cor_a)
+        eq_hiperbole[4].set_color(GREEN_B)
+        
+        relacao_hiperbole = MathTex(
+            '|',     # 0
+            'dist(', # 1
+            'P',     # 2
+            ',',     # 3
+            'F_1',   # 4
+            ')',     # 5
+            '-',     # 6
+            'dist(', # 7
+            'P',     # 8
+            ',',     # 9
+            'F_2',   # 10
+            ')',     # 11
+            '|',     # 12
+            '=',     # 13
+            '2a'     # 14
+        ).scale(0.7).move_to(4*LEFT+2.5*UP)
+        
+        relacao_hiperbole[2].set_color(cor_ponto)
+        relacao_hiperbole[4].set_color(cor_foco)
+        relacao_hiperbole[8].set_color(cor_ponto)
+        relacao_hiperbole[10].set_color(cor_foco)
+        
+        # ---------------------- Animações ----------------------
+        self.add(plano)
+        play(Write(textos[14]))
+        play(Write(hiperbole[0]))
+        play(Write(hiperbole[1]))
+        
+        play(FadeOut(textos[14]))
+        play(Write(textos[15]))
+        play(FadeIn(focos))
+        play(Write(comprimento_c))
+        play(comprimento_c.animate.shift(c2p(0, 2) - c2p(0, 0)))
+        play(Write(linha_vertical_c[0]), Write(linha_vertical_c[1]))        
+        
+        play(Write(comprimento_a))
+        play(comprimento_a.animate.shift(c2p(0, -2) - c2p(0, 0)))
+        play(Write(linha_vertical_a[0]), Write(linha_vertical_a[1]))
 
+        play(FadeOut(textos[15]))
+        play(Write(textos[16]))
+        
+        play(Write(eq_hiperbole))
+        play(FadeOut(textos[16]))
+        play(Write(textos[17]))
+        
+        play(Write(relacao_hiperbole))
+
+        self.offset = 0
+        ponto_1 = Dot(hiperbole[0][0].get_center())
+        linha_p_f1_1 = Line(focos[0].get_center(), ponto_1.get_center())
+        linha_p_f2_1 = Line(focos[1].get_center(), ponto_1.get_center())
+        
+        play(Write(ponto_1))
+        play(Write(linha_p_f1_1))
+        play(Write(linha_p_f2_1))
+        
+        velocidade = 10
+        
+        def ponto_1_updater(mob: Mobject, dt):
+            if self.offset < len(hiperbole[0]) - velocidade:
+                self.offset += velocidade
+                mob.move_to(hiperbole[0][self.offset].get_center())
+                
+        def linha_p_f1_1_updater(mob: Mobject, dt):
+            mob.become(Line(focos[0].get_center(), ponto_1.get_center()))  
+            
+        def linha_p_f2_1_updater(mob: Mobject, dt):
+            mob.become(Line(focos[1].get_center(), ponto_1.get_center()))  
+                
+        ponto_1.add_updater(ponto_1_updater)
+        linha_p_f1_1.add_updater(linha_p_f1_1_updater)
+        linha_p_f2_1.add_updater(linha_p_f2_1_updater)
+        self.wait(4)
+        ponto_1.clear_updaters()
+        linha_p_f1_1.clear_updaters()
+        linha_p_f2_1.clear_updaters()
+        self.remove(ponto_1, linha_p_f1_1, linha_p_f2_1)
+        
+        ponto_final_1 = Dot(hiperbole[0][-1].get_center())
+        play(FadeOut(
+            ponto_final_1,
+            Line(focos[0].get_center(), ponto_final_1.get_center()),
+            Line(focos[1].get_center(), ponto_final_1.get_center())
+        ))
+        
+        self.offset = 0
+        ponto_2 = Dot(hiperbole[1][0].get_center())
+        linha_p_f1_2 = Line(focos[0].get_center(), ponto_2.get_center())
+        linha_p_f2_2 = Line(focos[1].get_center(), ponto_2.get_center())
+        
+        play(Write(ponto_2))
+        play(Write(linha_p_f1_2))
+        play(Write(linha_p_f2_2))
+        
+        velocidade = 10
+        
+        def ponto_2_updater(mob: Mobject, dt):
+            if self.offset < len(hiperbole[1]) - velocidade:
+                self.offset += velocidade
+                mob.move_to(hiperbole[1][self.offset].get_center())
+                
+        def linha_p_f1_2_updater(mob: Mobject, dt):
+            mob.become(Line(focos[0].get_center(), ponto_2.get_center()))  
+            
+        def linha_p_f2_2_updater(mob: Mobject, dt):
+            mob.become(Line(focos[1].get_center(), ponto_2.get_center()))  
+                
+        ponto_2.add_updater(ponto_2_updater)
+        linha_p_f1_2.add_updater(linha_p_f1_2_updater)
+        linha_p_f2_2.add_updater(linha_p_f2_2_updater)
+        self.wait(4)
+        ponto_2.clear_updaters()
+        linha_p_f1_2.clear_updaters()
+        linha_p_f2_2.clear_updaters()
+        self.remove(ponto_2, linha_p_f1_2, linha_p_f2_2)
+        ponto_final_2 = Dot(hiperbole[1][-1].get_center())
+        play(FadeOut(
+            ponto_final_2, 
+            Line(focos[0].get_center(), ponto_final_2), 
+            Line(focos[1].get_center(), ponto_final_2))
+        )     
+        
+        # play(FadeOut(*[mob for mob in self.mobjects if mob != plano]))
 
 
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
-    ARGS = '-pql'
+    ARGS = '-s'
 
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
 

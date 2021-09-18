@@ -12,3 +12,7 @@ O próximo objeto que veremos é a parábola.
 Assim como a elipse, a parábola possui suas propriedades.
 Com isso, podemos definir a equação da parábola.
 Essa equação define a seguinte relação da parábola.
+O último objeto que veremos é a hipérbole.
+Assim, como os outros objetos, a hipérbole também possui suas propriedades.
+Com isso, podemos definir a equação da hipérbole.
+Essa equação define a seguinte relação:
