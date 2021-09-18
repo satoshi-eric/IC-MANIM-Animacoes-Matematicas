@@ -1,0 +1,48 @@
+{
+	// Place your Monitoria_GA workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Divisor comment": {
+		"scope": "python",
+		"prefix": "divisor",
+		"body": [
+			"# ---------------------- $1 ----------------------"
+		],
+		"description": "Comentário para divisão do código"
+	},
+
+	"Manim project": {
+		"scope": "python",
+		"prefix": "manim_project",
+		"body": [
+"from manim import *",
+"from pathlib import Path",
+"import os",
+"",
+"class $1(Scene):",
+"    def construct(self):",
+"        $2",
+"",
+"ARQ_NOME = Path(__file__).resolve()",
+"CENA = $1.__name__",
+"ARGS = '-s'",
+"",
+"if __name__ == '__main__':",
+"    os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')"
+		]
+	}
+}
