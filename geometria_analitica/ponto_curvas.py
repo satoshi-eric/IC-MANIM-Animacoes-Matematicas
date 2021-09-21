@@ -23,10 +23,10 @@ class CenaPontoCurvas(Scene):
     ###################### Ponto de Entrada #########################
     def construct(self):
         self.config_textos()
-        # self.explicar_plano_ponto()
-        # self.explicar_reta()
-        # self.explicar_elipse()
-        # self.explicar_parabola()
+        self.explicar_plano_ponto()
+        self.explicar_reta()
+        self.explicar_elipse()
+        self.explicar_parabola()
         self.explicar_hiperbole()
     #################################################################    
         
@@ -59,6 +59,7 @@ class CenaPontoCurvas(Scene):
     def explicar_plano_ponto(self, x: float = 3, y: float = 2):
         # ---------------------- Dados ----------------------
         play: Callable = self.play
+        wait = lambda x=1: self.wait(x)
         coords = (x, y)
         eixo_x: NumberLine = self.plano.x_axis
         eixo_y: NumberLine = self.plano.y_axis
@@ -80,25 +81,25 @@ class CenaPontoCurvas(Scene):
         # ---------------------- Animações ----------------------
 
         # Animação do plano cartesiano e sua explicação
-        play(Write(textos[0]))
+        play(Write(textos[0]), run_time=2)
         play(textos[0].animate.to_corner(UP))
         play(Write(self.plano), Write(label_x), Write(label_y), run_time=3)
         play(FadeOut(textos[0]))
+        wait()
 
         # Animação do ponto e sua explicação
-        play(Write(textos[1]))
+        play(Write(textos[1]), run_time=2)
+        wait()
         play(FadeIn(m_coord))
-        play(ReplacementTransform(m_coord[1].copy(), num_eixo_x))
-        play(ReplacementTransform(m_coord[3].copy(), num_eixo_y))
-        play(Write(linha_horizontal), Write(linha_vertical))
-        play(FadeIn(m_ponto))
-        play(
-            FadeOut(textos[1]),
-            FadeOut(m_coord),
-            FadeOut(m_ponto),
-            FadeOut(linha_horizontal),
-            FadeOut(linha_vertical),
-        )
+        wait()
+        play(ReplacementTransform(m_coord[1].copy(), num_eixo_x), run_time=2)
+        wait()
+        play(ReplacementTransform(m_coord[3].copy(), num_eixo_y), run_time=2)
+        wait()
+        play(Write(linha_horizontal), Write(linha_vertical), run_time=2)
+        play(FadeIn(m_ponto), run_time=3)
+        wait()
+        play(FadeOut(*[mob for mob in self.mobjects if mob != self.plano])        )
    
     def explicar_reta(self):
         def get_texto_coords(nome_conj: str, conj_coords: list) -> Text:
@@ -132,6 +133,7 @@ class CenaPontoCurvas(Scene):
         label_x, label_y = self.plano.get_axis_labels(x_label='x', y_label='y')
         label_x.scale(0.7).shift(0.4*LEFT + 0.1*UP).set_color(BLUE_B)
         label_y.scale(0.7).shift(0.4*DOWN + 0.1*RIGHT).set_color(GREEN_B)
+        wait = lambda x=1: self.wait(x)
         
         # ---------------------- Mobjects ----------------------
         coords_text = get_texto_coords('A', coords)
@@ -141,8 +143,8 @@ class CenaPontoCurvas(Scene):
         reta = Line(self.plano.c2p(-4, f(-4)), self.plano.c2p(6, f(6))).set_color(RED_D)
         angulo = Angle(self.plano.x_axis, reta, 1).set_color(YELLOW)
         tex_angulo = MathTex(r'\theta').move_to(angulo.get_center() + 0.4*RIGHT + 0.1*UP).set_color(YELLOW)
-        linha_vertical = self.plano.get_vertical_line(self.plano.c2p(5, y(5)), line_func=Line).set_color(GREEN)
-        linha_horizontal = Line(self.plano.c2p(2, 0), self.plano.c2p(5, 0)).set_color(PURPLE)
+        linha_vertical = self.plano.get_vertical_line(self.plano.c2p(5, y(5)), line_func=Line).set_color(GREEN).set_stroke(width=7)
+        linha_horizontal = Line(self.plano.c2p(2, 0), self.plano.c2p(5, 0)).set_color(PURPLE).set_stroke(width=7)
         delta_y_brace = Brace(linha_vertical, RIGHT)
         delta_x_brace = Brace(linha_horizontal, DOWN)
         delta_y_tex = MathTex('\Delta y').next_to(delta_y_brace, RIGHT).scale(0.7).set_color(GREEN)
@@ -155,44 +157,71 @@ class CenaPontoCurvas(Scene):
         # ---------------------- Animações ----------------------
         self.add(self.plano)
         self.add(label_x, label_y)
-        play(Write(textos[2]))
-        play(Write(coords_text))
-        play(ReplacementTransform(coords_text[3 :10].copy(), pontos[0]))
-        play(ReplacementTransform(coords_text[11:17].copy(), pontos[1]))
-        play(ReplacementTransform(coords_text[18:23].copy(), pontos[2]))
-        play(ReplacementTransform(coords_text[24:29].copy(), pontos[3]))
-        play(ReplacementTransform(coords_text[30:36].copy(), pontos[4]))
-        play(ReplacementTransform(coords_text[37:43].copy(), pontos[5]))
+        play(Write(textos[2]), run_time=2)
+        wait()
+        play(Write(coords_text), run_time=3)
+        play(ReplacementTransform(coords_text[3 :10].copy(), pontos[0]), run_time=2)
+        wait()
+        play(ReplacementTransform(coords_text[11:17].copy(), pontos[1]), run_time=2)
+        wait()
+        play(ReplacementTransform(coords_text[18:23].copy(), pontos[2]), run_time=2)
+        wait()
+        play(ReplacementTransform(coords_text[24:29].copy(), pontos[3]), run_time=2)
+        wait()
+        play(ReplacementTransform(coords_text[30:36].copy(), pontos[4]), run_time=2)
+        wait()
+        play(ReplacementTransform(coords_text[37:43].copy(), pontos[5]), run_time=2)
+        wait()
         play(FadeOut(textos[2]))
-        play(Write(textos[3]))
-        play(coords_text[3 :10].animate.set_color(RED_E), pontos[0].animate.set_color(RED_E))
-        play(coords_text[11:17].animate.set_color(RED_E), pontos[1].animate.set_color(RED_E))
-        play(coords_text[18:23].animate.set_color(RED_E), pontos[2].animate.set_color(RED_E))
-        play(Write(pontos_reta))
-        play(ReplacementTransform(pontos_reta, reta))
+        play(Write(textos[3]), run_time=2)
+        wait()
+        play(coords_text[3 :10].animate.set_color(RED_E), pontos[0].animate.set_color(RED_E), run_time=2)
+        wait()
+        play(coords_text[11:17].animate.set_color(RED_E), pontos[1].animate.set_color(RED_E), run_time=2)
+        wait()
+        play(coords_text[18:23].animate.set_color(RED_E), pontos[2].animate.set_color(RED_E), run_time=2)
+        wait()
+        play(Write(pontos_reta), run_time=3)
+        wait()
+        play(ReplacementTransform(pontos_reta, reta), run_time=3)
+        wait()
         play(FadeOut(textos[3]))
-        play(Write(textos[4]))
+        play(Write(textos[4]), run_time=2)
+        wait(3)
         play(FadeOut(textos[4]))
         play(Write(textos[5]))
-        play(Write(tex_eq_reta))
-        play(FadeIn(coef_angular))
-        play(FadeIn(coef_linear))
+        wait(3)
+        play(Write(tex_eq_reta), run_time=3)
+        wait()
+        play(FadeIn(coef_angular), run_time=2)
+        wait(2)
+        play(FadeIn(coef_linear), run_time=2)
+        wait(2)
         play(tex_eq_reta[1].animate.set_color(YELLOW))
         play(tex_eq_reta[3].animate.set_color(ORANGE))
-        play(Write(angulo))
-        play(Write(tex_angulo))
-        play(Write(linha_vertical))
-        play(Write(linha_horizontal))
+        wait()
+        play(Write(angulo), Write(tex_angulo))
+        wait()
+        play(FadeIn(linha_vertical))
+        wait()
+        play(FadeIn(linha_horizontal))
+        wait()
         play(Write(delta_y_brace), Write(delta_y_tex))
+        wait()
         play(Write(delta_x_brace), Write(delta_x_tex))
         play(Write(delta_y_x[0]))
-        play(ReplacementTransform(delta_y_tex.copy(), delta_y_x[1]))
-        play(ReplacementTransform(delta_x_tex.copy(), delta_y_x[3]))
+        play(ReplacementTransform(delta_y_tex.copy(), delta_y_x[1]), run_time=2)
+        play(ReplacementTransform(delta_x_tex.copy(), delta_y_x[3]), run_time=2)
+        wait()
         play(FadeIn(delta_y_x[2]))
         play(FadeIn(delta_y_x[4]))
         play(FadeIn(delta_y_x[5]))
-        play(ReplacementTransform(delta_y_x[5].copy(), tex_eq_reta[1]))
-        play(ReplacementTransform(coef_linear_eixo.copy(), tex_eq_reta[3]))
+        play(ReplacementTransform(delta_y_x[5].copy(), tex_eq_reta[1]), run_time=3)
+        wait()
+        play(FadeIn(coef_linear_eixo))
+        wait()
+        play(ReplacementTransform(coef_linear_eixo.copy(), tex_eq_reta[3]), run_time=3)
+        wait()
         play(*[FadeOut(mobject) for mobject in self.mobjects if mobject != self.plano])
 
     def explicar_elipse(self):
@@ -203,6 +232,7 @@ class CenaPontoCurvas(Scene):
         a, b = 4, 3
         c = np.sqrt(a**2 - b**2) if a >= b else np.sqrt(b**2 - a**2)
         focos = [c2p(-c, 0), c2p(c, 0)] if a >= b else [c2p(0, c), c2p(0, -c)]
+        wait = lambda x=1: self.wait(x)
         
         # ---------------------- Mobjects ----------------------
         
@@ -232,6 +262,7 @@ class CenaPontoCurvas(Scene):
             Line(c2p(0, 0), c2p(a, 0)),
             Tex('a').next_to(Line(c2p(0, 0), c2p( a, 0)), DOWN, 0.5).scale(0.8),
         ).set_color(DARK_BLUE)
+        
         # ---------------------- eixo menor ----------------------
         eixo_menor_text = Tex('Eixo menor').scale(0.7).move_to(5*LEFT+2*UP)
         comprimento_b = VGroup(
@@ -305,33 +336,6 @@ class CenaPontoCurvas(Scene):
         relacao_elipse[9].set_color(MAROON)
         relacao_elipse[13].set_color(DARK_BLUE)
         
-        # relacao_elipse_algebrica = MathTex(
-        #     '\\sqrt{(', # 0     
-        #     'x',        # 1
-        #     '+',        # 2
-        #     'c',        # 3   
-        #     ')^2 - (',  # 4  
-        #     'y',        # 5 
-        #     '- 0)^2}',  # 6
-        #     '+',        # 7
-        #     '\\sqrt{('  # 8
-        #     'x',        # 9
-        #     '-',        # 10
-        #     'c',        # 11
-        #     ')^2 - (',  # 12    
-        #     'y',        # 13
-        #     '- 0)^2}',  # 14  
-        #     '= 2',      # 15
-        #     'a'         # 16
-        # ).scale(0.6).move_to(2*UP + 4*RIGHT)
-        # relacao_elipse_algebrica[1].set_color(BLUE_B)
-        # relacao_elipse_algebrica[9].set_color(BLUE_B)
-        # relacao_elipse_algebrica[3].set_color(YELLOW)
-        # relacao_elipse_algebrica[11].set_color(YELLOW)
-        # relacao_elipse_algebrica[5].set_color(GREEN_B)
-        # relacao_elipse_algebrica[13].set_color(GREEN_B)
-        # relacao_elipse_algebrica[15].set_color(DARK_BLUE)
-        
         # ---------------------- ponto ----------------------
         ponto_exemplo = Dot(m_elipse.point_from_proportion(0.35)).set_color(GOLD)
         ponto_exemplo_label = Tex('P').scale(0.6).move_to(ponto_exemplo.get_center() + 0.3*LEFT + 0.3*UP).set_color(GOLD)
@@ -347,23 +351,35 @@ class CenaPontoCurvas(Scene):
                        
         # ---------------------- Animações ----------------------        
         self.add(plano, label_x, label_y)
-        play(Write(textos[6]))
-        play(Write(m_elipse))
+        play(Write(textos[6]), run_time=2)
+        wait()
+        play(Write(m_elipse), run_time=2)
+        wait()
         play(FadeOut(textos[6]))
-        play(Write(textos[7]))
+        play(Write(textos[7]), run_time=2)
+        wait()
         play(Write(focos_text))
-        play(ReplacementTransform(focos_text, VGroup(m_focos, f1_label, f2_label)))
-        play(Write(comprimento_c))
+        wait()
+        play(ReplacementTransform(focos_text, VGroup(m_focos, f1_label, f2_label)), run_time=3)
+        play(FadeIn(comprimento_c), run_time=2)
+        wait()
         play(Write(eixo_maior_text))
-        play(ReplacementTransform(eixo_maior_text, comprimento_a))
-        play(comprimento_a.animate.shift((c2p(0, b)[1] - c2p(0, 0))*DOWN))
+        wait()
+        play(ReplacementTransform(eixo_maior_text, comprimento_a), run_time=2)
+        wait()
+        play(comprimento_a.animate.shift((c2p(0, b)[1] - c2p(0, 0)[1])*DOWN), run_time=2)
+        wait()
         play(Write(eixo_menor_text))
-        play(ReplacementTransform(eixo_menor_text, comprimento_b))
-        play(comprimento_b.animate.shift((c2p(a, 0)[0] - c2p(0, 0))*RIGHT))
+        wait()
+        play(ReplacementTransform(eixo_menor_text, comprimento_b), run_time=2)
+        wait()
+        play(comprimento_b.animate.shift((c2p(a, 0)[0] - c2p(0, 0))*RIGHT), run_time=2)
+        wait()
         play(FadeOut(comprimento_a[2:4]), FadeOut(comprimento_b[2:4]), FadeOut(comprimento_c[2:4]))
-        play(comprimento_b[0:2].animate.shift((c2p(a, 0)[0] - c2p(0, 0))*LEFT),)
-        play(Transform(comprimento_a[0:2], VGroup(Line(c2p(-c, 0), c2p(0, b)), Tex('a').move_to(0.9*UP+1.7*LEFT)).set_color(DARK_BLUE)))
-        
+        play(comprimento_b[0:2].animate.shift((c2p(a, 0)[0] - c2p(0, 0))*LEFT), run_time=1.5)
+        wait()
+        play(Transform(comprimento_a[0:2], VGroup(Line(c2p(-c, 0), c2p(0, b)), Tex('a').move_to(0.9*UP+1.7*LEFT)).set_color(DARK_BLUE)), run_time=2)
+        wait()
         play(ReplacementTransform(comprimento_a[1].copy(), eq_c1[0]))
         play(ReplacementTransform(comprimento_b[1].copy(), eq_c1[2]))
         play(ReplacementTransform(comprimento_c[1].copy(), eq_c1[4]))
@@ -394,20 +410,27 @@ class CenaPontoCurvas(Scene):
         play(FadeOut(eq_c1, eq_c2, eq_c3, eq_c4), eq_c5.animate.shift(1*UP))
         
         play(FadeOut(textos[7]))
-        play(Write(textos[8]))
-        play(Write(eq_elipse))
-        play(ReplacementTransform(comprimento_a[1].copy(), eq_elipse[2]))
-        play(ReplacementTransform(comprimento_b[1].copy(), eq_elipse[6]))
+        play(Write(textos[8]), run_time=2)
+        play(Write(eq_elipse), run_time=2)
+        play(ReplacementTransform(comprimento_a[1].copy(), eq_elipse[2]), run_time=2)
+        play(ReplacementTransform(comprimento_b[1].copy(), eq_elipse[6]), run_time=2)
         play(FadeOut(textos[8]))
-        play(Write(textos[9]))
-        play(Write(relacao_elipse))
+        play(Write(textos[9]), run_time=2)
+        wait()
+        play(Write(relacao_elipse), run_time=2)
+        wait()
         
         play(FadeOut(comprimento_a[0:2], comprimento_b[0:2], comprimento_c[0:2]))
-        play(FadeIn(ponto_exemplo, ponto_exemplo_label))
-        play(ReplacementTransform(relacao_elipse[1].copy(), ponto_exemplo))
-        play(ReplacementTransform(relacao_elipse[3].copy(), m_focos[0]))
-        play(ReplacementTransform(relacao_elipse[7].copy(), ponto_exemplo))
-        play(ReplacementTransform(relacao_elipse[9].copy(), m_focos[1]))
+        play(FadeIn(ponto_exemplo, ponto_exemplo_label), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_elipse[1].copy(), ponto_exemplo), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_elipse[3].copy(), m_focos[0]), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_elipse[7].copy(), ponto_exemplo), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_elipse[9].copy(), m_focos[1]), run_time=2)
+        wait()
         play(Write(linha_f1))
         play(Write(linha_f2))
         
@@ -440,8 +463,12 @@ class CenaPontoCurvas(Scene):
         
         self.wait(8)
         
-        # print([mob for mob in self.mobjects if mob != self.plano])
-        play(*[FadeOut(mob) for mob in self.mobjects if mob != plano])
+        self.remove(linha1,linha2, ponto, ponto_label)
+        
+        play(*[FadeOut(mob) for mob in self.mobjects if mob != plano], 
+            FadeOut(Line(f1.get_center(), m_elipse.point_from_proportion(1))), 
+            FadeOut(Line(f2.get_center(), m_elipse.point_from_proportion(1)))
+            )
 
     def explicar_parabola(self):
         # ---------------------- Dados ----------------------
@@ -458,6 +485,7 @@ class CenaPontoCurvas(Scene):
         cor_p = ORANGE
         cor_ponto = PURPLE
         cor_linhas = PINK
+        wait = lambda x=1: self.wait(x)
 
         # ---------------------- Mobjects ----------------------
         label_x, label_y = self.plano.get_axis_labels(x_label='x', y_label='y')
@@ -518,37 +546,55 @@ class CenaPontoCurvas(Scene):
         # ---------------------- Animações ----------------------
         self.add(plano, label_x, label_y)
         play(Write(textos[10]))
+        wait()
         play(Write(parabola))
+        wait()
         play(FadeOut(textos[10]))
         play(Write(textos[11]))
+        wait()
         play(Write(foco_texto))
-        play(ReplacementTransform(foco_texto, foco))
+        wait()
+        play(ReplacementTransform(foco_texto, foco), run_time=2)
+        wait()
         play(Write(foco_label))
         play(Write(reta_diretriz_texto))
-        play(ReplacementTransform(reta_diretriz_texto, reta_diretriz))
+        wait()
+        play(ReplacementTransform(reta_diretriz_texto, reta_diretriz), run_time=3)
+        wait()
         play(Write(reta_diretriz_label))
-        play(Write(p_top))
-        play(Write(p_down))
+        play(Write(p_top), run_time=2)
+        play(Write(p_down), run_time=2)
         play(FadeOut(textos[11]))
         play(Write(textos[12]))
-        play(Write(eq_parabola))
+        wait()
+        play(Write(eq_parabola), run_time=2)
+        wait()
         play(FadeOut(textos[12]))
         play(Write(textos[13]))
+        wait()
         play(Write(relacao_parabola))
+        wait()
         play(Write(linha_reta_exemplo))
         play(Write(linha_foco_exemplo))
         play(Write(ponto_exemplo))
         play(Write(ponto_label_exemplo))
-        play(ReplacementTransform(VGroup(relacao_parabola[1].copy(), relacao_parabola[7].copy()), ponto_exemplo))
-        play(ReplacementTransform(relacao_parabola[3].copy(), reta_diretriz))
-        play(ReplacementTransform(relacao_parabola[9].copy(), foco))
-        play(ReplacementTransform(relacao_parabola[0:5].copy(), linha_reta_exemplo))
-        play(ReplacementTransform(relacao_parabola[6:11].copy(), linha_foco_exemplo))
-        play(FadeOut(linha_reta_exemplo, linha_foco_exemplo, ponto_exemplo, ponto_label_exemplo))
+        play(ReplacementTransform(VGroup(relacao_parabola[1].copy(), relacao_parabola[7].copy()), ponto_exemplo), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_parabola[3].copy(), reta_diretriz), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_parabola[9].copy(), foco), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_parabola[0:5].copy(), linha_reta_exemplo), run_time=2)
+        wait()
+        play(ReplacementTransform(relacao_parabola[6:11].copy(), linha_foco_exemplo), run_time=2)
+        wait()
+        play(FadeOut(linha_reta_exemplo, linha_foco_exemplo, ponto_exemplo, ponto_label_exemplo), run_time=2)
+        wait()
         play(FadeIn(ponto))
         play(Write(linha_horizontal))
         play(Write(linha_vertical))
         play(Write(ponto_label))
+        wait()
         
         self.offset = 0
         
@@ -577,6 +623,8 @@ class CenaPontoCurvas(Scene):
         linha_vertical.clear_updaters()
         linha_horizontal.clear_updaters()
         ponto_label.clear_updaters()
+
+        wait()
         
         play(FadeOut(*[mobject for mobject in self.mobjects if mobject != plano], linha_horizontal, linha_vertical))
     
@@ -595,6 +643,10 @@ class CenaPontoCurvas(Scene):
         a, b = 3, 2
         c = np.sqrt(a**2 + b**2)
         func = lambda x: np.sqrt((((x**(2))/(a**(2)))-1)*b**(2)) if x**2/a**2 >= 1 else 0
+
+        wait = lambda x=1: self.wait(x)
+        
+        velocidade = 10
         # ---------------------- Mobjects ----------------------
         hiperbole = VGroup(
             VGroup(
@@ -607,6 +659,7 @@ class CenaPontoCurvas(Scene):
             )
         ).set_color(cor_hiperbole)
                 
+        # ---------------------- c ----------------------
         comprimento_c = VGroup(
             Line(c2p(0, 0), c2p(-c, 0)), 
             Tex('c').move_to(Line(c2p(0, 0), c2p(-c, 0)).get_center() + 0.3*UP),
@@ -618,6 +671,8 @@ class CenaPontoCurvas(Scene):
             DashedLine(start=c2p(-c, 2), end=c2p(-c, 0)).set_color(cor_c),
             DashedLine(start=c2p(c, 2), end=c2p(c, 0)).set_color(cor_c)
         ]
+        
+        # ---------------------- a ----------------------
         
         comprimento_a = VGroup(
             Line(c2p(0, 0), c2p(-a, 0)), 
@@ -631,7 +686,23 @@ class CenaPontoCurvas(Scene):
             DashedLine(start=c2p(a, -2), end=c2p(a, 0)).set_color(cor_a)
         ]
         
+        # ---------------------- focos ----------------------
+        
         focos = VGroup(Dot(c2p(-c, 0)), Dot(c2p(c, 0))).set_color(cor_foco)
+        
+        # ---------------------- ponto_1 ----------------------
+        
+        ponto_1 = Dot(hiperbole[0][0].get_center())
+        linha_p_f1_1 = Line(focos[0].get_center(), ponto_1.get_center())
+        linha_p_f2_1 = Line(focos[1].get_center(), ponto_1.get_center())
+        
+        # ---------------------- Ponto 2 ----------------------
+        
+        ponto_2 = Dot(hiperbole[1][0].get_center())
+        linha_p_f1_2 = Line(focos[0].get_center(), ponto_2.get_center())
+        linha_p_f2_2 = Line(focos[1].get_center(), ponto_2.get_center())
+        
+        # ---------------------- Equação da hipérbole ----------------------
         
         eq_hiperbole = MathTex(
             '{x^2', 
@@ -648,6 +719,8 @@ class CenaPontoCurvas(Scene):
         eq_hiperbole[0].set_color(BLUE_B)
         eq_hiperbole[2].set_color(cor_a)
         eq_hiperbole[4].set_color(GREEN_B)
+        
+        # ---------------------- Relação da hipérbole ----------------------
         
         relacao_hiperbole = MathTex(
             '|',     # 0
@@ -672,43 +745,19 @@ class CenaPontoCurvas(Scene):
         relacao_hiperbole[8].set_color(cor_ponto)
         relacao_hiperbole[10].set_color(cor_foco)
         
-        # ---------------------- Animações ----------------------
-        self.add(plano)
-        play(Write(textos[14]))
-        play(Write(hiperbole[0]))
-        play(Write(hiperbole[1]))
+        # ---------------------- Updaters ----------------------
         
-        play(FadeOut(textos[14]))
-        play(Write(textos[15]))
-        play(FadeIn(focos))
-        play(Write(comprimento_c))
-        play(comprimento_c.animate.shift(c2p(0, 2) - c2p(0, 0)))
-        play(Write(linha_vertical_c[0]), Write(linha_vertical_c[1]))        
-        
-        play(Write(comprimento_a))
-        play(comprimento_a.animate.shift(c2p(0, -2) - c2p(0, 0)))
-        play(Write(linha_vertical_a[0]), Write(linha_vertical_a[1]))
-
-        play(FadeOut(textos[15]))
-        play(Write(textos[16]))
-        
-        play(Write(eq_hiperbole))
-        play(FadeOut(textos[16]))
-        play(Write(textos[17]))
-        
-        play(Write(relacao_hiperbole))
-
-        self.offset = 0
-        ponto_1 = Dot(hiperbole[0][0].get_center())
-        linha_p_f1_1 = Line(focos[0].get_center(), ponto_1.get_center())
-        linha_p_f2_1 = Line(focos[1].get_center(), ponto_1.get_center())
-        
-        play(Write(ponto_1))
-        play(Write(linha_p_f1_1))
-        play(Write(linha_p_f2_1))
-        
-        velocidade = 10
-        
+        def ponto_2_updater(mob: Mobject, dt):
+            if self.offset < len(hiperbole[1]) - velocidade:
+                self.offset += velocidade
+                mob.move_to(hiperbole[1][self.offset].get_center())
+                
+        def linha_p_f1_2_updater(mob: Mobject, dt):
+            mob.become(Line(focos[0].get_center(), ponto_2.get_center()))  
+            
+        def linha_p_f2_2_updater(mob: Mobject, dt):
+            mob.become(Line(focos[1].get_center(), ponto_2.get_center()))  
+            
         def ponto_1_updater(mob: Mobject, dt):
             if self.offset < len(hiperbole[0]) - velocidade:
                 self.offset += velocidade
@@ -718,7 +767,49 @@ class CenaPontoCurvas(Scene):
             mob.become(Line(focos[0].get_center(), ponto_1.get_center()))  
             
         def linha_p_f2_1_updater(mob: Mobject, dt):
-            mob.become(Line(focos[1].get_center(), ponto_1.get_center()))  
+            mob.become(Line(focos[1].get_center(), ponto_1.get_center())) 
+        
+        # ---------------------- Animações ----------------------
+        self.add(plano)
+        play(Write(textos[14]))
+        wait()
+        play(Write(hiperbole[0]))
+        play(Write(hiperbole[1]))
+        wait()
+        
+        play(FadeOut(textos[14]))
+        play(Write(textos[15]))
+        play(FadeIn(focos))
+        
+        play(Write(comprimento_c))
+        play(comprimento_c.animate.shift(c2p(0, 2) - c2p(0, 0)))
+        play(FadeIn(linha_vertical_c[0]), FadeIn(linha_vertical_c[1]))     
+        wait()   
+        
+        play(Write(comprimento_a))
+        play(comprimento_a.animate.shift(c2p(0, -2) - c2p(0, 0)))
+        play(FadeIn(linha_vertical_a[0]), FadeIn(linha_vertical_a[1]))
+        wait()
+
+        play(FadeOut(textos[15]))
+        play(Write(textos[16]), run_time=2)
+        wait()
+        
+        play(Write(eq_hiperbole), run_time=2)
+        wait()
+        play(FadeOut(textos[16]))
+        play(Write(textos[17]))
+        wait()
+        
+        play(Write(relacao_hiperbole))
+        wait()
+
+        self.offset = 0
+        
+        play(Write(ponto_1))
+        play(Write(linha_p_f1_1))
+        play(Write(linha_p_f2_1))
+        wait()
                 
         ponto_1.add_updater(ponto_1_updater)
         linha_p_f1_1.add_updater(linha_p_f1_1_updater)
@@ -734,30 +825,17 @@ class CenaPontoCurvas(Scene):
             ponto_final_1,
             Line(focos[0].get_center(), ponto_final_1.get_center()),
             Line(focos[1].get_center(), ponto_final_1.get_center())
-        ))
+        ))        
         
         self.offset = 0
-        ponto_2 = Dot(hiperbole[1][0].get_center())
-        linha_p_f1_2 = Line(focos[0].get_center(), ponto_2.get_center())
-        linha_p_f2_2 = Line(focos[1].get_center(), ponto_2.get_center())
-        
+
         play(Write(ponto_2))
         play(Write(linha_p_f1_2))
         play(Write(linha_p_f2_2))
+        wait()
         
         velocidade = 10
         
-        def ponto_2_updater(mob: Mobject, dt):
-            if self.offset < len(hiperbole[1]) - velocidade:
-                self.offset += velocidade
-                mob.move_to(hiperbole[1][self.offset].get_center())
-                
-        def linha_p_f1_2_updater(mob: Mobject, dt):
-            mob.become(Line(focos[0].get_center(), ponto_2.get_center()))  
-            
-        def linha_p_f2_2_updater(mob: Mobject, dt):
-            mob.become(Line(focos[1].get_center(), ponto_2.get_center()))  
-                
         ponto_2.add_updater(ponto_2_updater)
         linha_p_f1_2.add_updater(linha_p_f1_2_updater)
         linha_p_f2_2.add_updater(linha_p_f2_2_updater)
@@ -771,15 +849,17 @@ class CenaPontoCurvas(Scene):
             ponto_final_2, 
             Line(focos[0].get_center(), ponto_final_2), 
             Line(focos[1].get_center(), ponto_final_2))
-        )     
+        )   
+        wait()  
         
-        # play(FadeOut(*[mob for mob in self.mobjects if mob != plano]))
+        play(FadeOut(*[mob for mob in self.mobjects if mob != plano]))
+        wait()
 
 
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
-    ARGS = '-s'
+    ARGS = '-pql'
 
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
 
