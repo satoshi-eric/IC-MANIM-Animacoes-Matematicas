@@ -99,7 +99,7 @@ class CenaPontoCurvas(Scene):
         play(Write(linha_horizontal), Write(linha_vertical), run_time=2)
         play(FadeIn(m_ponto), run_time=3)
         wait()
-        play(FadeOut(*[mob for mob in self.mobjects if mob != self.plano])        )
+        play(FadeOut(*[mob for mob in self.mobjects if mob != self.plano]))
    
     def explicar_reta(self):
         def get_texto_coords(nome_conj: str, conj_coords: list) -> Text:
@@ -444,14 +444,14 @@ class CenaPontoCurvas(Scene):
         
         def ponto_updater(mob: Mobject, dt: float):
             if self.offset < 1:
-                self.offset = round(self.offset + 0.01, 2)
-                mob.move_to(m_elipse.point_from_proportion(self.offset % 1))
+                self.offset = (self.offset + 0.125*dt) % 1
+                mob.move_to(m_elipse.point_from_proportion(self.offset))
 
         def linha1_updater(mob: Mobject, dt: float):
-            mob.become(Line(f1.get_center(), ponto))
+            mob.become(Line(f1.get_center(), ponto.get_center()))
         
         def linha2_updater(mob: Mobject, dt: float):
-            mob.become(Line(f2.get_center(), ponto))
+            mob.become(Line(f2.get_center(), ponto.get_center()))
         
         def ponto_label_updater(mob: Mobject, dt:float):
             mob.move_to(ponto.get_center() + 0.3*UP + 0.3*RIGHT)
@@ -599,8 +599,8 @@ class CenaPontoCurvas(Scene):
         self.offset = 0
         
         def ponto_updater(mob: Mobject, dt: float):
-            if self.offset < 1:
-                self.offset = round(self.offset + 0.01, 2)
+            if self.offset < 1-0.25*dt:
+                self.offset = (self.offset + 0.25*dt) % 1
                 mob.move_to(parabola.point_from_proportion(self.offset))
                 
         def linha_vertical_updater(mob: Mobject, dt: float):
@@ -646,7 +646,7 @@ class CenaPontoCurvas(Scene):
 
         wait = lambda x=1: self.wait(x)
         
-        velocidade = 10
+        velocidade = 5
         # ---------------------- Mobjects ----------------------
         hiperbole = VGroup(
             VGroup(
@@ -834,7 +834,7 @@ class CenaPontoCurvas(Scene):
         play(Write(linha_p_f2_2))
         wait()
         
-        velocidade = 10
+        velocidade = 5
         
         ponto_2.add_updater(ponto_2_updater)
         linha_p_f1_2.add_updater(linha_p_f1_2_updater)
@@ -859,7 +859,7 @@ class CenaPontoCurvas(Scene):
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
-    ARGS = '-pql'
+    ARGS = '-pqh'
 
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
 
