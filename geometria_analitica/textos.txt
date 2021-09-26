@@ -1,6 +1,6 @@
-Para desenhar pontos, curvas utilizamos o plano cartesiano.
-Podemos desenhar um ponto no plano através de suas coordenadas.
-Podemos representar um conjunto de pontos.
+Para representar pontos e curvas utilizamos o plano cartesiano.
+Representamos um ponto usando suas coordenadas.
+Podemos representar também um conjunto de pontos.
 Alguns desses pontos podem obedecer à uma relação.
 Os pontos obedecem a uma equação, a equação da reta.
 Essa equação possui a seguinte forma:
