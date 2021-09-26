@@ -1,3 +1,41 @@
+''' 
+TODO
+1) Substituir
+“para desenhar pontos, curvas utilizamos o plano cartesiano” 
+por
+“para representar pontos e curvas utilizamos o plano cartesiano” 
+OK
+
+2) Substituir
+“Podemos desenhar um ponto no plano através de suas coordenadas” 
+por
+“Representamos um ponto usando suas coordenadas” 
+OK
+
+3) Substituir
+“Podemos representar um conjunto de pontos” 
+por
+“Podemos representar também um conjunto de pontos” 
+OK
+
+4) No momento que vc indica o coeficiente linear (fazendo o -1 se mover para o lugar de b), seria possível antes aumentar o tamanho do onde cruza o eixo y para destacar o ponto  ?
+
+
+5) quando vc coloca a expressão dist(P,F1), etc, seria possível escrever D1 e F2 como F_1 e F_2 (com os números no sub-índice) ?
+
+6) Engraçado, mas tive a impressão que o segmento de reta entre o ponto P e r na parabola não está igual ao segmento entre P e F quando vc faz a animação variando a posição do ponto P ?
+
+
+7) Acho que ao invés de usar “objeto” para falar da parábola, elipse e hipérbole, seria melhor usar “curva” mesmo. 
+
+8) acho que vc poderia indicar também P, F1, F2 nos pontos correspondentes da hipérbole como vc fez na elipse e parábola.
+
+9) No final, teria como remover o gráfico e ficar apenas com tela preta. Nela vc poderia colocar info sobre a produção como o seu nome como autor, referencia ao projeto do PIBIC (número) e meu nome como orientador, se der também colocar o símbolo da Unicamp e FT (como fizemos no vídeo o Explora).
+
+Outra coisa: seria possível alterar as flechas que representam os eixos do plano cartesiano para algo como -> e não como um triângulo todos preenchido ?
+
+'''
+
 from typing import Callable
 from manim import *
 from pathlib import Path
@@ -23,11 +61,11 @@ class CenaPontoCurvas(Scene):
     ###################### Ponto de Entrada #########################
     def construct(self):
         self.config_textos()
-        self.explicar_plano_ponto()
+        # self.explicar_plano_ponto()
         self.explicar_reta()
-        self.explicar_elipse()
-        self.explicar_parabola()
-        self.explicar_hiperbole()
+        # self.explicar_elipse()
+        # self.explicar_parabola()
+        # self.explicar_hiperbole()
     #################################################################    
         
 
@@ -220,6 +258,9 @@ class CenaPontoCurvas(Scene):
         wait()
         play(FadeIn(coef_linear_eixo))
         wait()
+        play(coef_linear_eixo.animate.scale(2).set_color(ORANGE))
+        play(coef_linear_eixo.animate.scale(0.5))
+        wait()
         play(ReplacementTransform(coef_linear_eixo.copy(), tex_eq_reta[3]), run_time=3)
         wait()
         play(*[FadeOut(mobject) for mobject in self.mobjects if mobject != self.plano])
@@ -318,13 +359,13 @@ class CenaPontoCurvas(Scene):
             'dist(',  # 0
             'P',      # 1
             ',',      # 2
-            'F1',     # 3
+            'F_1',     # 3
             ')',      # 4
             '+',      # 5
             'dist(',  # 6
             'P',      # 7
             ',',      # 8  
-            'F2',     # 9  
+            'F_2',     # 9  
             ')',      # 10
             '=',      # 11
             '2',      # 12
@@ -859,7 +900,7 @@ class CenaPontoCurvas(Scene):
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
-    ARGS = '-pqh'
+    ARGS = '-pql'
 
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
 
