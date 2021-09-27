@@ -19,18 +19,22 @@ por
 OK
 
 4) No momento que vc indica o coeficiente linear (fazendo o -1 se mover para o lugar de b), seria possível antes aumentar o tamanho do onde cruza o eixo y para destacar o ponto  ?
-
+OK
 
 5) quando vc coloca a expressão dist(P,F1), etc, seria possível escrever D1 e F2 como F_1 e F_2 (com os números no sub-índice) ?
+OK
 
 6) Engraçado, mas tive a impressão que o segmento de reta entre o ponto P e r na parabola não está igual ao segmento entre P e F quando vc faz a animação variando a posição do ponto P ?
-
+Não sei resolver
 
 7) Acho que ao invés de usar “objeto” para falar da parábola, elipse e hipérbole, seria melhor usar “curva” mesmo. 
+OK
 
 8) acho que vc poderia indicar também P, F1, F2 nos pontos correspondentes da hipérbole como vc fez na elipse e parábola.
+OK
 
 9) No final, teria como remover o gráfico e ficar apenas com tela preta. Nela vc poderia colocar info sobre a produção como o seu nome como autor, referencia ao projeto do PIBIC (número) e meu nome como orientador, se der também colocar o símbolo da Unicamp e FT (como fizemos no vídeo o Explora).
+OK
 
 Outra coisa: seria possível alterar as flechas que representam os eixos do plano cartesiano para algo como -> e não como um triângulo todos preenchido ?
 
@@ -44,31 +48,32 @@ import os
 
 class CenaPontoCurvas(Scene):
     plano: Axes = Axes(
-        x_range=[-6.9, 7, 1], 
-        y_range=[-3.9, 4, 1],
+        x_range=[-6.9, 6.9, 1], 
+        y_range=[-3.25, 3.25, 1],
         x_axis_config={
             # 'include_numbers': True,
             'font_size': 24,
-            'color': BLUE_B
+            'color': BLUE_B,
+            'include_tip': False
         },
         y_axis_config={
             # 'include_numbers': True,
             'font_size': 24,
-            'color': GREEN_B
+            'color': GREEN_B,
+            'include_tip': False
         }
     ).shift(0.5*DOWN)
 
-    ###################### Ponto de Entrada #########################
     def construct(self):
         self.config_textos()
-        # self.explicar_plano_ponto()
+        self.abertura()
+        self.explicar_plano_ponto()
         self.explicar_reta()
-        # self.explicar_elipse()
-        # self.explicar_parabola()
-        # self.explicar_hiperbole()
-    #################################################################    
+        self.explicar_elipse()
+        self.explicar_parabola()
+        self.explicar_hiperbole()
+        self.fechamento()
         
-
     def config_textos(self):
         dir_str = os.path.dirname(__file__).__str__()
         caminho = dir_str + '\\textos.txt'
@@ -103,6 +108,8 @@ class CenaPontoCurvas(Scene):
         eixo_y: NumberLine = self.plano.y_axis
         valor_coord_x, valor_coord_y = coords[0], coords[1] 
         ponto = self.plano.c2p(*coords)
+        seta_x = MathTex('\\rightarrow').next_to(self.plano, RIGHT, -0.2).set_color(BLUE_B)
+        seta_y = MathTex('\\rightarrow').rotate(90*DEGREES).next_to(self.plano, UP, -0.2).set_color(GREEN_B)
         
         # ---------------------- Mobjects ----------------------
         num_eixo_x = eixo_x.get_number_mobject(valor_coord_x)
@@ -121,7 +128,7 @@ class CenaPontoCurvas(Scene):
         # Animação do plano cartesiano e sua explicação
         play(Write(textos[0]), run_time=2)
         play(textos[0].animate.to_corner(UP))
-        play(Write(self.plano), Write(label_x), Write(label_y), run_time=3)
+        play(FadeIn(self.plano), FadeIn(seta_x), FadeIn(seta_y), FadeIn(label_x), FadeIn(label_y), run_time=3)
         play(FadeOut(textos[0]))
         wait()
 
@@ -172,7 +179,9 @@ class CenaPontoCurvas(Scene):
         label_x.scale(0.7).shift(0.4*LEFT + 0.1*UP).set_color(BLUE_B)
         label_y.scale(0.7).shift(0.4*DOWN + 0.1*RIGHT).set_color(GREEN_B)
         wait = lambda x=1: self.wait(x)
-        
+        seta_x = MathTex('\\rightarrow').next_to(self.plano, RIGHT, -0.2).set_color(BLUE_B)
+        seta_y = MathTex('\\rightarrow').rotate(90*DEGREES).next_to(self.plano, UP, -0.2).set_color(GREEN_B)
+
         # ---------------------- Mobjects ----------------------
         coords_text = get_texto_coords('A', coords)
         pontos: list[Dot] = get_pontos_de_coords(coords, self.plano)
@@ -193,7 +202,7 @@ class CenaPontoCurvas(Scene):
         coef_linear = VGroup(MathTex(r'\rightarrow').rotate(270*DEGREES).next_to(tex_eq_reta[3], DOWN, buff=0.2), Text('coeficiente linear').move_to(tex_eq_reta[3].get_center() + 0.9*RIGHT + DOWN).scale(0.4).set_color(ORANGE))
         
         # ---------------------- Animações ----------------------
-        self.add(self.plano)
+        self.add(self.plano, seta_x, seta_y)
         self.add(label_x, label_y)
         play(Write(textos[2]), run_time=2)
         wait()
@@ -274,8 +283,11 @@ class CenaPontoCurvas(Scene):
         c = np.sqrt(a**2 - b**2) if a >= b else np.sqrt(b**2 - a**2)
         focos = [c2p(-c, 0), c2p(c, 0)] if a >= b else [c2p(0, c), c2p(0, -c)]
         wait = lambda x=1: self.wait(x)
-        
+
         # ---------------------- Mobjects ----------------------
+        seta_x = MathTex('\\rightarrow').next_to(self.plano, RIGHT, -0.2).set_color(BLUE_B)
+        seta_y = MathTex('\\rightarrow').rotate(90*DEGREES).next_to(self.plano, UP, -0.2).set_color(GREEN_B)
+        
         
         # ---------------------- plano ----------------------
         plano = self.plano
@@ -376,6 +388,16 @@ class CenaPontoCurvas(Scene):
         relacao_elipse[7].set_color(GOLD)
         relacao_elipse[9].set_color(MAROON)
         relacao_elipse[13].set_color(DARK_BLUE)
+
+        relacao_elipse2 = MathTex(
+            'D_1',
+            '+',      
+            'D_2',     
+            '=',      
+            '2',      
+            'a'       
+        ).scale(0.6).move_to(2.5*UP + 4*RIGHT)
+        relacao_elipse2[5].set_color(DARK_BLUE)
         
         # ---------------------- ponto ----------------------
         ponto_exemplo = Dot(m_elipse.point_from_proportion(0.35)).set_color(GOLD)
@@ -391,7 +413,7 @@ class CenaPontoCurvas(Scene):
         ponto_label = MathTex('P').scale(0.6).move_to(ponto.get_center() + 0.3*UP + 0.3*RIGHT)
                        
         # ---------------------- Animações ----------------------        
-        self.add(plano, label_x, label_y)
+        self.add(plano, label_x, label_y, seta_x, seta_y)
         play(Write(textos[6]), run_time=2)
         wait()
         play(Write(m_elipse), run_time=2)
@@ -472,8 +494,11 @@ class CenaPontoCurvas(Scene):
         wait()
         play(ReplacementTransform(relacao_elipse[9].copy(), m_focos[1]), run_time=2)
         wait()
-        play(Write(linha_f1))
-        play(Write(linha_f2))
+        play(TransformMatchingTex(relacao_elipse, relacao_elipse2))
+        wait()
+        play(ReplacementTransform(relacao_elipse2[0].copy(), linha_f1))
+        play(ReplacementTransform(relacao_elipse2[0].copy(), linha_f2))
+        wait()
         
         # ---------------------- Animação do ponto com as retas seguindo  ----------------------
         
@@ -517,7 +542,7 @@ class CenaPontoCurvas(Scene):
         plano = self.plano
         c2p = plano.c2p
         textos = self.m_textos
-        p = 1.5
+        p = 1
         x_limits = 4/p**(1/2)
         func = lambda x: (x**2)/4*p
         cor_parabola = RED
@@ -529,6 +554,8 @@ class CenaPontoCurvas(Scene):
         wait = lambda x=1: self.wait(x)
 
         # ---------------------- Mobjects ----------------------
+        seta_x = MathTex('\\rightarrow').next_to(self.plano, RIGHT, -0.2).set_color(BLUE_B)
+        seta_y = MathTex('\\rightarrow').rotate(90*DEGREES).next_to(self.plano, UP, -0.2).set_color(GREEN_B)
         label_x, label_y = self.plano.get_axis_labels(x_label='x', y_label='y')
         label_x.scale(0.7).shift(0.4*LEFT + 0.1*UP).set_color(BLUE_B)
         label_y.scale(0.7).shift(0.4*DOWN + 0.1*RIGHT).set_color(GREEN_B)
@@ -554,6 +581,7 @@ class CenaPontoCurvas(Scene):
         eq_parabola[0].set_color(GREEN_B)
         eq_parabola[5].set_color(cor_p)
         eq_parabola[6].set_color(BLUE_B)
+
         relacao_parabola = MathTex(
             'dist(',        # 0
             'P',            # 1
@@ -571,6 +599,12 @@ class CenaPontoCurvas(Scene):
         relacao_parabola[3].set_color(cor_reta)
         relacao_parabola[7].set_color(cor_ponto)
         relacao_parabola[9].set_color(cor_foco)
+
+        relacao_parabola2 = MathTex(
+            'D_1',           
+            '=',  
+            'D_2'            
+        ).scale(0.7).move_to(5*RIGHT+2*UP)
         
         pos_ponto_exemplo = parabola.point_from_proportion(0.3)
         ponto_exemplo = Dot(pos_ponto_exemplo).set_color(cor_ponto)
@@ -585,7 +619,7 @@ class CenaPontoCurvas(Scene):
         ponto_label = Tex('P').move_to(ponto.get_center() + 0.5*UP).scale(0.6).set_color(cor_ponto)
         
         # ---------------------- Animações ----------------------
-        self.add(plano, label_x, label_y)
+        self.add(plano, label_x, label_y, seta_x, seta_y)
         play(Write(textos[10]))
         wait()
         play(Write(parabola))
@@ -625,9 +659,11 @@ class CenaPontoCurvas(Scene):
         wait()
         play(ReplacementTransform(relacao_parabola[9].copy(), foco), run_time=2)
         wait()
-        play(ReplacementTransform(relacao_parabola[0:5].copy(), linha_reta_exemplo), run_time=2)
+        play(TransformMatchingTex(relacao_parabola, relacao_parabola2))
+        wait()        
+        play(ReplacementTransform(relacao_parabola2[0].copy(), linha_reta_exemplo), run_time=2)
         wait()
-        play(ReplacementTransform(relacao_parabola[6:11].copy(), linha_foco_exemplo), run_time=2)
+        play(ReplacementTransform(relacao_parabola2[2].copy(), linha_foco_exemplo), run_time=2)
         wait()
         play(FadeOut(linha_reta_exemplo, linha_foco_exemplo, ponto_exemplo, ponto_label_exemplo), run_time=2)
         wait()
@@ -689,6 +725,8 @@ class CenaPontoCurvas(Scene):
         
         velocidade = 5
         # ---------------------- Mobjects ----------------------
+        seta_x = MathTex('\\rightarrow').next_to(self.plano, RIGHT, -0.2).set_color(BLUE_B)
+        seta_y = MathTex('\\rightarrow').rotate(90*DEGREES).next_to(self.plano, UP, -0.2).set_color(GREEN_B)
         hiperbole = VGroup(
             VGroup(
                 *[Line(c2p(x, func(x)), c2p(x+0.01, func(x+0.01))) for x in np.arange(plano.x_range[0]+1, -a-0.01, 0.01)],
@@ -785,6 +823,18 @@ class CenaPontoCurvas(Scene):
         relacao_hiperbole[4].set_color(cor_foco)
         relacao_hiperbole[8].set_color(cor_ponto)
         relacao_hiperbole[10].set_color(cor_foco)
+        relacao_hiperbole[14].set_color(cor_a)
+
+        relacao_hiperbole2 = MathTex(
+            '|',     
+            'D_1'    
+            '-',     
+            'D_2'
+            '|',     
+            '=',     
+            '2a'
+        ).scale(0.7).move_to(4*LEFT+2.5*UP)
+        relacao_hiperbole2[-1].set_color(cor_a)
         
         # ---------------------- Updaters ----------------------
         
@@ -811,7 +861,7 @@ class CenaPontoCurvas(Scene):
             mob.become(Line(focos[1].get_center(), ponto_1.get_center())) 
         
         # ---------------------- Animações ----------------------
-        self.add(plano)
+        self.add(plano, seta_x, seta_y)
         play(Write(textos[14]))
         wait()
         play(Write(hiperbole[0]))
@@ -847,9 +897,16 @@ class CenaPontoCurvas(Scene):
 
         self.offset = 0
         
-        play(Write(ponto_1))
-        play(Write(linha_p_f1_1))
-        play(Write(linha_p_f2_1))
+        play(ReplacementTransform(VGroup(relacao_hiperbole[2], relacao_hiperbole[8]).copy(), ponto_1))
+        wait()
+        play(ReplacementTransform(relacao_hiperbole[4].copy(), linha_p_f1_1))
+        wait()
+        play(ReplacementTransform(relacao_hiperbole[10].copy(), linha_p_f2_1))
+        wait()
+        play(ReplacementTransform(relacao_hiperbole[14].copy(), comprimento_a))
+        wait()
+
+        play(TransformMatchingTex(relacao_hiperbole, relacao_hiperbole2))
         wait()
                 
         ponto_1.add_updater(ponto_1_updater)
@@ -893,14 +950,40 @@ class CenaPontoCurvas(Scene):
         )   
         wait()  
         
-        play(FadeOut(*[mob for mob in self.mobjects if mob != plano]))
+        play(FadeOut(*[mob for mob in self.mobjects]))
         wait()
+
+    def abertura(self):
+        titulo = Tex('Geometria Analítica').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
+        subtitulo = Tex('Ponto e Curvas').scale(1.5).set_color('#43bfca').move_to(titulo.get_center() + 1.2*DOWN)
+
+        self.play(FadeIn(titulo, subtitulo))
+        self.wait(1.5)
+        self.play(FadeOut(titulo), FadeOut(subtitulo))
+        self.wait()
+
+    def fechamento(self):
+        pibit = MathTex("\\text{PIBIT: 0220036212472856}").scale(2).move_to(2*UP).set_color(DARK_BLUE)
+        autor = MathTex("\\text{Autor: Eric Satoshi Suzuki Kishimoto}").set_color("#dc6a40").move_to(ORIGIN)
+        orientador = MathTex("\\text{Orientador: Prof. Vitor Rafael Coluci}").set_color("#dc6a40").move_to(DOWN)
+        ft = ImageMobject("./logo-FT.jpeg").scale(0.4).shift(1.5*DOWN+3*RIGHT)
+        unicamp = ImageMobject("./logo-unicamp.jpeg").scale(0.3).shift(1.5*DOWN+3*LEFT)
+
+        self.play(FadeIn(pibit))
+        self.wait(1)
+        self.play(FadeIn(unicamp), FadeIn(ft))
+        self.wait(1)
+        self.play(FadeOut(unicamp), FadeOut(ft))
+        self.wait(0.8)
+        self.play(FadeIn(autor), FadeIn(orientador))
+        self.wait(2)
+        self.play(FadeOut(*[mob for mob in self.mobjects]))
 
 
 def main():
     ARQ_NOME = Path(__file__).resolve()
     CENA = CenaPontoCurvas.__name__
-    ARGS = '-pql'
+    ARGS = '-pqh'
 
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
 
