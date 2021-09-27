@@ -4,15 +4,15 @@ Podemos representar também um conjunto de pontos.
 Alguns desses pontos podem obedecer à uma relação.
 Os pontos obedecem a uma equação, a equação da reta.
 Essa equação possui a seguinte forma:
-Além da reta, existem outros objetos. Por exemplo a Elipse.
+Além da reta, existem outros curvas. Por exemplo a Elipse.
 Antes de definir sua equação, precisamos definir algumas outras propriedades.
 Agora que as propriedades foram definidas, podemos definir a equação da elipse.
 Essa equação representa um conjunto de pontos onde:
-O próximo objeto que veremos é a parábola.
+O próximo curva que veremos é a parábola.
 Assim como a elipse, a parábola possui suas propriedades.
 Com isso, podemos definir a equação da parábola.
 Essa equação define a seguinte relação da parábola.
-O último objeto que veremos é a hipérbole.
-Assim, como os outros objetos, a hipérbole também possui suas propriedades.
+O último curva que veremos é a hipérbole.
+Assim, como os outros curvas, a hipérbole também possui suas propriedades.
 Com isso, podemos definir a equação da hipérbole.
 Essa equação define a seguinte relação:
