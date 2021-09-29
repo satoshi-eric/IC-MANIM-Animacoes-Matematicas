@@ -963,7 +963,7 @@ class CenaPontoCurvas(Scene):
         self.wait()
 
     def fechamento(self):
-        pibit = MathTex("\\text{PIBIT/CNPQ: 0220036212472856}").scale(2).move_to(2*UP).set_color(DARK_BLUE)
+        pibit = MathTex("\\text{PIBIT/CNPQ: 0220036212472856}").scale(1.5).move_to(2*UP).set_color(DARK_BLUE)
         autor = MathTex("\\text{Autor: Eric Satoshi Suzuki Kishimoto}").set_color("#dc6a40").move_to(ORIGIN)
         orientador = MathTex("\\text{Orientador: Prof. Vitor Rafael Coluci}").set_color("#dc6a40").move_to(DOWN)
         ft = ImageMobject("./logo-FT.jpeg").scale(0.4).shift(1.5*DOWN+3*RIGHT)
