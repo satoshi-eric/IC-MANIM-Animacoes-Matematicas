@@ -2,8 +2,7 @@
 Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento de animações para o ensino de matemática usando o Manim".
 
 # Tópicos do Manual
-
-- [ ]  Desenvolvimento de manual interativo 
+- [ ]  Desenvolvimento de manual interativo
     - [x]  Introdução `introducao`
         - [x]  O que é o Manim? `definicao-manim`
         - [x]  Instalação do Manim no Colab `instalacao-colab`
@@ -107,11 +106,6 @@ Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento
         - [ ]  mob `mob`
         - [ ]  dt `dt`
         - [ ]  criando suas próprias animações `criando-proprias-animacoes`
-    - [ ]  Navegando pela biblioteca `navegando-manim`
-        - [ ]  Identificando construtores `procurando-construtores`
-        - [ ]  Identificando métodos `identificando-metodos`
-        - [ ]  Procurando parâmetros kwargs `procurando-kwargs`
-        - [ ]  Consultando documentação `consultando-documentacao`
     - [ ]  Produção de animações `producao-animacoes`
         - [ ]  Roteiro e planejamento `roteiro-planejamento`
         - [ ]  Editor de texto e ambiente de desenvolvimento `editor-texto`
@@ -122,3 +116,4 @@ Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento
         - [ ]  Generalização de cenas `generelizacao-cena`
         - [ ]  Simplificando funções `simplificando-funcoes`
         - [ ]  Criando seus próprios objetos `criando-objetos`
+        - [ ]  Consultando documentação `consultando-documentacao`
