@@ -1,45 +1,124 @@
 # IC-MANIM-Animacoes-Matematicas
 Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento de animações para o ensino de matemática usando o Manim".
 
-# Plano de Trabalho
+# Tópicos do Manual
 
-Tarefas:
-- Desenvolvimento de manual interativo (1º trimestre)
-  - Conceitos básicos
-  - Mais tipos
-  - Estrutura de controle
-  - Funções
-  - Programação orientada a objetos
-  - Bibliotecas
-  - Introdução ao Manim
-  - Mobjects
-  - Animações
-  - Gráficos 2D e 3D
-  - Update functions
-- Produções para o site "Derivando matemática" (2º e 3º trimestre)
-  - Equação da elipse
-  - Equação da parábola
-  - Hipérbole
-  - Lei dos cossenos
-  - Parametrização de curvas
-  - Problema de otimização de embalagem
-  - Catenário
-  - A cicloide
-  - Um problema de fibonacci
-  - Transformações lineares
-- Produções sobre temas de matemática do Ensino Médio
-  - Conjuntos
-  - Números Naturais, Cardinais, Reais
-  - Funcões Afins
-  - Funções 
-    - Quadráticas
-    - Polinomiais 
-    - Exponenciais e Logarítmicas
-    - Trigonométrica
-  - Geometria analítica
-  - Geometria espacial
-  - Sistemas de equqções lineares
-  - Matrizes e determinantes
-  - Números complexos
-  - Equações algébricas
-
+- [x]  Desenvolvimento de manual interativo (1º trimestre)
+    - [x]  Introdução `introducao`
+        - [x]  O que é o Manim? `definicao-manim`
+        - [x]  Instalação do Manim no Colab `instalacao-colab`
+        - [x]  Primeira animação `primeira-animacao`
+    - [x]  Introdução ao Python `introducao-python`
+        - [x]  Conceitos básicos `conceitos-basicos`
+            - [x]  Variáveis `variaveis`
+            - [x]  Tipos de dados `tipos-dados`
+            - [x]  Operadores aritméticos `operadores-aritmeticos`
+            - [x]  Operações com strings `operacoes-strings`
+            - [x]  Operações booleanas `operacoes-booleanas`
+            - [x]  Operações de atribuição `operacoes-atribuicao`
+            - [x]  Comentários `comentarios`
+            - [x]  Variáveis no Manim `variaveis-manim`
+        - [x]  Mais tipos `mais-tipos`
+            - [x]  Listas `listas`
+            - [x]  Listas fatiadas `listas-fatiadas`
+            - [x]  Dicionários `dicionarios`
+            - [x]  Tuplas `tuplas`
+            - [x]  Listas e Tuplas no Manim `listas-tuplas-manim`
+        - [x]  Estrutura de controle `estrutura-controle`
+            - [x]  Expressões booleanas `expressoes-booleanas`
+            - [x]  if else `if-else`
+            - [x]  elif `elif`
+            - [x]  while `while`
+            - [x]  break `break`
+            - [x]  for `for`
+            - [x]  Compreensões de listas `compreensao-lista`
+            - [x]  range `range`
+            - [x]  Operador ternário `operador-ternario`
+        - [x]  Funções `funcoes`
+            - [x]  Reuso de código `reuso-codigo`
+            - [x]  O que são funções? `funcoes-definicao`
+            - [x]  Escopo `escopo`
+            - [x]  Argumentos e parâmetros `args-params`
+            - [x]  Parâmetros nomeados `param-nomeados`
+            - [x]  Parâmetros padrão `param-padrao`
+            - [x]  Retorno `return`
+            - [x]  Desempacotamento de listas e tuplas `desempacotamento-listas-tuplas`
+            - [x]  lambda `lambda`
+        - [x]  Trabalhando com arquivos `arquivos`
+            - [x]  open `open`
+            - [x]  Escrevendo arquivos `escrever-arq`
+            - [x]  Lendo arquivos `leitura-arq`
+            - [x]  Trabalhando com arquivos `trabalhando-arq`
+        - [x]  Programação orientada a objetos `poo`
+            - [x]  Conceitos iniciais `conceitos-inicias`
+            - [x]  Objeto e classe `objeto-classe`
+            - [x]  Construtor `construtor`
+            - [x]  Decoradores`decorador`
+            - [x]  Encapsulamento `encapsulamento`
+            - [x]  Herança `heranca`
+            - [x]  Polimorfismo `polimorfismo`
+            - [x]  Operadores mágicos `operadores-magicos`
+            - [x]  Métodos estáticos e de classe `metodos-estaticos-classe`
+            - [ ]  POO no Manim
+        - [x]  Bibliotecas `bibliotecas`
+            - [x]  O que são bibliotecas `definicao-bibliotecas`
+            - [x]  Como importar bibliotecas `importar-biblioteca`
+            - [x]  Como criar sua própria biblioteca `criar-biblioteca`
+            - [x]  args e kwargs `args-kwargs`
+            - [x]  pip `pip`
+            - [ ]  venv `venv`
+            - [ ]  requirements `requirements`
+            - [ ]  numpy `numpy`
+            - [ ]  typing `typing`
+    - [ ]  Introdução ao Manim `introducao-manim`
+        - [ ]  Instalação local `instalacao-local`
+        - [ ]  Classe Scene `classe-scene`
+        - [ ]  Método construct `construct`
+        - [ ]  Parâmetros de linha de comando `linha-comando`
+    - [ ]  Mobjects `Mobjects`
+        - [ ]  Text `Text`
+        - [ ]  Latex `Latex`
+        - [ ]  MathTex `MathTex`
+        - [ ]  Tex `Tex`
+        - [ ]  Geometry `Geometry`
+        - [ ]  VGroup `VGroup`
+        - [ ]  Manipular Mobjects `manipular-mobjects`
+            - [ ]  move_to `move_to`
+            - [ ]  next_to `next_to`
+            - [ ]  shift `shift`
+            - [ ]  scale `scale`
+            - [ ]  rotate `rotate`
+            - [ ]  set_color `set_color`
+            - [ ]  become `become`
+            - [ ]  copy `copy`
+        - [ ]  Outros Mobjects `outros-mobjects`
+    - [ ]  Animações `animacoes`
+        - [ ]  Write `Write`
+        - [ ]  FadeIn `FadeIn`
+        - [ ]  FadeOut `FadeOut`
+        - [ ]  animate `animate`
+        - [ ]  Outras animações `outras-animacoes`
+    - [ ]  Gráficos 2D e 3D `graficos`
+        - [ ]  NumberLine `NumberLine`
+        - [ ]  Axes `Axes`
+        - [ ]  ThreeDAxes `ThreeDAxes`
+        - [ ]  VectorScene `VectorScene`
+    - [ ]  Update functions `update-functions`
+        - [ ]  mob `mob`
+        - [ ]  dt `dt`
+        - [ ]  criando suas próprias animações `criando-proprias-animacoes`
+    - [ ]  Navegando pela biblioteca `navegando-manim`
+        - [ ]  Identificando construtores `procurando-construtores`
+        - [ ]  Identificando métodos `identificando-metodos`
+        - [ ]  Procurando parâmetros kwargs `procurando-kwargs`
+        - [ ]  Consultando documentação `consultando-documentacao`
+    - [ ]  Produção de animações `producao-animacoes`
+        - [ ]  Roteiro e planejamento `roteiro-planejamento`
+        - [ ]  Editor de texto e ambiente de desenvolvimento `editor-texto`
+        - [ ]  Estrutura do projeto `estrutura-projeto`
+        - [ ]  Uso de comentários `uso-comentarios`
+        - [ ]  Separando dados, objetos gráficos e animações `dados-graficos-animacoes`
+        - [ ]  Separando textos em outros arquivos `textos-em-arquivos`
+        - [ ]  Generalização de cenas `generelizacao-cena`
+        - [ ]  Simplificando funções `simplificando-funcoes`
+        - [ ]  Criando seus próprios objetos `criando-objetos`
