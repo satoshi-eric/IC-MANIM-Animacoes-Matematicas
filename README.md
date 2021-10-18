@@ -3,7 +3,7 @@ Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento
 
 # Tópicos do Manual
 
-- [x]  Desenvolvimento de manual interativo (1º trimestre)
+- [ ]  Desenvolvimento de manual interativo 
     - [x]  Introdução `introducao`
         - [x]  O que é o Manim? `definicao-manim`
         - [x]  Instalação do Manim no Colab `instalacao-colab`
