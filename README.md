@@ -2,6 +2,7 @@
 Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento de animações para o ensino de matemática usando o Manim".
 
 # Tópicos do Manual
+
 - [ ]  Desenvolvimento de manual interativo
     - [x]  Introdução `introducao`
         - [x]  O que é o Manim? `definicao-manim`
@@ -58,45 +59,54 @@ Repositório para o desenvolvimento de iniciação tecnológica "Desenvolvimento
             - [x]  Polimorfismo `polimorfismo`
             - [x]  Operadores mágicos `operadores-magicos`
             - [x]  Métodos estáticos e de classe `metodos-estaticos-classe`
-            - [ ]  POO no Manim
+            - [x]  Funções como objetos `funcoes-objetos`
+            - [x]  POO no Manim poo-manim
         - [x]  Bibliotecas `bibliotecas`
             - [x]  O que são bibliotecas `definicao-bibliotecas`
             - [x]  Como importar bibliotecas `importar-biblioteca`
             - [x]  Como criar sua própria biblioteca `criar-biblioteca`
             - [x]  args e kwargs `args-kwargs`
             - [x]  pip `pip`
-            - [ ]  venv `venv`
-            - [ ]  requirements `requirements`
-            - [ ]  numpy `numpy`
-            - [ ]  typing `typing`
-    - [ ]  Introdução ao Manim `introducao-manim`
-        - [ ]  Instalação local `instalacao-local`
-        - [ ]  Classe Scene `classe-scene`
-        - [ ]  Método construct `construct`
-        - [ ]  Parâmetros de linha de comando `linha-comando`
-    - [ ]  Mobjects `Mobjects`
-        - [ ]  Text `Text`
-        - [ ]  Latex `Latex`
-        - [ ]  MathTex `MathTex`
-        - [ ]  Tex `Tex`
-        - [ ]  Geometry `Geometry`
-        - [ ]  VGroup `VGroup`
-        - [ ]  Manipular Mobjects `manipular-mobjects`
-            - [ ]  move_to `move_to`
-            - [ ]  next_to `next_to`
-            - [ ]  shift `shift`
-            - [ ]  scale `scale`
-            - [ ]  rotate `rotate`
-            - [ ]  set_color `set_color`
-            - [ ]  become `become`
-            - [ ]  copy `copy`
-        - [ ]  Outros Mobjects `outros-mobjects`
-    - [ ]  Animações `animacoes`
-        - [ ]  Write `Write`
-        - [ ]  FadeIn `FadeIn`
-        - [ ]  FadeOut `FadeOut`
-        - [ ]  animate `animate`
-        - [ ]  Outras animações `outras-animacoes`
+            - [x]  venv `venv`
+            - [x]  requirements `requirements`
+            - [x]  numpy `numpy`
+            - [x]  typing `typing`
+    - [x]  Introdução ao Manim `introducao-manim`
+        - [x]  Instalação local `instalacao-local`
+        - [x]  Estrutura da cena `estrutura-cena`
+        - [x]  Parâmetros de linha de comando `linha-comando`
+    - [x]  Mobjects `Mobjects`
+        - [x]  Text `Text`
+        - [x]  Latex `Latex`
+        - [x]  MathTex `MathTex`
+        - [x]  Tex `Tex`
+        - [x]  Geometry `Geometry`
+            - [x]  Square `Square`
+            - [x]  Rectangle `Rectangle`
+            - [x]  Circle `Circle`
+            - [x]  Ellipse `Ellipse`
+            - [x]  Coordenadas no Manim `coordenadas-manim`
+            - [x]  Line `Line`
+            - [x]  Arrow `Arrow`
+            - [x]  Dot `Dot`
+        - [x]  Manipular Mobjects `manipular-mobjects`
+            - [x]  move_to `move_to`
+            - [x]  next_to `next_to`
+            - [x]  shift `shift`
+            - [x]  to_corner `to_corner`
+            - [x]  scale `scale`
+            - [x]  rotate `rotate`
+            - [x]  set_color `set_color`
+            - [x]  become `become`
+            - [x]  copy `copy`
+        - [x]  VGroup `VGroup`
+    - [x]  Animações `animacoes`
+        - [x]  Write `Write`
+        - [x]  FadeIn `FadeIn`
+        - [x]  FadeOut `FadeOut`
+        - [x]  Transform e ReplacementTransform `Transform-ReplacementTransform`
+        - [x]  Animações de manipulação `animacoes-manipulacao`
+        - [x]  Outras animações `outras-animacoes`
     - [ ]  Gráficos 2D e 3D `graficos`
         - [ ]  NumberLine `NumberLine`
         - [ ]  Axes `Axes`
