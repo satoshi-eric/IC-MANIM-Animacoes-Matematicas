@@ -153,20 +153,12 @@ class DerivandoElipse(Scene):
             '= 2a'
         ).scale(escala_definicoes).move_to(1.5*RIGHT)
 
-        self.def_dist_1 = MathTex('d(P_1, F_1) = \\sqrt{(x - (-c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
-        self.def_dist_2 = MathTex('d(P_1, F_2) = \\sqrt{(x - (c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
+        self.eq_dist_1 = MathTex('d(P_1, F_1) = \\sqrt{(x - (-c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
+        self.eq_dist_2 = MathTex('d(P_1, F_2) = \\sqrt{(x - (c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
 
-        eqs = list(map(lambda eq: eq.scale(0.6).move_to(RIGHT + DOWN),
-            [
-                MathTex('\\sqrt{(x + c)^2 + (y - 0)^2} = 2a'),
-                MathTex('\\sqrt{(x + c)^2 = 2a + (y - 0)^2}'),
-                MathTex('(x + c)^2 + y^2 = 4a^2 - 4a\\sqrt{(x - c)^2 + y^2} + (x - c)^2 + y^2'),
-                MathTex('(x + c)^2 = 4a^2 - 4a\\sqrt{(x - c)^2 + y^2} + (x - c)^2'),
-                MathTex('x^2 + 2cx + c^2 = 4a^2 - 4a \\sqrt{(x - c)^2+ y^2} + x^2 - 2cx + c^2'),
-                MathTex('2cx = 4a^2 - 4a \\sqrt{(x - c)^2+ y^2} - 2cx'),
-                MathTex
-            ]
-        ))
+        self.eqs = [
+            
+        ]
 
     def mostrar_definicoes_em_objetos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
@@ -208,7 +200,7 @@ class DerivandoElipse(Scene):
 
         self.wait(1)
 
-    def manipulacao_algebrica(self):
+    def mostrar_definicoes(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
         play(Write(self.eq_elipse))
         play(self.eq_elipse.animate.shift(3*UP + LEFT))
@@ -218,20 +210,18 @@ class DerivandoElipse(Scene):
         play(self.eq_f2.animate.shift(2.5*UP + 1.5*RIGHT))
         play(Write(self.eq_ponto))
         play(self.eq_ponto.animate.shift(2*UP + LEFT)) 
-        play(Write(self.def_dist_1))
-        play(self.def_dist_1.animate.shift(1.5*UP + 0.5*RIGHT))
-        play(TransformMatchingShapes(self.def_dist_1, MathTex('d(P_1, F_1) = \\sqrt{(x + c)^2 + y^2}').scale(0.6).move_to(self.def_dist_1.get_center())))
-        play(Write(self.def_dist_2))
-        play(self.def_dist_2.animate.shift(1*UP + 0.5*RIGHT))
-        play(TransformMatchingShapes(self.def_dist_2, MathTex('d(P_1, F_2) = \\sqrt{(x - c)^2 + y^2}').scale(0.6).move_to(self.def_dist_2.get_center())))
-        play(self.eq_ponto[1:5].copy().animate.move_to(RIGHT + DOWN))
+        play(Write(self.eq_dist_1))
+        play(self.eq_dist_1.animate.shift(1.5*UP + 0.5*RIGHT))
+        play(TransformMatchingShapes(self.eq_dist_1, MathTex('d(P_1, F_1) = \\sqrt{(x + c)^2 + y^2}').scale(0.6).move_to(self.eq_dist_1.get_center())))
+        play(Write(self.eq_dist_2))
+        play(self.eq_dist_2.animate.shift(1*UP + 0.5*RIGHT))
+        play(TransformMatchingShapes(self.eq_dist_2, MathTex('d(P_1, F_2) = \\sqrt{(x - c)^2 + y^2}').scale(0.6).move_to(self.eq_dist_2.get_center())))
+        play((eq_def_elipse := self.eq_ponto[1:5].copy()).animate.move_to(2.5*RIGHT))
+        self.eq_def_elipse = eq_def_elipse
 
-        # 'P_1 = (x, y) \\in E \\rightarrow', 
-        #     'd(P_1, F_1)', 
-        #     '+', 
-        #     'd(P_2, F_2)', 
-        #     '= 2a'
-        
+    
+    def manipulacao_algebrica(self):
+        pass
     
 
 ARQ_NOME = Path(__file__).resolve()
