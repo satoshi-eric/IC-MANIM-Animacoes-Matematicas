@@ -1,7 +1,9 @@
 from manim import *
 from pathlib import Path
 import os
+import itertools as it
 from typing import *
+
 
 
 class DerivandoElipse(Scene):
@@ -9,6 +11,7 @@ class DerivandoElipse(Scene):
         self.init_dados()
         self.init_objetos()
         self.mostrar_definicoes_em_objetos()
+        self.mostrar_definicoes()
         self.manipulacao_algebrica()
 
     def init_dados(self):
@@ -156,8 +159,43 @@ class DerivandoElipse(Scene):
         self.eq_dist_1 = MathTex('d(P_1, F_1) = \\sqrt{(x - (-c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
         self.eq_dist_2 = MathTex('d(P_1, F_2) = \\sqrt{(x - (c))^2 + (y - 0)^2}').scale(escala_definicoes).move_to(RIGHT)
 
+        equations_positions = it.cycle([
+            2.5 * RIGHT,
+            2.5 * RIGHT + 0.7*DOWN, 
+            2.5 * RIGHT + 1.4*DOWN,
+            2.5 * RIGHT + 2.1*DOWN,
+            2.5 * RIGHT + 2.8*DOWN,
+        ])
+
+        eqs_str = [
+            'd(P_1, F_1) + d(P_2, F_2) = 2a',
+            '\\sqrt{(x + c)^2 + y^2} + \\sqrt{(x - c)^2 + y^2} = 2a',
+            '\\sqrt{(x + c)^2 + y^2} = 2a - \\sqrt{(x - c)^2 + y^2}',
+            '(\\sqrt{(x + c)^2 + y^2})^2 = (2a - \\sqrt{(x - c)^2 + y^2}^2)',
+            '(x + c)^2 + y^2 = 4a^2 - 4a\\sqrt{(x - c)^2 + y^2} + (x - c)^2 + y^2',
+            '(x + c)^2 = 4a^2 - 4a\\sqrt{(x - c)^2 + y^2} + (x - c)^2',
+            'x^2 + 2cx + c^2 = 4a^2 -4a\\sqrt{(x - c)^2 + y^2} + x^2 - 2cx + c^2',
+            '2cx = 4a^2 - 4a \\sqrt{(x-c)^2 + y^2} - 2cx',
+            '4a \\sqrt{(x-c)^2 + y^2} = 4a^2 - 2cx - 2cx',
+            '4a \\sqrt{(x-c)^2 + y^2} = 4a^2 - 4cx',
+            '{4a \\sqrt{(x-c)^2 + y^2} \\over 4} = {4a^2 - 4cx \\over 4}',
+            'a \\sqrt{(x-c)^2 + y^2} = a^2 - cx',
+            '(a \\sqrt{(x-c)^2 + y^2})^2 = (a^2 - cx)^2',
+            'a^2 [(x-c)^2 + y^2] = a^4 - 2a^2 cx + c^2 x^2',
+            'a^2 [x^2 - 2cx + c^2 + y^2] = a^4 - 2a^2cx + c^2x^2',
+            'a^2 x^2 - 2a^2 cx + a^2 c^2 + a^2 y^2 = a^4 - 2a^2 cx + c^2 x^2',
+            'a^2 x^2 + a^2 c^2 + a^2 y^2 = a^4 + c^2 x^2',
+            'a^2 x^2 - c^2 x^2 + a^2 y^2 = a^4 - a^2 c^2',
+            '(a^2 - c^2) x^2 + a^2 y^2 = a^2 (a^2 - c^2)',
+            'b = \\sqrt{a^2 - c^2} \\rightarrow a^2 + b^2 = c^2',
+            'b^2 x^2 + a^2 y^2 = a^2 b^2',
+            '{b^2 x^2 \\over a^2 b^2} + {a^2 y^2 \\over a^2 b^2} = {a^2 b^2 \\over a^2 b^2}',
+            '{x^2 \\over a^2} + {b^2 \\over b^2} = 1'
+        ]
+
         self.eqs = [
-            
+            MathTex(eq_str).scale(escala_definicoes).move_to(eq_pos)
+            for eq_str, eq_pos in zip(eqs_str, equations_positions)
         ]
 
     def mostrar_definicoes_em_objetos(self):
@@ -216,17 +254,98 @@ class DerivandoElipse(Scene):
         play(Write(self.eq_dist_2))
         play(self.eq_dist_2.animate.shift(1*UP + 0.5*RIGHT))
         play(TransformMatchingShapes(self.eq_dist_2, MathTex('d(P_1, F_2) = \\sqrt{(x - c)^2 + y^2}').scale(0.6).move_to(self.eq_dist_2.get_center())))
-        play((eq_def_elipse := self.eq_ponto[1:5].copy()).animate.move_to(2.5*RIGHT))
-        self.eq_def_elipse = eq_def_elipse
+        play(TransformMatchingShapes(self.eq_ponto[1:5].copy(), self.eqs[0]))
 
+        
+            
     
     def manipulacao_algebrica(self):
-        pass
-    
+        play = lambda *anim, t=1: self.play(*anim, run_time=t)
+        play(TransformMatchingShapes(self.eqs[0].copy(), self.eqs[1].move_to(2.5 * RIGHT + 0.6*DOWN)))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[1].copy(), self.eqs[2]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[2].copy(), self.eqs[3]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[3].copy(), self.eqs[4]))
+        self.wait()
+        play(FadeOut(self.eqs[0]))
+        play(TransformMatchingShapes(self.eqs[4].copy(), self.eqs[5]))
+        self.wait()
+        
+        play(FadeOut(
+            self.eqs[1],
+            self.eqs[2],
+            self.eqs[3],
+            self.eqs[4]
+            ))
+
+        play(TransformMatchingShapes(self.eqs[5].copy(), self.eqs[6]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[6].copy(), self.eqs[7]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[7].copy(), self.eqs[8]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[8].copy(), self.eqs[9]))
+        self.wait()
+        play(FadeOut(self.eqs[5]))
+        play(TransformMatchingShapes(self.eqs[9].copy(), self.eqs[10]))
+        self.wait()
+
+        play(FadeOut(
+            self.eqs[6],
+            self.eqs[7],
+            self.eqs[8],
+            self.eqs[9]
+            ))
+
+        play(TransformMatchingShapes(self.eqs[10].copy(), self.eqs[11]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[11].copy(), self.eqs[12]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[12].copy(), self.eqs[13]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[13].copy(), self.eqs[14]))
+        self.wait()
+        play(FadeOut(self.eqs[10]))
+        play(TransformMatchingShapes(self.eqs[14].copy(), self.eqs[15]))
+        self.wait()
+
+        play(FadeOut(
+            self.eqs[11],
+            self.eqs[12],
+            self.eqs[13],
+            self.eqs[14]
+            ))
+
+        play(TransformMatchingShapes(self.eqs[15].copy(), self.eqs[16]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[16].copy(), self.eqs[17]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[17].copy(), self.eqs[18]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[18].copy(), self.eqs[19]))
+        self.wait()
+        play(FadeOut(self.eqs[15]))
+        play(TransformMatchingShapes(self.eqs[19].copy(), self.eqs[20]))
+        self.wait()
+
+        play(FadeOut(
+            self.eqs[16],
+            self.eqs[17],
+            self.eqs[18],
+            self.eqs[19],
+            ))
+        play(TransformMatchingShapes(self.eqs[20].copy(), self.eqs[21]))
+        self.wait()
+        play(TransformMatchingShapes(self.eqs[21].copy(), self.eqs[22]))
+        play(FadeOut(self.eqs[20],self.eqs[21]))
+        play(Write(SurroundingRectangle(self.eqs[22])))
+
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = DerivandoElipse.__name__
-ARGS = '-s'
+ARGS = '-pqh'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
