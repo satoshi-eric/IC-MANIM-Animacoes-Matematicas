@@ -190,7 +190,7 @@ class DerivandoElipse(Scene):
             'b = \\sqrt{a^2 - c^2} \\rightarrow a^2 + b^2 = c^2',
             'b^2 x^2 + a^2 y^2 = a^2 b^2',
             '{b^2 x^2 \\over a^2 b^2} + {a^2 y^2 \\over a^2 b^2} = {a^2 b^2 \\over a^2 b^2}',
-            '{x^2 \\over a^2} + {b^2 \\over b^2} = 1'
+            '{x^2 \\over a^2} + {y^2 \\over b^2} = 1'
         ]
 
         self.eqs = [
@@ -261,17 +261,17 @@ class DerivandoElipse(Scene):
     
     def manipulacao_algebrica(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
-        play(TransformMatchingShapes(self.eqs[0].copy(), self.eqs[1].move_to(2.5 * RIGHT + 0.6*DOWN)))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[1].copy(), self.eqs[2]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[2].copy(), self.eqs[3]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[3].copy(), self.eqs[4]))
-        self.wait()
+        play(TransformMatchingShapes(self.eqs[0].copy(), self.eqs[1].move_to(2.5 * RIGHT + 0.6*DOWN)), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[1].copy(), self.eqs[2]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[2].copy(), self.eqs[3]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[3].copy(), self.eqs[4]), t=2)
+        self.wait(2)
         play(FadeOut(self.eqs[0]))
-        play(TransformMatchingShapes(self.eqs[4].copy(), self.eqs[5]))
-        self.wait()
+        play(TransformMatchingShapes(self.eqs[4].copy(), self.eqs[5]), t=2)
+        self.wait(2)
         
         play(FadeOut(
             self.eqs[1],
@@ -280,17 +280,19 @@ class DerivandoElipse(Scene):
             self.eqs[4]
             ))
 
-        play(TransformMatchingShapes(self.eqs[5].copy(), self.eqs[6]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[6].copy(), self.eqs[7]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[7].copy(), self.eqs[8]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[8].copy(), self.eqs[9]))
-        self.wait()
+        self.wait(2)
+
+        play(TransformMatchingShapes(self.eqs[5].copy(), self.eqs[6]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[6].copy(), self.eqs[7]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[7].copy(), self.eqs[8]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[8].copy(), self.eqs[9]), t=2)
+        self.wait(2)
         play(FadeOut(self.eqs[5]))
-        play(TransformMatchingShapes(self.eqs[9].copy(), self.eqs[10]))
-        self.wait()
+        play(TransformMatchingShapes(self.eqs[9].copy(), self.eqs[10]), t=2)
+        self.wait(2)
 
         play(FadeOut(
             self.eqs[6],
@@ -299,17 +301,19 @@ class DerivandoElipse(Scene):
             self.eqs[9]
             ))
 
-        play(TransformMatchingShapes(self.eqs[10].copy(), self.eqs[11]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[11].copy(), self.eqs[12]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[12].copy(), self.eqs[13]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[13].copy(), self.eqs[14]))
-        self.wait()
+        self.wait(2)
+
+        play(TransformMatchingShapes(self.eqs[10].copy(), self.eqs[11]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[11].copy(), self.eqs[12]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[12].copy(), self.eqs[13]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[13].copy(), self.eqs[14]), t=2)
+        self.wait(2)
         play(FadeOut(self.eqs[10]))
-        play(TransformMatchingShapes(self.eqs[14].copy(), self.eqs[15]))
-        self.wait()
+        play(TransformMatchingShapes(self.eqs[14].copy(), self.eqs[15]), t=2)
+        self.wait(2)
 
         play(FadeOut(
             self.eqs[11],
@@ -318,17 +322,19 @@ class DerivandoElipse(Scene):
             self.eqs[14]
             ))
 
-        play(TransformMatchingShapes(self.eqs[15].copy(), self.eqs[16]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[16].copy(), self.eqs[17]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[17].copy(), self.eqs[18]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[18].copy(), self.eqs[19]))
-        self.wait()
+        self.wait(2)
+
+        play(TransformMatchingShapes(self.eqs[15].copy(), self.eqs[16]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[16].copy(), self.eqs[17]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[17].copy(), self.eqs[18]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[18].copy(), self.eqs[19]), t=2)
+        self.wait(2)
         play(FadeOut(self.eqs[15]))
-        play(TransformMatchingShapes(self.eqs[19].copy(), self.eqs[20]))
-        self.wait()
+        play(TransformMatchingShapes(self.eqs[19].copy(), self.eqs[20]), t=2)
+        self.wait(2)
 
         play(FadeOut(
             self.eqs[16],
@@ -336,11 +342,17 @@ class DerivandoElipse(Scene):
             self.eqs[18],
             self.eqs[19],
             ))
-        play(TransformMatchingShapes(self.eqs[20].copy(), self.eqs[21]))
-        self.wait()
-        play(TransformMatchingShapes(self.eqs[21].copy(), self.eqs[22]))
+
+        self.wait(2)
+
+        play(TransformMatchingShapes(self.eqs[20].copy(), self.eqs[21]), t=2)
+        self.wait(2)
+        play(TransformMatchingShapes(self.eqs[21].copy(), self.eqs[22]), t=2)
+        self.wait(2)
         play(FadeOut(self.eqs[20],self.eqs[21]))
+        self.wait(2)
         play(Write(SurroundingRectangle(self.eqs[22])))
+
 
 
 ARQ_NOME = Path(__file__).resolve()
