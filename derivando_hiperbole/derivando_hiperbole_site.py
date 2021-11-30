@@ -74,7 +74,7 @@ class Hiperbole(VGroup):
         return self.__h_dir
 
 
-class DerivandoElipse(Scene):
+class DerivandoHiperbole(Scene):
     def construct(self):
         self.init_ojects()
         self.definicoes_em_objetos()
@@ -266,7 +266,7 @@ class DerivandoElipse(Scene):
        
 
 ARQ_NOME = Path(__file__).resolve()
-CENA = DerivandoElipse.__name__
+CENA = DerivandoHiperbole.__name__
 ARGS = '-pqh'
 
 if __name__ == '__main__':
