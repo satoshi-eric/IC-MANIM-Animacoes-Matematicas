@@ -270,6 +270,8 @@ class DerivandoHiperbole(Scene):
         play(Write(SurroundingRectangle(self.eqs[-1])), t=2)
         self.wait()
 
+        play(FadeOut(*[mob for mob in self.mobjects]))
+
     def abertura(self):
         titulo = Tex('A Equação da Hipérbole').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
         self.play(FadeIn(titulo))
