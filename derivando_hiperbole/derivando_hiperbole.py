@@ -76,10 +76,12 @@ class Hiperbole(VGroup):
 
 class DerivandoHiperbole(Scene):
     def construct(self):
+        self.abertura()
         self.init_ojects()
         self.definicoes_em_objetos()
         self.propriedades_hiperbole()
         self.mostrar_equacoes()
+        self.fechamento()
 
     def init_ojects(self):
         class Cores:
@@ -140,6 +142,8 @@ class DerivandoHiperbole(Scene):
             x_axis_config={'include_ticks': False}, 
             y_axis_config={'include_ticks': False}
         )
+
+        eixos_labels = eixos.get_axis_labels('x', 'y')
         
         # Agrupando objetos
         hiperbole_objs = VGroup(
@@ -148,7 +152,8 @@ class DerivandoHiperbole(Scene):
             focos,
             seg_focal,
             dist_focal,
-            a
+            a,
+            eixos_labels
         ).scale(0.4).move_to(4*LEFT + DOWN)
 
         self.eixos = hiperbole_objs[0]
@@ -157,6 +162,7 @@ class DerivandoHiperbole(Scene):
         self.seg_focal = hiperbole_objs[3]
         self.dist_focal = hiperbole_objs[4]
         self.a = hiperbole_objs[5]
+        self.eixos_labels = hiperbole_objs[6]
 
         # Configurando objetos
         self.hiperbole.set_color(Cores.hiperbole)
@@ -210,7 +216,7 @@ class DerivandoHiperbole(Scene):
             'a^2 x^2 + (c^2 -a^2) a^2 + a^2 y^2 = x^2 c^2',
             '(c^2 - a^2) a^2 + a^2 x^2 = x^2 c^2 - a^2 x^2',
             '(c^2 - a^2) a^2 + a^2 y^2 = (c^2 - a^2) x^2',
-            'b^2 = c^2 - a^2',
+            'b^2 \\equiv c^2 - a^2',
             'b^2 a^2 + a^2 y^2 = b^2 x^2',
             '\\frac{b^2 a^2}{a^2 b^2} + \\frac{a^2 y^2}{a^2 b^2} = \\frac{b^2 x^2}{a^2 b^2}',
             '1 + \\frac{y^2}{b^2} = \\frac{x^2}{a^2}',
@@ -226,7 +232,7 @@ class DerivandoHiperbole(Scene):
     def definicoes_em_objetos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
 
-        play(Write(self.eixos))
+        play(Write(self.eixos), Write(self.eixos_labels))
         play(Write(self.hiperbole))
         play(Write(self.def_focos))
         play(ReplacementTransform(self.def_focos.copy(), self.focos))
@@ -248,20 +254,46 @@ class DerivandoHiperbole(Scene):
 
     def mostrar_equacoes(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
-        play(ReplacementTransform(self.eq_hiperbole, self.eqs[0]))
+        play(ReplacementTransform(self.eq_hiperbole, self.eqs[0]), t=2)
 
         for i in range(len(self.eqs) - 1):
             if i % 4 == 3:
                 play(FadeOut(self.eqs[i - 3]), t=2)
-                self.wait()
+                self.wait(2)
             if i % 4 == 0 and i != 0:
                 play(FadeOut(*self.eqs[i-3:i]), t=2)
-                self.wait()
+                self.wait(2)
             play(ReplacementTransform(self.eqs[i].copy(), self.eqs[i+1]), t=2)
+            self.wait(2)
         
         play(FadeOut(*self.eqs[-4:-1]), t=2)
         play(Write(SurroundingRectangle(self.eqs[-1])), t=2)
         self.wait()
+
+    def abertura(self):
+        titulo = Tex('A Equação da Hipérbole').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
+        self.play(FadeIn(titulo))
+        self.wait(1.5)
+        self.play(FadeOut(titulo))
+        self.wait()
+
+    def fechamento(self):
+        pibit = MathTex("\\text{PIBIT/CNPQ: 0220036212472856}").scale(1.5).move_to(2*UP).set_color(DARK_BLUE)
+        autor = MathTex("\\text{Autor: Eric Satoshi Suzuki Kishimoto}").set_color("#dc6a40").move_to(ORIGIN)
+        orientador = MathTex("\\text{Orientador: Prof. Vitor Rafael Coluci}").set_color("#dc6a40").move_to(DOWN)
+        ft = ImageMobject("./logo-FT.jpeg").scale(0.4).shift(1.5*DOWN+3*RIGHT)
+        unicamp = ImageMobject("./logo-unicamp.jpeg").scale(0.3).shift(1.5*DOWN+3*LEFT)
+
+        self.play(FadeIn(pibit))
+        self.wait(1)
+        self.play(FadeIn(unicamp), FadeIn(ft))
+        self.wait(1)
+        self.play(FadeOut(unicamp), FadeOut(ft))
+        self.wait(0.8)
+        self.play(FadeIn(autor), FadeIn(orientador))
+        self.wait(2)
+        self.play(FadeOut(*[mob for mob in self.mobjects]))
+        self.wait(2)
 
        
 
