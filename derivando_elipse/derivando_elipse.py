@@ -8,11 +8,13 @@ from typing import *
 
 class DerivandoElipse(Scene):
     def construct(self):
+        self.abertura()
         self.init_dados()
         self.init_objetos()
         self.mostrar_definicoes_em_objetos()
         self.mostrar_definicoes()
         self.manipulacao_algebrica()
+        self.fechamento()
 
     def init_dados(self):
         a = 3
@@ -44,7 +46,8 @@ class DerivandoElipse(Scene):
 
         # -------- Eixos --------
         eixos = Axes(x_length=2*(self.a+1), x_axis_config={"include_ticks": False}, y_axis_config={"include_ticks": False})
-        
+        eixos_labels = eixos.get_axis_labels("x", "y")
+
         # -------- Elipse --------
         elipse = Ellipse(width=2*self.a, height=2*self.b).set_color(cor_elipse)
         elipse_label = MathTex("E").move_to(elipse.point_from_proportion(0.4) + UP).set_color(cor_elipse)
@@ -93,7 +96,8 @@ class DerivandoElipse(Scene):
             p, p_label, dist_c_1, 
             dist_c_2, dist_c_1_label, dist_c_2_label, 
             dist_a_1, dist_a_2, dist_a_1_label, dist_a_2_label,
-            segmento_focal, dist_b_1, dist_b_2, dist_b_1_label, dist_b_2_label)\
+            segmento_focal, dist_b_1, dist_b_2, dist_b_1_label, dist_b_2_label,
+            eixos_labels)\
             .scale(escala_objetos).move_to(posicao_objetos)
 
         # -------- Agrupando objetos para manipulá-los separados --------
@@ -119,6 +123,7 @@ class DerivandoElipse(Scene):
         self.dist_b_2 = objetos[19]
         self.dist_b_1_label = objetos[20]
         self.dist_b_2_label = objetos[21]
+        self.eixos_labels = objetos[22]
 
         self.focos = VGroup(self.f1_label, self.f2_label, self.f1, self.f2)
         self.distancia_focal = VGroup(self.dist_c_1, self.dist_c_2, self.dist_c_1_label, self.dist_c_2_label)
@@ -187,7 +192,7 @@ class DerivandoElipse(Scene):
             'a^2 x^2 + a^2 c^2 + a^2 y^2 = a^4 + c^2 x^2',
             'a^2 x^2 - c^2 x^2 + a^2 y^2 = a^4 - a^2 c^2',
             '(a^2 - c^2) x^2 + a^2 y^2 = a^2 (a^2 - c^2)',
-            'b = \\sqrt{a^2 - c^2} \\rightarrow a^2 + b^2 = c^2',
+            'b^2 \\equiv a^2 - c^2',
             'b^2 x^2 + a^2 y^2 = a^2 b^2',
             '{b^2 x^2 \\over a^2 b^2} + {a^2 y^2 \\over a^2 b^2} = {a^2 b^2 \\over a^2 b^2}',
             '{x^2 \\over a^2} + {y^2 \\over b^2} = 1'
@@ -201,7 +206,7 @@ class DerivandoElipse(Scene):
     def mostrar_definicoes_em_objetos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
 
-        play(Write(self.eixos))
+        play(Write(self.eixos), Write(self.eixos_labels))
 
         play(Write(self.def_elipse))
         play(Transform(self.def_elipse[0].copy(), self.elipse_label))
@@ -352,6 +357,33 @@ class DerivandoElipse(Scene):
         play(FadeOut(self.eqs[20],self.eqs[21]))
         self.wait(2)
         play(Write(SurroundingRectangle(self.eqs[22])))
+
+        play(FadeOut(*[mob for mob in self.mobjects]))
+
+    def abertura(self):
+        titulo = Tex('A Equação da Elipse').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
+        self.play(FadeIn(titulo))
+        self.wait(1.5)
+        self.play(FadeOut(titulo))
+        self.wait()
+
+    def fechamento(self):
+        pibit = MathTex("\\text{PIBIT/CNPQ: 0220036212472856}").scale(1.5).move_to(2*UP).set_color(DARK_BLUE)
+        autor = MathTex("\\text{Autor: Eric Satoshi Suzuki Kishimoto}").set_color("#dc6a40").move_to(ORIGIN)
+        orientador = MathTex("\\text{Orientador: Prof. Vitor Rafael Coluci}").set_color("#dc6a40").move_to(DOWN)
+        ft = ImageMobject("./logo-FT.jpeg").scale(0.4).shift(1.5*DOWN+3*RIGHT)
+        unicamp = ImageMobject("./logo-unicamp.jpeg").scale(0.3).shift(1.5*DOWN+3*LEFT)
+
+        self.play(FadeIn(pibit))
+        self.wait(1)
+        self.play(FadeIn(unicamp), FadeIn(ft))
+        self.wait(1)
+        self.play(FadeOut(unicamp), FadeOut(ft))
+        self.wait(0.8)
+        self.play(FadeIn(autor), FadeIn(orientador))
+        self.wait(2)
+        self.play(FadeOut(*[mob for mob in self.mobjects]))
+        self.wait(2)
 
 
 
