@@ -121,12 +121,12 @@ class Seta(Line):
 
 class DerivandoLeiSenos(Scene):
     def construct(self):
-        pass
+        
         # self.abertura()
-        # self.mostrar_lei_senos()
-        # self.revisao_algebra_linear()
+        self.mostrar_lei_senos()
+        self.revisao_algebra_linear()
         self.lei_senos()
-        # self.fechamento()
+        self.fechamento()
 
     def mostrar_lei_senos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
@@ -143,6 +143,7 @@ class DerivandoLeiSenos(Scene):
         play(triangulo.animate.move_to(3.5*LEFT).scale(0.8))
         play(Write(lei_senos), t=2)
         play(*[FadeOut(mob) for mob in self.mobjects])
+        self.wait(2)
 
     def revisao_algebra_linear(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
@@ -210,11 +211,11 @@ class DerivandoLeiSenos(Scene):
         titulo = Tex('Produto Vetorial').scale(2)
         produto_vetorial = Tex('$\\vec{u} \\wedge \\vec{v}$: produto vetorial').scale(0.5)
         topicos = Tex(
-            '\\raggedright $\\bullet$ Se $(\\vec{u}, \\vec{v})$ é LD, então $\\vec{u} \\wedge \\vec{v} = \\vec{0}$ \\\\',
-            '\\raggedright $\\bullet$ Se $(\\vec{u}, \\vec{v}, \\vec{w})$ é LI, então: \\\\',
-            '\\raggedright $\\bullet ||\\vec{u} \\wedge \\vec{v}|| = ||\\vec{u}|| \\cdot ||\\vec{v}|| \\cdot sen(\\theta)$ \\\\',
-            '\\raggedright $\\bullet \\vec{u} \\wedge \\vec{v}$ é ortogonal a $\\vec{u}$ e $\\vec{v}$ \\\\',
-            '\\raggedright $\\bullet (\\vec{u}, \\vec{v}, \\vec{u} \\wedge \\vec{v})$ é uma base positiva \\\\',
+            '\\raggedright $\\bullet \\quad$ Se $(\\vec{u}, \\vec{v})$ é LD, então $\\vec{u} \\wedge \\vec{v} = \\vec{0}$ \\\\',
+            '\\raggedright $\\bullet \\quad$ Se $(\\vec{u}, \\vec{v}, \\vec{w})$ é LI, então: \\\\',
+            '\\raggedright $\\bullet \\quad ||\\vec{u} \\wedge \\vec{v}|| = ||\\vec{u}|| \\cdot ||\\vec{v}|| \\cdot sen(\\theta)$ \\\\',
+            '\\raggedright $\\bullet \\quad \\vec{u} \\wedge \\vec{v}$ é ortogonal a $\\vec{u}$ e $\\vec{v}$ \\\\',
+            '\\raggedright $\\bullet \\quad (\\vec{u}, \\vec{v}, \\vec{u} \\wedge \\vec{v})$ é uma base positiva \\\\',
         ).scale(0.5).move_to(0.8*UP + 3.2*LEFT)
         topicos[2].shift(0.5*RIGHT)
         topicos[3].shift(0.5*RIGHT)
@@ -237,19 +238,26 @@ class DerivandoLeiSenos(Scene):
         vetores3d = VGroup(VGroup(v3, v3_label), VGroup(v4, v4_label), VGroup(v5, v5_label)).scale(0.5).move_to(1.5*DOWN+RIGHT)
 
         play(Write(titulo), t=2)
-        play(titulo.animate.move_to(3.5*UP).scale(0.4))
-        play(Write(produto_vetorial))
-        play(produto_vetorial.animate.move_to(2*UP+4*LEFT))
+        play(titulo.animate.move_to(3.5*UP).scale(0.4), t=2)
+        play(Write(produto_vetorial), t=2)
+        play(produto_vetorial.animate.move_to(2*UP+4*LEFT), t=2)
         play(Write(topicos[0]), t=2)
-        play(Write(vetores[0]))
-        play(Write(vetores[1]))
+        self.wait(2)
+        play(Write(vetores[0]), t=2)
+        self.wait(2)
+        play(Write(vetores[1]), t=2)
+        self.wait(2)
         play(Write(topicos[1]), t=2)
-        play(Write(vetores3d[0]))
-        play(Write(vetores3d[1]))
-        play(Write(vetores3d[2]))
+        self.wait(2)
+        play(Write(vetores3d[0]), t=2)
+        play(Write(vetores3d[1]), t=2)
+        play(Write(vetores3d[2]), t=2)
         play(Write(topicos[2]), t=2)
+        self.wait(2)
         play(Write(topicos[3]), t=2)
+        self.wait(2)
         play(Write(topicos[4]), t=2)
+        self.wait(2)
         play(FadeOut(titulo, produto_vetorial, topicos, vetores, vetores3d))
 
         # Intepretação do produto vetorial
@@ -315,28 +323,47 @@ class DerivandoLeiSenos(Scene):
         formula_raio = MathTex('R = {abc \\over 4 \\cdot A_{triângulo}').scale(0.5)
 
         play(Write(titulo_interpretacao), t=2)
-        play(titulo_interpretacao.animate.next_to(titulo, DOWN, buff=0.2).scale(0.4))
+        self.wait(2)
+        play(titulo_interpretacao.animate.next_to(titulo, DOWN, buff=0.2).scale(0.4), t=2)
+        self.wait(2)
         play(Write(introducao), t=2)
+        self.wait(2)
         play(Write(interpretacao), t=2)
+        self.wait(2)
         play(Write(paralelograma), t=2)
+        self.wait(2)
         play(Write(explicacao_area[0]), t=2)
+        self.wait(2)
         play(FadeOut(explicacao_area[0]))
+        self.wait(2)
         play(Write(explicacao_area[1]), t=2)
+        self.wait(2)
         play(FadeOut(explicacao_area[1]))
+        self.wait(2)
         play(Write(explicacao_area[2]), t=2)
+        self.wait(2)
         play(Write(triangulo), t=2)
+        self.wait(2)
         play(triangulo.animate.shift(5*RIGHT))
+        self.wait(2)
         play(ReplacementTransform(triangulo[1].copy(), formula_seno[0][2]), t=2)
+        self.wait(2)
         play(ReplacementTransform(triangulo[2].copy(), formula_seno[0][4]), t=2)
+        self.wait(2)
         play(ReplacementTransform(triangulo[4].copy(), formula_seno[0][0]), t=2)
-        play(FadeIn(formula_seno[0][1], formula_seno[0][3]))
-        self.wait()
+        self.wait(2)
+        play(FadeIn(formula_seno[0][1], formula_seno[0][3]), t=2)
+        self.wait(2)
         play(TransformMatchingShapes(formula_seno[0], formula_seno[1]), t=2)
         self.wait()
-        play(FadeOut(triangulo))
-        play(FadeOut(explicacao_area[2]))
+        play(FadeOut(triangulo), t=2)
+        self.wait(2)
+        play(FadeOut(explicacao_area[2]), t=2)
+        self.wait(2)
         play(Write(explicacao_area[3]), t=2)
+        self.wait(2)
         play(Write(formula_area[0]), t=2)
+        self.wait(2)
         play(
             ReplacementTransform(formula_area[0][0], formula_area[1][0]), 
             ReplacementTransform(formula_area[0][1], formula_area[1][1]),
@@ -363,6 +390,7 @@ class DerivandoLeiSenos(Scene):
         self.wait()
 
         play(FadeOut(*[mob for mob in self.mobjects]))
+        self.wait(2)
 
     def lei_senos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
@@ -437,24 +465,26 @@ class DerivandoLeiSenos(Scene):
         play(ReplacementTransform(formulas[0].copy(), formulas[1]), t=2)
         self.wait(2)
 
-        play(FadeOut(textos[3]))
+        play(FadeOut(textos[3]), t=2)
         self.wait(2)
         play(Write(textos[4]), t=2)
         self.wait(2)
 
-        for i, formula in enumerate(formulas[1:]):
-            if i == 6:
+        for i, formula in enumerate(formulas[2:]):
+            if i == 5:
                 try:
-                    play(FadeOut(*formulas[i-6:i+1]))
+                    play(FadeOut(*formulas[i-5:i+2]), TransformMatchingShapes(formulas[i+1].copy(), formula), t=2)
                 except:
                     pass
-
-            play(ReplacementTransform(formulas[i].copy(), formula), t=2)
+            else:
+                play(TransformMatchingShapes(formulas[i+1].copy(), formula), t=2)
             self.wait(2)
 
         play(FadeOut(*formulas[len(formulas) - 3: len(formulas)-1]))
 
         play(Write(SurroundingRectangle(formulas[-1])), t=2)
+
+        play(FadeOut(*[mob for mob in self.mobjects]))
 
     def abertura(self):
         titulo = Tex('Lei dos Senos').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
@@ -484,7 +514,7 @@ class DerivandoLeiSenos(Scene):
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = DerivandoLeiSenos.__name__
-ARGS = '-pql'
+ARGS = '-pqh'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
