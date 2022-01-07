@@ -1,0 +1,82 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 80px 1fr;
+    grid-template-areas:
+        "header header"
+        "nav main";
+}
+
+header {
+    grid-area: header;
+    display: flex;
+    background-color: cadetblue;
+    font-size: 28px;
+    justify-content: center;
+    align-items: center;
+}
+
+nav {
+    grid-area: nav;
+    height: 100%;
+    background-color: cyan;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+nav .circle {
+    width: 100px;
+    height: 100px;
+    border: solid 3px black;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    left: 90px;
+    top: 100px
+}
+
+nav .square {
+    width: 100px;
+    height: 100px;
+    border: solid 3px black;
+    background-color: #fff;
+    position: absolute;
+    left: 90px;
+    top: 250px;
+}
+
+nav .text {
+    padding: 20px 50px;
+    border: solid 3px black;
+    background-color: #fff;
+    display: flex;
+    position: absolute;
+    left: 70px;
+    top: 400px;
+}
+
+.main {
+    grid-area: pos-area;
+}
+
+.main .x {
+    position: absolute;
+    font-size: 24px;
+    top: 80px;
+    right: 30px;
+}
+
+.main .y {
+    position: absolute;
+    font-size: 24px;
+    top: 100px;
+    right: 30px;
+}
