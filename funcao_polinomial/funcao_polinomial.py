@@ -30,8 +30,10 @@ class Ponto(MathTex):
 
 class FuncaoPolinomial(Scene):
     def construct(self):
+        self.abertura()
         self.introduzir_problema()
         self.mostrar_sistema()
+        self.fechamento()
 
     def introduzir_problema(self):
         def criar_coord(x, y):
@@ -215,11 +217,37 @@ class FuncaoPolinomial(Scene):
 
         play(FadeOut(*[mob for mob in self.mobjects]))
 
+    def abertura(self):
+        titulo = Tex('Função Polinomial').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
+        subtitulo = Tex('Interpolação Polinomial').scale(1.5).set_color('#43bfca').move_to(titulo.get_center() + 1.2*DOWN)
+
+        self.play(FadeIn(titulo, subtitulo))
+        self.wait(1.5)
+        self.play(FadeOut(titulo), FadeOut(subtitulo))
+        self.wait()
+
+    def fechamento(self):
+        pibit = MathTex("\\text{PIBIT/CNPQ: 0220036212472856}").scale(1.5).move_to(2*UP).set_color(DARK_BLUE)
+        autor = MathTex("\\text{Autor: Eric Satoshi Suzuki Kishimoto}").set_color("#dc6a40").move_to(ORIGIN)
+        orientador = MathTex("\\text{Orientador: Prof. Vitor Rafael Coluci}").set_color("#dc6a40").move_to(DOWN)
+        ft = ImageMobject("./logo-FT.jpeg").scale(0.4).shift(1.5*DOWN+3*RIGHT)
+        unicamp = ImageMobject("./logo-unicamp.jpeg").scale(0.3).shift(1.5*DOWN+3*LEFT)
+
+        self.play(FadeIn(pibit))
+        self.wait(1)
+        self.play(FadeIn(unicamp), FadeIn(ft))
+        self.wait(1)
+        self.play(FadeOut(unicamp), FadeOut(ft))
+        self.wait(0.8)
+        self.play(FadeIn(autor), FadeIn(orientador))
+        self.wait(2)
+        self.play(FadeOut(*[mob for mob in self.mobjects]))
+
 
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = FuncaoPolinomial.__name__
-ARGS = '-pql'
+ARGS = '-pqh'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
