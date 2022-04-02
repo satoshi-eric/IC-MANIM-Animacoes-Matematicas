@@ -1,14 +1,26 @@
-from turtle import width
+# TODO
+"""
+conjuntos:
+
+1) aumentar um pouco o tamanho das coisas (inclusive as fontes dos textos).
+
+2) operações entre conjuntos: colocar os símbolos de -, interseção e união depois que apresentar a operação 
+e não abaixo da representação dos conjuntos,
+
+"""
+
+
 from manim import *
 from pathlib import Path
 from typing import List
 
 from matplotlib import scale
+from scipy.fftpack import shift
 
 class Utils:
-    escala_tamanho_texto = 0.5
+    escala_tamanho_texto = 0.7
     cor_conjunto_elipse = ORANGE
-    escala_tamanho_elemento_conjunto = 0.8
+    escala_tamanho_elemento_conjunto = 1.2
     cor_elemento_conjunto = YELLOW
 
     
@@ -29,7 +41,7 @@ class Conjuntos(Scene):
         self.add(grade)
 
     def construct(self):
-        # self.debug()
+        self.debug()
         self.abertura()
         self.introducao()
         self.explicacao_simbolos()
@@ -44,16 +56,16 @@ class Conjuntos(Scene):
     def introducao(self):
         play = lambda *anim, t=2: self.play(*anim, run_time=t)
 
-        texto_introducao = [
-            Tex(r'Podemos definir um conjunto como uma coleção de elementos. ')\
-                .scale(Utils.escala_tamanho_texto).to_corner(UP),
-            Tex(r'Podemos representá-los como diagramas:')\
-                .scale(Utils.escala_tamanho_texto).move_to(3*UP)
-        ]
+        
+        texto_introducao = Tex(
+            r'\raggedright Podemos definir um conjunto como uma coleção de elementos. ',
+            r'Podemos representá-los como diagramas:'
+        ).scale(Utils.escala_tamanho_texto).to_corner(UP)
+
         conjunto = Ellipse(width=3, height=4).set_color(Utils.cor_conjunto_elipse).move_to(3*LEFT)
         numeros_conjunto = VGroup(*[
-            MathTex(2*i + 1).set_color(Utils.cor_elemento_conjunto).scale(Utils.escala_tamanho_elemento_conjunto).move_to(RIGHT + 0.5*i*RIGHT) for i in range(0, 3)
-        ]).move_to(2*RIGHT).add(MathTex('...').move_to(3*RIGHT))
+            MathTex(2*i + 1).set_color(Utils.cor_elemento_conjunto).scale(1.2).move_to(RIGHT + i*RIGHT) for i in range(0, 3)
+        ]).move_to(2*RIGHT).add(MathTex('...').move_to(4*RIGHT))
         elementos_conjunto = conjunto.copy().set_fill(opacity=0.5)
 
         play(Write(texto_introducao[0]))
@@ -97,7 +109,7 @@ class Conjuntos(Scene):
             r'\raggedright \quad $A = \{1, 3, 5, ...\}$\\',
             r'\raggedright $\bullet$ Ou através de uma regra que todos os elementos respeitem.\\',
             r'\raggedright \quad $A = \{x | \text{x é ímpar e maior que 0}\}$\\',
-        ).scale(0.6)
+        ).scale(Utils.escala_tamanho_texto)
 
         explicacao_1 = texto[0].shift(UP)
         conjunto_numerado = texto[1].shift(0.5*UP)
@@ -124,17 +136,17 @@ class Conjuntos(Scene):
             r'\raggedright \quad $\bullet$ Conjunto vazio: não possui elementos\\',
             r'\raggedright Representado por $\emptyset$\\',
             r'\raggedright \quad $\bullet$ Conjunto unitário: possui apenas um elemento\\',
-        ).scale(Utils.escala_tamanho_texto)
+        ).scale(Utils.escala_tamanho_texto).shift(0.2*DOWN)
 
         introducao = texto[0].shift(3*UP + 2*LEFT)
         texto_conjunto_vazio = texto[1].shift(2.5*UP + 2*LEFT)
-        representacao = texto[2].shift(1.5*UP)
+        representacao = texto[2].shift(1.5*UP + 1.5*RIGHT)
         texto_conjunto_unitario = texto[3].shift(2*LEFT)
 
         conjunto_vazio = Ellipse(width=1, height=1.5).shift(3.5*LEFT + 1.2*UP)
         conjunto_unitario = VGroup(
             Ellipse(width=1, height=1.5),
-            MathTex('1')
+            MathTex('1').scale(0.7)
         ).shift(3.5*LEFT + 2*DOWN)
 
 
@@ -158,7 +170,7 @@ class Conjuntos(Scene):
 
         introducao = Tex('Agora, veremos as relações entre: \\')\
             .scale(Utils.escala_tamanho_texto)\
-            .move_to(3.5*UP + 4*LEFT)
+            .move_to(3.25*UP + 4*LEFT)
 
         ####################### Relação Conjunto Conjunto ############################
 
@@ -170,7 +182,7 @@ class Conjuntos(Scene):
             \raggedright \quad $\bullet \not \supset$: não contém \\
         ''')\
             .scale(Utils.escala_tamanho_texto)\
-            .move_to(2.25*UP + 4*LEFT)
+            .move_to(1.75*UP + 4*LEFT)
 
         ######################## Contido ###########################
 
@@ -179,23 +191,23 @@ class Conjuntos(Scene):
             VGroup(
                 *[MathTex(f'{2*i + 1}').shift(UP + 0.5*i*DOWN).scale(0.7) for i in range(2)]
             ).shift(5*LEFT + 0.5*DOWN)
-        )
+        ).shift(DOWN)
         
         conjunto_total_1 = VGroup(
             Ellipse(height=1.8, width=1).shift(3*LEFT).set_color(Utils.cor_conjunto_elipse),
             VGroup(
                 *[MathTex(f'{2*i + 1}').shift(UP + 0.5*i*DOWN).scale(0.7) for i in range(3)]
             ).shift(3*LEFT + 0.5*DOWN)
-        )
+        ).shift(DOWN)
 
-        contido = MathTex(r'\subset').shift(4*LEFT)
+        contido = MathTex(r'\subset').shift(4*LEFT + DOWN)
 
         simbolo_conjunto_contido = MathTex(r'\{ 1, 3 \}')\
             .scale(0.7)\
             .move_to(conjunto_contido)
         simbolo_conjunto_total = MathTex(r'\{ 1, 3, 5 \}')\
             .scale(0.7)\
-                .move_to(conjunto_total_1)
+            .move_to(conjunto_total_1)
 
         ###################################################
 
@@ -206,16 +218,16 @@ class Conjuntos(Scene):
             VGroup(
                 *[MathTex(f'{i+1}').shift(UP + 0.5*i*DOWN).scale(0.7) for i in range(2)]
             ).shift(5*LEFT + 0.5*DOWN)
-        )
+        ).shift(DOWN)
         
         conjunto_total_2 = VGroup(
             Ellipse(height=1.8, width=1).shift(3*LEFT).set_color(Utils.cor_conjunto_elipse),
             VGroup(
                 *[MathTex(f'{2*i + 1}').shift(UP + 0.5*i*DOWN).scale(0.7) for i in range(3)]
             ).shift(3*LEFT + 0.5*DOWN)
-        )
+        ).shift(DOWN)
 
-        nao_contido = MathTex(r'\not \subset').shift(4*LEFT)
+        nao_contido = MathTex(r'\not \subset').shift(4*LEFT + DOWN)
 
         simbolo_conjunto_nao_contido = MathTex(r'\{ 1, 2 \}')\
             .scale(0.7)\
@@ -223,7 +235,6 @@ class Conjuntos(Scene):
         simbolo_conjunto_total_2 = MathTex(r'\{ 1, 3, 5 \}')\
             .scale(0.7)\
             .move_to(conjunto_total_2)
-
         ###################################################
 
         ######################## Relação elemento conjunto ###########################
@@ -234,25 +245,26 @@ class Conjuntos(Scene):
             \raggedright \quad $\bullet \not \in$: não pertence \\
         ''')\
             .scale(Utils.escala_tamanho_texto)\
-            .move_to(2.5*UP + 2*RIGHT)
+            .move_to(2*UP + 2*RIGHT)
 
         ###################################################
 
         ########################### Pertence ########################
 
-        elemento = MathTex('1').scale(0.7).shift(1.5*RIGHT)
-        pertence = MathTex(r'\in').shift(2*RIGHT)
+        elemento = MathTex('1').scale(0.7).shift(1.5*RIGHT + DOWN)
+        pertence = MathTex(r'\in').shift(2*RIGHT + DOWN)
 
         conjunto_pertence = VGroup(
             Ellipse(width=1, height=1.8).set_color(Utils.cor_conjunto_elipse),
             VGroup(
                 *[MathTex(f'{2*i + 1}').shift(0.5*UP + 0.5*i*DOWN).scale(0.7) for i in range(3)]
             )
-        ).shift(3*RIGHT)
+        ).shift(3*RIGHT + DOWN)
 
         simbolo_elemento = MathTex(r'1')\
             .scale(0.7)\
-            .move_to(elemento)
+            .move_to(elemento)\
+            .shift(DOWN)
         simbolo_conjunto_pertence = MathTex(r'\{ 1, 3, 5 \}')\
             .scale(0.7)\
             .move_to(conjunto_pertence)
@@ -261,15 +273,15 @@ class Conjuntos(Scene):
 
         ######################### Não Pertence ##########################
         
-        elemento_nao_pertence = MathTex('2').scale(0.7).shift(1.5*RIGHT)
-        nao_pertence = MathTex(r'\not \in').shift(2*RIGHT)
+        elemento_nao_pertence = MathTex('2').scale(0.7).shift(1.5*RIGHT + DOWN)
+        nao_pertence = MathTex(r'\not \in').shift(2*RIGHT + DOWN)
 
         conjunto_nao_pertence = VGroup(
             Ellipse(width=1, height=1.8).set_color(Utils.cor_conjunto_elipse),
             VGroup(
                 *[MathTex(f'{2*i + 1}').shift(0.5*UP + 0.5*i*DOWN).scale(0.7) for i in range(3)]
             )
-        ).shift(3*RIGHT)
+        ).shift(3*RIGHT + DOWN)
 
         simbolo_conjunto_nao_pertence = MathTex(r'\{ 1, 3, 5 \}')\
             .scale(0.7)\
@@ -383,11 +395,11 @@ class Conjuntos(Scene):
         self.wait(2)
         play(ReplacementTransform(conjunto_total_2, simbolo_conjunto_total_2))
         self.wait(2)
+        # play(FadeIn(simbolo_conjunto_contido, simbolo_conjunto_total, contido))
         play(
-            simbolo_conjunto_nao_contido.animate.shift(DOWN),
-            simbolo_conjunto_total_2.animate.shift(DOWN),
-            nao_contido.animate.shift(DOWN),
-            FadeIn(simbolo_conjunto_contido, simbolo_conjunto_total, contido)
+            simbolo_conjunto_contido.animate.shift(DOWN),
+            simbolo_conjunto_total.animate.shift(DOWN),
+            contido.animate.shift(DOWN),
         )
         self.wait(2)
 
@@ -466,11 +478,11 @@ class Conjuntos(Scene):
 
         play = lambda *anim, t=2: self.play(*anim, run_time=t)
 
-        introducao = Tex('Também podemos realizar operações entre conjuntos.').scale(Utils.escala_tamanho_texto).shift(3.5*UP + 3*LEFT)
+        introducao = Tex('Também podemos realizar operações entre conjuntos.').scale(Utils.escala_tamanho_texto).shift(3.25*UP + 2.5*LEFT)
         texto_operacoes = [
-            Tex(r'\raggedright $\bullet$ Diferença').scale(Utils.escala_tamanho_texto).shift(3*UP + 5*LEFT),
-            Tex(r'\raggedright $\bullet$ Interseção').scale(Utils.escala_tamanho_texto).shift(3*UP + 5*LEFT),
-            Tex(r'\raggedright $\bullet$ União').scale(Utils.escala_tamanho_texto).shift(3*UP + 5*LEFT),
+            Tex(r'\raggedright $\bullet$ Diferença').scale(Utils.escala_tamanho_texto).shift(2.5*UP + 5*LEFT),
+            Tex(r'\raggedright $\bullet$ Interseção').scale(Utils.escala_tamanho_texto).shift(2.5*UP + 5*LEFT),
+            Tex(r'\raggedright $\bullet$ União').scale(Utils.escala_tamanho_texto).shift(2.5*UP + 5*LEFT),
         ]
 
         play(Write(introducao))
@@ -501,7 +513,7 @@ class Conjuntos(Scene):
         elementos_intersecao = MathTex('3')\
             .move_to(Intersection(conjunto_ellipse_a, conjunto_ellipse_b))
 
-        diferenca_a_b = MathTex(r'A - B = \{ 1, 2 \}', color=GREEN).scale(0.8).next_to(exclusivo_a, DOWN, buff=0.25).shift(LEFT)
+        diferenca_a_b = MathTex(r'A - B = \{ 1, 2 \}', color=GREEN).scale(0.8).move_to(exclusivo_a)#.next_to(exclusivo_a, DOWN, buff=0.25).shift(LEFT)
         diferenca_b_a = MathTex(r'B - A = \{ 4, 5 \}', color=RED).scale(0.8).next_to(exclusivo_b, DOWN, buff=0.25).shift(RIGHT)
 
         play(Write(conjunto_ellipse_a), Write(label_conjunto_a), Write(elementos_a))
@@ -512,27 +524,36 @@ class Conjuntos(Scene):
         self.wait(2)
         play(FadeIn(exclusivo_a))
         self.wait(2)
+        play(FadeOut(
+            label_conjunto_a, 
+            label_conjunto_b, 
+            conjunto_ellipse_a,
+            conjunto_ellipse_b, 
+            elementos_a, 
+            elementos_b, 
+            elementos_intersecao, 
+            exclusivo_a))
+        # play(Write(diferenca_a_b))
+        # self.wait(2)
+        # play(FadeIn(exclusivo_b))
+        # self.wait(2)
         play(Write(diferenca_a_b))
         self.wait(2)
-        play(FadeIn(exclusivo_b))
+        # play(FadeOut(
+        #     conjunto_ellipse_a,
+        #     label_conjunto_a,
+        #     elementos_a,
+        #     conjunto_ellipse_b,
+        #     label_conjunto_b,
+        #     elementos_b,
+        #     elementos_intersecao,
+        #     exclusivo_a,
+        #     diferenca_a_b,
+        #     exclusivo_b,
+        #     diferenca_b_a,
+        # ))
         self.wait(2)
-        play(Write(diferenca_b_a))
-        self.wait(2)
-        play(FadeOut(
-            conjunto_ellipse_a,
-            label_conjunto_a,
-            elementos_a,
-            conjunto_ellipse_b,
-            label_conjunto_b,
-            elementos_b,
-            elementos_intersecao,
-            exclusivo_a,
-            diferenca_a_b,
-            exclusivo_b,
-            diferenca_b_a,
-        ))
-        self.wait(2)
-        play(FadeOut(texto_operacoes[0]))
+        play(FadeOut(texto_operacoes[0], diferenca_a_b))
         self.wait(2)
 
         ######################################
@@ -561,7 +582,7 @@ class Conjuntos(Scene):
         elementos_intersecao = MathTex('3')\
             .move_to(Intersection(conjunto_ellipse_a, conjunto_ellipse_b))
 
-        tex_interseccao_a_b = MathTex(r'A \cap B = \{ 3 \}', color=BLUE).scale(0.8).next_to(interseccao_a_b, DOWN, buff=1)
+        tex_interseccao_a_b = MathTex(r'A \cap B = \{ 3 \}', color=BLUE).move_to(interseccao_a_b)#.scale(0.8).next_to(interseccao_a_b, DOWN, buff=1)
 
         play(Write(texto_operacoes[1]))
         self.wait(2)
@@ -573,8 +594,6 @@ class Conjuntos(Scene):
         self.wait(2)
         play(FadeIn(interseccao_a_b))
         self.wait(2)
-        play(Write(tex_interseccao_a_b))
-        self.wait(2)
         play(FadeOut(
             conjunto_ellipse_a,
             label_conjunto_a,
@@ -584,10 +603,11 @@ class Conjuntos(Scene):
             elementos_b,
             elementos_intersecao,
             interseccao_a_b,
-            tex_interseccao_a_b,
         ))
         self.wait(2)
-        play(FadeOut(texto_operacoes[1]))
+        play(Write(tex_interseccao_a_b))
+        self.wait(2)
+        play(FadeOut(texto_operacoes[1], tex_interseccao_a_b))
         self.wait(2)
 
         ######################################
@@ -615,7 +635,7 @@ class Conjuntos(Scene):
         elementos_intersecao = MathTex('3')\
             .move_to(Intersection(conjunto_ellipse_a, conjunto_ellipse_b))
 
-        tex_uniao_a_b = MathTex(r'A \cup B = \{ 1, 2, 3, 4, 5 \}', color=BLUE).scale(0.8).next_to(interseccao_a_b, DOWN, buff=1)
+        tex_uniao_a_b = MathTex(r'A \cup B = \{ 1, 2, 3, 4, 5 \}', color=BLUE).move_to(interseccao_a_b)#.scale(0.8).next_to(interseccao_a_b, DOWN, buff=1)
 
         play(Write(texto_operacoes[2]))
         self.wait(2)
@@ -627,8 +647,6 @@ class Conjuntos(Scene):
         self.wait(2)
         play(FadeIn(uniao))
         self.wait(2)
-        play(Write(tex_uniao_a_b))
-        self.wait(2)
         play(FadeOut(
             conjunto_ellipse_a,
             label_conjunto_a,
@@ -637,11 +655,12 @@ class Conjuntos(Scene):
             label_conjunto_b,
             elementos_b,
             elementos_intersecao,
-            uniao,
-            tex_uniao_a_b,
+            uniao
         ))
         self.wait(2)
-        play(FadeOut(texto_operacoes[2]))
+        play(Write(tex_uniao_a_b))
+        self.wait(2)
+        play(FadeOut(texto_operacoes[2], tex_uniao_a_b))
         self.wait(2)
         
         ######################################
