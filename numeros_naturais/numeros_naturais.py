@@ -1,5 +1,20 @@
-from re import A
-from tkinter import CENTER
+"""
+numeros naturais e inteiros:
+1) na ilustração de operação menor-> colocar os carros do mesmo tamanho como no caso  da operação maior. OK
+
+2) numeros inteiros: acho melhor não usar o desenho do carro quando falar dos inteiros. 
+Quando vc mostra a reta dos interios usar uma flecha apontando para baixo no ligar do carro que 
+fica deslocando da direita para a esquerda. OK
+
+3) quando vc mostra que os naturais pertence no conjunto dos inteiros, não seria está contido ? 
+Aqui seria legal colocar os números formando os dois conjuntos para indicar que o N está contido em Z. 
+Ou ainda usar a reta dos inteiros para mostrar que o lado direito corresponde aos naturais. OK
+
+4) seria bom indicar que o conjuntos do naturais se chama N e o dos inteiro Z em vez de apenas 
+apresentar essas letras na ultima cena, a dos conjuntos um dentro do outro. OK
+
+5) aumentar também um pouco as fontes e o tamanho dos objetos OK
+"""
 from manim import *
 from pathlib import Path
 import os
@@ -110,15 +125,15 @@ class Lapis(VGroup):
 class NumerosNaturaisEInteiros(Scene):
     def construct(self):
         # self.add(Grade())
-        self.abertura()
-        self.introducao()
-        self.conjunto_naturais()
-        self.operacoes()
-        self.relacoes()
-        self.numeros_inteiros()
+        # self.abertura()
+        # self.introducao()
+        # self.conjunto_naturais()
+        # self.operacoes()
+        # self.relacoes()
+        # self.numeros_inteiros()
         self.reta_inteiros()
-        self.conjuntos_pertence()
-        self.fechamento()
+        # self.conjuntos_pertence()
+        # self.fechamento()
 
     def limpar_cena(self):
         self.play(FadeOut(*self.mobjects))
@@ -130,7 +145,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         texto_introducao = Tex(
             'Números naturais são utilizados para contar quantidades.'
-        ).scale(0.6).shift(3*UP + 2.5*LEFT)
+        ).scale(0.7).shift(3*UP + 2.5*LEFT)
 
         carros = VGroup(
             Carro(color=BLUE).shift(5*LEFT + UP).scale(0.35),
@@ -178,8 +193,8 @@ class NumerosNaturaisEInteiros(Scene):
             self.play(*anim, run_time=t)
             self.wait(wait_time)
 
-        texto_introducao = Tex(r'\raggedright Os números naturais pertencem a um conjunto, \\o conjunto dos números naturais. ')\
-            .scale(0.5).shift(3*UP + 3*LEFT)
+        texto_introducao = Tex(r'\raggedright Os números naturais pertencem a um conjunto, \\o conjunto dos números naturais chamado $\mathbb{N}$ ')\
+            .scale(0.7).shift(3*UP + 3*LEFT)
         conjunto_elipse = Ellipse(width=1, height=3)\
             .set_stroke(color=ORANGE).shift(5*LEFT + 0.5*UP)
         conjunto_numeros = VGroup(
@@ -190,7 +205,7 @@ class NumerosNaturaisEInteiros(Scene):
         ).add(MathTex('...').shift(LEFT + 0.5*5*RIGHT)).shift(3*LEFT + 0.5*UP)
 
         texo_representacao = Tex(r'\raggedright Representamos ele da seguinte forma:')\
-            .scale(0.5).shift(2*DOWN + 3.5*LEFT)
+            .scale(0.7).shift(2*DOWN + 3.5*LEFT)
 
         representacao_conjunto = MathTex(r'\mathbb{N} = \{ 0, 1, 2, 3, 4, ... \}')\
             .scale(0.5).shift(2.5*DOWN + 4.4*LEFT)
@@ -226,13 +241,13 @@ class NumerosNaturaisEInteiros(Scene):
 
         ###################################################
         introducao = Tex('Podemos realizar operações entre os números.')\
-            .scale(0.5).shift(3*UP + 3*LEFT)
+            .scale(0.7).shift(3*UP + 3*LEFT)
 
         ###################################################
 
         ######################## Adição ###########################
         texto_adicao = Tex(r'$\bullet$ Adição')\
-            .scale(0.5).shift(2.5*UP + 4.7*LEFT)
+            .scale(0.7).shift(2.5*UP + 4.7*LEFT)
         lapis_adicao = VGroup(
             Lapis(cor=YELLOW).shift(5*LEFT + 1.5*UP).scale(0.2),
             MathTex('+').shift(4.5*LEFT + 1.25*UP),
@@ -249,7 +264,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         ######################## Subtração ###########################
         texto_subtracao = Tex(r'$\bullet$ Subtração')\
-            .scale(0.5).shift(2.5*UP + 2*RIGHT)
+            .scale(0.7).shift(2.5*UP + 2*RIGHT)
         lapis_subtracao = VGroup(
             Lapis(cor=RED).shift(2*RIGHT + 1.5*UP).scale(0.2),
             Lapis(cor=RED).shift(2.5*RIGHT + 1.5*UP).scale(0.2),
@@ -266,7 +281,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         ######################## Multiplicação ###########################
         texto_multiplicacao = Tex(r'$\bullet$ Multiplicação')\
-            .scale(0.5).shift(0.5*DOWN + 4.7*LEFT)
+            .scale(0.7).shift(0.5*DOWN + 4.7*LEFT)
         lapis_multiplicacao = VGroup(
             Lapis(cor=BLUE).shift(5*LEFT + 1.5*DOWN).scale(0.2),
             Lapis(cor=BLUE).shift(4.5*LEFT + 1.5*DOWN).scale(0.2),
@@ -287,7 +302,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         ######################## Divisão ###########################
         texto_divisao = Tex(r'$\bullet$ Divisão')\
-            .scale(0.5).shift(0.5*DOWN + 1.9*RIGHT)
+            .scale(0.7).shift(0.5*DOWN + 1.9*RIGHT)
         lapis_divisao = VGroup(
             Lapis(cor=BLUE).shift(2*RIGHT + 1.5*DOWN).scale(0.2),
             Lapis(cor=BLUE).shift(2.3*RIGHT + 1.5*DOWN).scale(0.2),
@@ -348,10 +363,10 @@ class NumerosNaturaisEInteiros(Scene):
 
         introducao = Tex('Também podemos realizar \
             operações de relações entre eles.') \
-                .scale(0.5).move_to(3*UP + 3*LEFT)
+                .scale(0.7).move_to(3*UP + 3*LEFT)
         
         texto_maior = Tex(r'$\bullet$ Operador maior:') \
-            .scale(0.5).move_to(2*UP + 4.5*LEFT)
+            .scale(0.7).move_to(2*UP + 4.5*LEFT)
         relacao_maior = VGroup(
             VGroup(
                 Carro(),
@@ -375,8 +390,8 @@ class NumerosNaturaisEInteiros(Scene):
             ).scale(0.3).move_to(1.2*LEFT),
             MathTex('<'),
             VGroup(
-                Carro().scale(0.7),
-                Carro().scale(0.7).shift(3*DOWN)
+                Carro(),
+                Carro().shift(3*DOWN)
             ).scale(0.3).move_to(1.2*RIGHT)
         ).move_to(0.7*UP + 2*RIGHT)
         numeros_menor = VGroup(
@@ -386,7 +401,7 @@ class NumerosNaturaisEInteiros(Scene):
 
 
         texto_igual = Tex(r'$\bullet$ Operador igual') \
-            .scale(0.5).move_to(4.5*LEFT + 1.3*DOWN)
+            .scale(0.7).move_to(4.5*LEFT + 1.3*DOWN)
         relacao_igual = VGroup(
             Carro().scale(0.3).move_to(1.2*LEFT),
             MathTex('='),
@@ -415,10 +430,11 @@ class NumerosNaturaisEInteiros(Scene):
 
         introducao = Tex(
             '\\raggedright Número inteiros são números positivos \
-            ou negtivos sem casa decimal. Podemos \
+            ou negtivos sem casa decimal e pertencem ao conjunto dos \
+            inteiros chamado $\\mathbb{Z}$. Podemos \
             asssociar números positivos ao ganho e \
             números negativos à perda.'
-        ).scale(0.5).move_to(3*UP)
+        ).scale(0.7).move_to(3*UP)
         positivo = MathTex('+3')
         negativo = MathTex('-2')
         carros = VGroup(
@@ -439,9 +455,15 @@ class NumerosNaturaisEInteiros(Scene):
 
     def reta_inteiros(self):
         play = lambda *anim, t=2, wait_time=2: self.play(*anim, run_time=t)
-        introducao = Tex('\\raggedright Também podemos associar esses números ao deslocamento \\\\ utilizando a reta dos inteiros').scale(0.5).move_to(3*UP)
-        reta_inteiros = NumberLine(x_range=(-4, 4, 1), include_numbers=True)
+        introducao = Tex(
+            f'\\raggedright Podemos representar os números naturais com a reta dos naturais.', 
+            f' Com a parte negativa, temos a reta dos inteiros.',
+            f' Com ela, podemos representar o deslocamento de um objeto como um carro.'
+        ).scale(0.7).shift(3*UP)
+        reta_naturais = NumberLine(x_range=(0, 4, 1), include_numbers=True).shift(2*RIGHT)
+        reta_inteiros_negativo = NumberLine(x_range=(-4, 0, 1), include_numbers=True).shift(2*LEFT)
         carro = Carro().scale(0.25).shift(0.5*UP)
+        seta = Arrow(DOWN, ORIGIN).shift(0.7*DOWN)
         movimentos = (
             +3,
             -2,
@@ -451,22 +473,28 @@ class NumerosNaturaisEInteiros(Scene):
 
         def criar_movimento(movimento):
             if movimento <= 0:
-                return MathTex(str(movimento)).scale(0.5).shift(5*RIGHT + 2*UP)
+                return MathTex(str(movimento)).scale(0.7).shift(5*RIGHT + 2*UP)
             else:
-                return MathTex('+' + str(movimento)).scale(0.5).shift(5*RIGHT + 2*UP)
+                return MathTex('+' + str(movimento)).scale(0.7).shift(5*RIGHT + 2*UP)
 
         m_movimentos = list(map(criar_movimento, movimentos))
         
         obs = Tex('Obs: Perceba que não é possível parar entre os números. Isso porque eles são números inteiros')\
-            .scale(0.5).move_to(2*DOWN)
+            .scale(0.7).move_to(2*DOWN)
 
-        play(Write(introducao))
-        play(Write(reta_inteiros))
-        play(Write(carro))
+        play(Write(introducao[0]))
+        play(FadeIn(reta_naturais))
+        play(Write(introducao[1]))
+        play(FadeIn(reta_inteiros_negativo))
+        play(Write(introducao[2]))
+        play(Write(carro), Write(seta))
         
         for movimento, m_movimento in zip(movimentos, m_movimentos):
             play(FadeIn(m_movimento))
-            play(carro.animate.shift(movimento*RIGHT))
+            play(
+                carro.animate.shift(movimento*RIGHT),
+                seta.animate.shift(movimento*RIGHT)
+            )
             play(FadeOut(m_movimento))
 
         play(Write(obs))
@@ -476,8 +504,8 @@ class NumerosNaturaisEInteiros(Scene):
     def conjuntos_pertence(self):
         play = lambda *anim, t=2, wait_time=2: self.play(*anim, run_time=t)
 
-        introducao = Tex('\\raggedright O conjunto dos números naturais pertence \\\\ ao conjunto dos inteiros.')\
-            .scale(0.5).shift(3*UP)
+        introducao = Tex('\\raggedright O conjunto dos números naturais está contido \\\\ no conjunto dos inteiros.')\
+            .scale(0.7).shift(3*UP)
         conjuntos_aninhados = VGroup(
             VGroup(
                 Ellipse(2.5, 3),
@@ -524,7 +552,7 @@ class NumerosNaturaisEInteiros(Scene):
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = NumerosNaturaisEInteiros.__name__
-ARGS = '-pqh'
+ARGS = '-pql'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
