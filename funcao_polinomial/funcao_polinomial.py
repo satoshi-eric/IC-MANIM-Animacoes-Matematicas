@@ -1,3 +1,19 @@
+'''
+1) Substituir "sistemas de eq. lineares possuem diversas aplicações. Veremos a função polinomial." 
+por "sistemas de eq. lineares possuem diversas aplicações. Veremos aqui uma delas" OK
+
+2) Depois que vc apresenta o problema em 0:15, seria legal colocar em 0:25 os pontos no gráfico e 
+mostrar que a curva passando por eles. OK
+
+3) depois que vc substitui os valores de x e y no sistema de equações seria bom ter uma transformação que vc deixa  
+o sistema "limpo", por exemplo, a 1a equação ficaria a0 + a1+ a2 = 4. E aí depois vc coloca embaixo ou numa outra cena, 
+resolvendo o sistema temos.....
+
+
+4) e no final a ultima cena seria novamente os pontos no gráficos e a função passando por eles e 
+agora mostrando a expressão da função ao lado da curva.
+'''
+
 from manim import *
 from pathlib import Path
 import os
@@ -13,6 +29,9 @@ class SistemaEquacoes(VGroup):
 
     def get_equation(self, value):
         return self[value]
+
+    def get_brace(self):
+        return self[-1]
 
 class Ponto(MathTex):
     def __init__(self, x, y, **kwargs):
@@ -39,11 +58,11 @@ class FuncaoPolinomial(Scene):
         def criar_coord(x, y):
             return '(', x, ',', y, ')'
     
-        play = lambda *anim, t: self.play(*anim, run_time=t)
+        play = lambda *anim, t=2: self.play(*anim, run_time=t)
 
         introducao = Tex(
-            '''Sistemas de equações lineares possuem \\\\
-            diversas aplicações. Veremos a função polinomial.'''
+            '''Sistemas de eq. lineares possuem \\\\
+            diversas aplicações. Veremos aqui uma delas.'''
         ).scale(0.8)
         problema_texto = Tex(
             '''Problema: Encontrar uma função polinomial \\\\
@@ -61,6 +80,21 @@ class FuncaoPolinomial(Scene):
             *criar_coord(3, 12)
         ).scale(0.8).next_to(exemplo_texto, DOWN)
 
+        eixos = Axes(x_range=[-1, 8], y_range=[-1, 14], x_length=8, y_length=5)
+        grafico = VDict({
+            'eixos': eixos,
+            'pontos': VGroup(
+                Dot().move_to(eixos.coords_to_point(1, 4)).scale(0.7),
+                Dot().move_to(eixos.coords_to_point(2, 0)).scale(0.7),
+                Dot().move_to(eixos.coords_to_point(3, 12)).scale(0.7),
+            ),
+            'labels': VGroup(
+                MathTex('(1, 4)').next_to(eixos.coords_to_point(1, 4), UP).scale(0.7),
+                MathTex('(2, 0)').next_to(eixos.coords_to_point(2, 0), UP).scale(0.7),
+                MathTex('(3, 12)').next_to(eixos.coords_to_point(3, 12), UP).scale(0.7),
+            )
+        }).shift(0.5*DOWN)
+
         play(Write(introducao), t=2)
         self.wait(2)
         play(FadeOut(introducao), t=2)
@@ -70,7 +104,15 @@ class FuncaoPolinomial(Scene):
         play(Write(exemplo_texto), t=2)
         self.wait(2)
         play(Write(pontos_texto), t=2)
-
+        self.wait(2)
+        play(exemplo_texto.animate.scale(0.7).shift(3.2*UP), pontos_texto.animate.scale(0.7).shift(3.5*UP), t=2)
+        self.wait(2)
+        play(Write(grafico['eixos']))
+        self.wait(2)
+        play(FadeIn(grafico['pontos']))
+        self.wait(2)
+        play(FadeIn(grafico['labels']))
+        self.wait(2)
         play(*[FadeOut(mob) for mob in self.mobjects], t=2)
         self.wait(2)
 
@@ -103,6 +145,12 @@ class FuncaoPolinomial(Scene):
             ['a_0 + a_1(','x', ') + a_2(', 'x', ')^2 =', 'y']
         ]).scale(0.8).move_to(DOWN)
 
+        sistema_limpo = SistemaEquacoes([
+            ['a_0 + a_1 + a_2 = 4'],
+            ['a_0 + 2a_1 + 4a_2 = 0'],
+            ['a_0 + 3a_1 + 9a_2 = 12']
+        ]).scale(0.8).move_to(DOWN)
+
         resolucao = VGroup(
             Tex(
                 'Resolvendo o sistema, temos:\\\\', 
@@ -114,6 +162,10 @@ class FuncaoPolinomial(Scene):
             ).arrange(RIGHT)
         ).arrange(DOWN).scale(0.8).move_to(3*UP)
         substituicao = Tex('Substituindo na expressão, temos:').scale(0.8).move_to(3.2*UP)
+
+        grafico = VGroup(
+
+        )
 
         play(Write(introducao[0]), t=2)
         self.wait(2)
@@ -174,24 +226,29 @@ class FuncaoPolinomial(Scene):
         )
         self.wait(2)
 
+        play(FadeOut(
+            *pontos_copy, 
+            sistema_equacoes.get_equation(0)[0],
+            sistema_equacoes.get_equation(0)[2],
+            sistema_equacoes.get_equation(0)[4],
+            sistema_equacoes.get_equation(1)[0],
+            sistema_equacoes.get_equation(1)[2],
+            sistema_equacoes.get_equation(1)[4],
+            sistema_equacoes.get_equation(2)[0],
+            sistema_equacoes.get_equation(2)[2],
+            sistema_equacoes.get_equation(2)[4],
+            sistema_equacoes.get_brace()
+        ), FadeIn(sistema_limpo))
+        self.wait()
+
         play(FadeOut(introducao, pontos))
-        play(funcao_polinomio.animate.shift(1.5*DOWN))
+        play(funcao_polinomio.animate.shift(0.5*DOWN))
         self.wait(2)
         play(Write(resolucao))
         self.wait(2)
         play(
             FadeOut(
-                sistema_equacoes[0][0],
-                sistema_equacoes[0][2],
-                sistema_equacoes[0][4],
-                sistema_equacoes[1][0],
-                sistema_equacoes[1][2],
-                sistema_equacoes[1][4],
-                sistema_equacoes[2][0],
-                sistema_equacoes[2][2],
-                sistema_equacoes[2][4],
-                sistema_equacoes[-1],
-                *pontos_copy
+                sistema_limpo
             )
         )
         self.wait(2)
@@ -213,6 +270,33 @@ class FuncaoPolinomial(Scene):
             .animate.move_to(funcao_polinomio[6].get_center() + 0.05*UP),
             FadeOut(funcao_polinomio[6])
         )
+        self.wait(3)
+
+        eixos = Axes(x_range=[-1, 8], y_range=[-1, 14], x_length=8, y_length=4)
+        f = lambda x: 24 - 28*x + 8*x**2
+        grafico = VDict({
+            'eixos': eixos,
+            'pontos': VGroup(
+                Dot().move_to(eixos.coords_to_point(1, 4)).scale(0.7),
+                Dot().move_to(eixos.coords_to_point(2, 0)).scale(0.7),
+                Dot().move_to(eixos.coords_to_point(3, 12)).scale(0.7),
+            ),
+            'labels': VGroup(
+                MathTex('(1, 4)').next_to(eixos.coords_to_point(1, 4), UP).scale(0.7),
+                MathTex('(2, 0)').next_to(eixos.coords_to_point(2, 0), UP).scale(0.7),
+                MathTex('(3, 12)').next_to(eixos.coords_to_point(3, 12), UP).scale(0.7),
+            ),
+            'funcao': VGroup(
+                *[
+                    Line(
+                        eixos.coords_to_point(x, f(x)), 
+                        eixos.coords_to_point(x+0.01, f(x+0.01))
+                    ).set_color(BLUE) for x in np.arange(0.5, 3, 0.01)
+                ]
+            )
+        }).shift(0.75*DOWN)
+
+        play(FadeIn(grafico), t=3)
         self.wait(2)
 
         play(FadeOut(*[mob for mob in self.mobjects]))
@@ -247,7 +331,7 @@ class FuncaoPolinomial(Scene):
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = FuncaoPolinomial.__name__
-ARGS = '-pqh'
+ARGS = '-pql'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
