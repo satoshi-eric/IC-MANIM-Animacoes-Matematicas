@@ -296,8 +296,11 @@ class FuncaoPolinomial(Scene):
             )
         }).shift(0.75*DOWN)
 
-        play(FadeIn(grafico), t=3)
+        play(FadeIn(grafico['eixos']), t=3)
         self.wait(2)
+        play(FadeIn(grafico['pontos'], grafico['labels']), t=3)
+        self.wait(2)
+        play(Write(grafico['funcao']), t=3)
 
         play(FadeOut(*[mob for mob in self.mobjects]))
 
@@ -331,7 +334,7 @@ class FuncaoPolinomial(Scene):
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = FuncaoPolinomial.__name__
-ARGS = '-pql'
+ARGS = '-pqh'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
