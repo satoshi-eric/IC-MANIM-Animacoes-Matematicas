@@ -125,15 +125,15 @@ class Lapis(VGroup):
 class NumerosNaturaisEInteiros(Scene):
     def construct(self):
         # self.add(Grade())
-        # self.abertura()
-        # self.introducao()
-        # self.conjunto_naturais()
-        # self.operacoes()
-        # self.relacoes()
-        # self.numeros_inteiros()
+        self.abertura()
+        self.introducao()
+        self.conjunto_naturais()
+        self.operacoes()
+        self.relacoes()
+        self.numeros_inteiros()
         self.reta_inteiros()
-        # self.conjuntos_pertence()
-        # self.fechamento()
+        self.conjuntos_pertence()
+        self.fechamento()
 
     def limpar_cena(self):
         self.play(FadeOut(*self.mobjects))
@@ -390,8 +390,8 @@ class NumerosNaturaisEInteiros(Scene):
             ).scale(0.3).move_to(1.2*LEFT),
             MathTex('<'),
             VGroup(
-                Carro(),
-                Carro().shift(3*DOWN)
+                Carro().scale(0.7),
+                Carro().scale(0.7).shift(3*DOWN)
             ).scale(0.3).move_to(1.2*RIGHT)
         ).move_to(0.7*UP + 2*RIGHT)
         numeros_menor = VGroup(
@@ -430,7 +430,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         introducao = Tex(
             '\\raggedright Número inteiros são números positivos \
-            ou negtivos sem casa decimal e pertencem ao conjunto dos \
+            ou negativos sem casa decimal e pertencem ao conjunto dos \
             inteiros chamado $\\mathbb{Z}$. Podemos \
             asssociar números positivos ao ganho e \
             números negativos à perda.'
@@ -552,7 +552,7 @@ class NumerosNaturaisEInteiros(Scene):
 
 ARQ_NOME = Path(__file__).resolve()
 CENA = NumerosNaturaisEInteiros.__name__
-ARGS = '-pql'
+ARGS = '-pqh'
 
 if __name__ == '__main__':
     os.system(f'manim {ARQ_NOME} {CENA} {ARGS}')
