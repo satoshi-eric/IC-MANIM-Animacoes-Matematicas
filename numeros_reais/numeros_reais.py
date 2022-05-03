@@ -44,8 +44,9 @@ class NumerosReais(Scene):
         # self.abertura()
         # self.definicao()
         # self.definicao_2()
-        self.operacoes()
-        # self.reta_reais()
+        # self.operacoes()
+        self.reta_reais()
+        # self.intervalos()
         # self.fechamento()
 
     def abertura(self):
@@ -106,7 +107,7 @@ class NumerosReais(Scene):
                 ),
             )
 
-        self.clear_scene()
+        self.clear_cena()
 
     def definicao_2(self):
         def play(*anim, anim_time=2, wait_time=2):
@@ -161,7 +162,7 @@ class NumerosReais(Scene):
         play(Write(diagrama_venn['irracionais']))
         play(Write(diagrama_venn['reais']))
 
-        self.clear_scene()
+        self.clear_cena()
 
     def operacoes(self):
         def play(*anim, anim_time=2, wait_time=2):
@@ -255,214 +256,248 @@ class NumerosReais(Scene):
             .move_to(sub_label.get_center() + 0.75*DOWN + 3*RIGHT)
         
         mult_fracoes = MathTex(
-            '\\frac{}{}'
+            '\\frac{2}{3} \\cdot \\frac{1}{2}',
+            ' = \\frac{2 \\cdot 1}{3 \\cdot 2}',
+            ' = \\frac{2}{6}',
+            ' = \\frac{1}{3}'
         ).scale(Utils.scale.texto_normal)\
             .move_to(sub_label.get_center() + 2.25*DOWN + 2*RIGHT)
 
         ################# Divisão #################
 
-        div_label = Tex('$\\bullet$ Adição')\
+        div_label = Tex('$\\bullet$ Divisão')\
             .scale(Utils.scale.texto_normal)\
             .move_to(introducao.get_center() + 0.75*DOWN + 2*LEFT)
         div_passos = Tex(
-            '\\raggedright Mínimo múltiplo comum', 
-            '$\\rightarrow$ Divide pelo de baixo\\\\',
-            '$\\rightarrow$ Divide pelo de cima',
-            '$\\rightarrow$ Soma os numeradores',
+            '\\raggedright Inverte segunda fração e realiza mutiplicação'
         ).scale(Utils.scale.texto_pequeno)\
             .move_to(sub_label.get_center() + 0.75*DOWN + 3*RIGHT)
         
         div_fracoes = MathTex(
-            '{2', '\\over', '3}', '+', '{1', '\\over', '2}',
-            '=', '{{4', '+', '3}', '\\over', '6}', '=',
-            '{7', '\\over', '6}'
+            '\\frac{2}{3} \\divisionsymbol \\frac{1}{2}',
+            ' = \\frac{2}{3} \\cdot \\frac{2}{1}',
+            ' = \\frac{4}{3}'
         ).scale(Utils.scale.texto_normal)\
             .move_to(sub_label.get_center() + 2.25*DOWN + 2*RIGHT)
-        div_divide_pelo_de_baixo = MathTex(
-            '{6', ' \\divisionsymbol ', ' 2}', '=', '3'
-        ).scale(Utils.scale.texto_normal)\
-            .next_to(mult_fracoes, DOWN, buff=0.6)
-        div_multiplica_por_o_de_cima = MathTex(
-            '{2', ' \\cdot ', ' 2}', '=', '4'
-        ).scale(Utils.scale.texto_normal)\
-            .next_to(ad_divide_pelo_de_baixo_1, DOWN)
 
         play(Write(introducao))
 
-        ################# Adição #################
+        def adicao():
+            play(Write(ad_label))
+            play(FadeIn(ad_fracoes[0:7]))
+            play(Write(ad_passos[0]))
+            play(FadeIn(ad_fracoes[7], ad_fracoes[11:13]))
+            play(FadeIn(ad_passos[1]))
+            play(FadeIn(ad_divide_pelo_de_baixo_1[:-2]))
+            play(
+                ad_divide_pelo_de_baixo_1[0].animate.scale(1.3).set_color(RED),
+                ad_fracoes[12].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_divide_pelo_de_baixo_1[0].animate.scale(1/1.3).set_color(WHITE),
+                ad_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(
+                ad_divide_pelo_de_baixo_1[2].animate.scale(1.3).set_color(RED),
+                ad_fracoes[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_divide_pelo_de_baixo_1[2].animate.scale(1/1.3).set_color(WHITE),
+                ad_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(FadeIn(ad_divide_pelo_de_baixo_1[-2:]))
+            play(ReplacementTransform(
+                    ad_divide_pelo_de_baixo_1[-1].copy(), 
+                    ad_multiplica_pelo_de_cima_1[0]
+            ))
+            play(FadeIn(ad_passos[2]))
+            play(FadeIn(ad_multiplica_pelo_de_cima_1))
+            play(
+                ad_fracoes[0].animate.scale(1.3).set_color(RED),
+                ad_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
+                ad_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(ReplacementTransform(
+                ad_multiplica_pelo_de_cima_1[-1].copy(),
+                ad_fracoes[8]
+            ))
+            play(FadeOut(ad_divide_pelo_de_baixo_1, ad_multiplica_pelo_de_cima_1))
+            play(FadeIn(ad_divide_pelo_de_baixo_2[0:3]))
+            play(
+                ad_divide_pelo_de_baixo_2[0].animate.scale(1.3).set_color(RED),
+                ad_fracoes[12].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_divide_pelo_de_baixo_2[0].animate.scale(1/1.3).set_color(WHITE),
+                ad_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(
+                ad_divide_pelo_de_baixo_2[2].animate.scale(1.3).set_color(RED),
+                ad_fracoes[6].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_divide_pelo_de_baixo_2[2].animate.scale(1/1.3).set_color(WHITE),
+                ad_fracoes[6].animate.scale(1/1.3).set_color(WHITE) 
+            )
+            play(FadeIn(ad_divide_pelo_de_baixo_2[-2:]))
+            play(ReplacementTransform(
+                    ad_divide_pelo_de_baixo_2[-1].copy(), 
+                    ad_multiplica_pelo_de_cima_2[0]
+            ))
+            play(FadeIn(ad_multiplica_pelo_de_cima_2[1:-2]))
+            play(
+                ad_fracoes[4].animate.scale(1.3).set_color(RED),
+                ad_multiplica_pelo_de_cima_2[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                ad_fracoes[4].animate.scale(1/1.3).set_color(WHITE),
+                ad_multiplica_pelo_de_cima_2[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(FadeIn(ad_multiplica_pelo_de_cima_2[-2:]))
+            play(ReplacementTransform(
+                ad_multiplica_pelo_de_cima_1[-1].copy(),
+                ad_fracoes[10]
+            ))
+            play(FadeOut(ad_divide_pelo_de_baixo_2, ad_multiplica_pelo_de_cima_2))
+            play(FadeIn(ad_fracoes[9]))
+            play(Write(ad_passos[3]))
+            play(FadeIn(ad_fracoes[13:]))
 
-        # play(Write(ad_label))
-        # play(FadeIn(ad_fracoes[0:7]))
-        # play(Write(ad_passos[0]))
-        # play(FadeIn(ad_fracoes[7], ad_fracoes[11:13]))
-        # play(FadeIn(ad_passos[1]))
-        # play(FadeIn(ad_divide_pelo_de_baixo_1[:-2]))
-        # play(
-        #     ad_divide_pelo_de_baixo_1[0].animate.scale(1.3).set_color(RED),
-        #     ad_fracoes[12].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_1[0].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_1[2].animate.scale(1.3).set_color(RED),
-        #     ad_fracoes[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_1[2].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(FadeIn(ad_divide_pelo_de_baixo_1[-2:]))
-        # play(ReplacementTransform(
-        #         ad_divide_pelo_de_baixo_1[-1].copy(), 
-        #         ad_multiplica_pelo_de_cima_1[0]
-        # ))
-        # play(FadeIn(ad_passos[2]))
-        # play(FadeIn(ad_multiplica_pelo_de_cima_1))
-        # play(
-        #     ad_fracoes[0].animate.scale(1.3).set_color(RED),
-        #     ad_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(ReplacementTransform(
-        #     ad_multiplica_pelo_de_cima_1[-1].copy(),
-        #     ad_fracoes[8]
-        # ))
-        # play(FadeOut(ad_divide_pelo_de_baixo_1, ad_multiplica_pelo_de_cima_1))
-        # play(FadeIn(ad_divide_pelo_de_baixo_2))
-        # play(
-        #     ad_divide_pelo_de_baixo_2[0].animate.scale(1.3).set_color(RED),
-        #     ad_fracoes[12].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_2[0].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_2[2].animate.scale(1.3).set_color(RED),
-        #     ad_fracoes[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_divide_pelo_de_baixo_2[2].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(FadeIn(ad_divide_pelo_de_baixo_2[-2:]))
-        # play(ReplacementTransform(
-        #         ad_divide_pelo_de_baixo_2[-1].copy(), 
-        #         ad_multiplica_pelo_de_cima_1[0]
-        # ))
-        # play(FadeIn(ad_passos[2]))
-        # play(FadeIn(ad_multiplica_pelo_de_cima_1))
-        # play(
-        #     ad_fracoes[0].animate.scale(1.3).set_color(RED),
-        #     ad_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     ad_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
-        #     ad_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(ReplacementTransform(
-        #     ad_multiplica_pelo_de_cima_1[-1].copy(),
-        #     ad_fracoes[10]
-        # ))
-        # play(FadeOut(ad_divide_pelo_de_baixo_1, ad_multiplica_pelo_de_cima_1))
-        # play(FadeIn(ad_fracoes[9]))
-        # play(Write(ad_passos[3]))
-        # play(FadeIn(ad_fracoes[13:]))
+            play(FadeOut(ad_label, ad_fracoes, ad_passos))
 
-        ################# Subtração #################
-        # play(Write(sub_label))
-        # play(FadeIn(sub_fracoes[0:7]))
-        # play(Write(sub_passos[0]))
-        # play(FadeIn(sub_fracoes[7], ad_fracoes[11:13]))
-        # play(FadeIn(sub_passos[1]))
-        # play(FadeIn(sub_divide_pelo_de_baixo_1[:-2]))
-        # play(
-        #     sub_divide_pelo_de_baixo_1[0].animate.scale(1.3).set_color(RED),
-        #     sub_fracoes[12].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_1[0].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_1[2].animate.scale(1.3).set_color(RED),
-        #     sub_fracoes[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_1[2].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(FadeIn(sub_divide_pelo_de_baixo_1[-2:]))
-        # play(ReplacementTransform(
-        #         sub_divide_pelo_de_baixo_1[-1].copy(), 
-        #         sub_multiplica_pelo_de_cima_1[0]
-        # ))
-        # play(FadeIn(sub_passos[2]))
-        # play(FadeIn(sub_multiplica_pelo_de_cima_1))
-        # play(
-        #     sub_fracoes[0].animate.scale(1.3).set_color(RED),
-        #     sub_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(ReplacementTransform(
-        #     sub_multiplica_pelo_de_cima_1[-1].copy(),
-        #     sub_fracoes[8]
-        # ))
-        # play(FadeOut(sub_divide_pelo_de_baixo_1, sub_multiplica_pelo_de_cima_1))
-        # play(FadeIn(sub_divide_pelo_de_baixo_2))
-        # play(
-        #     sub_divide_pelo_de_baixo_2[0].animate.scale(1.3).set_color(RED),
-        #     sub_fracoes[12].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_2[0].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_2[2].animate.scale(1.3).set_color(RED),
-        #     sub_fracoes[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_divide_pelo_de_baixo_2[2].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(FadeIn(sub_divide_pelo_de_baixo_2[-2:]))
-        # play(ReplacementTransform(
-        #         sub_divide_pelo_de_baixo_2[-1].copy(), 
-        #         sub_multiplica_pelo_de_cima_1[0]
-        # ))
-        # play(FadeIn(sub_passos[2]))
-        # play(FadeIn(sub_multiplica_pelo_de_cima_1))
-        # play(
-        #     sub_fracoes[0].animate.scale(1.3).set_color(RED),
-        #     sub_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
-        # )
-        # play(
-        #     sub_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
-        #     sub_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
-        # )
-        # play(ReplacementTransform(
-        #     sub_multiplica_pelo_de_cima_1[-1].copy(),
-        #     sub_fracoes[10]
-        # ))
-        # play(FadeOut(sub_divide_pelo_de_baixo_1, sub_multiplica_pelo_de_cima_1))
-        # play(FadeIn(sub_fracoes[9]))
-        # play(Write(sub_passos[3]))
-        # play(FadeIn(sub_fracoes[13:]))
+        def subtracao():
+            play(Write(sub_label))
+            play(FadeIn(sub_fracoes[0:7]))
+            play(Write(sub_passos[0]))
+            play(FadeIn(sub_fracoes[7], sub_fracoes[11:13]))
+            play(FadeIn(sub_passos[1]))
+            play(FadeIn(sub_divide_pelo_de_baixo_1[:-2]))
+            play(
+                sub_divide_pelo_de_baixo_1[0].animate.scale(1.3).set_color(RED),
+                sub_fracoes[12].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_divide_pelo_de_baixo_1[0].animate.scale(1/1.3).set_color(WHITE),
+                sub_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(
+                sub_divide_pelo_de_baixo_1[2].animate.scale(1.3).set_color(RED),
+                sub_fracoes[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_divide_pelo_de_baixo_1[2].animate.scale(1/1.3).set_color(WHITE),
+                sub_fracoes[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(FadeIn(sub_divide_pelo_de_baixo_1[-2:]))
+            play(ReplacementTransform(
+                    sub_divide_pelo_de_baixo_1[-1].copy(), 
+                    sub_multiplica_pelo_de_cima_1[0]
+            ))
+            play(FadeIn(sub_passos[2]))
+            play(FadeIn(sub_multiplica_pelo_de_cima_1[1:]))
+            play(
+                sub_fracoes[0].animate.scale(1.3).set_color(RED),
+                sub_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_fracoes[0].animate.scale(1/1.3).set_color(WHITE),
+                sub_multiplica_pelo_de_cima_1[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(ReplacementTransform(
+                sub_multiplica_pelo_de_cima_1[-1].copy(),
+                sub_fracoes[8]
+            ))
+            play(FadeOut(sub_divide_pelo_de_baixo_1, sub_multiplica_pelo_de_cima_1))
+            play(FadeIn(sub_divide_pelo_de_baixo_2[0:3]))
+            play(
+                sub_divide_pelo_de_baixo_2[0].animate.scale(1.3).set_color(RED),
+                sub_fracoes[12].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_divide_pelo_de_baixo_2[0].animate.scale(1/1.3).set_color(WHITE),
+                sub_fracoes[12].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(
+                sub_divide_pelo_de_baixo_2[2].animate.scale(1.3).set_color(RED),
+                sub_fracoes[6].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_divide_pelo_de_baixo_2[2].animate.scale(1/1.3).set_color(WHITE),
+                sub_fracoes[6].animate.scale(1/1.3).set_color(WHITE) 
+            )
+            play(FadeIn(sub_divide_pelo_de_baixo_2[-2:]))
+            play(ReplacementTransform(
+                    sub_divide_pelo_de_baixo_2[-1].copy(), 
+                    sub_multiplica_pelo_de_cima_2[0]
+            ))
+            play(FadeIn(sub_multiplica_pelo_de_cima_2[1:-2]))
+            play(
+                sub_fracoes[4].animate.scale(1.3).set_color(RED),
+                sub_multiplica_pelo_de_cima_2[2].animate.scale(1.3).set_color(RED)
+            )
+            play(
+                sub_fracoes[4].animate.scale(1/1.3).set_color(WHITE),
+                sub_multiplica_pelo_de_cima_2[2].animate.scale(1/1.3).set_color(WHITE)
+            )
+            play(FadeIn(sub_multiplica_pelo_de_cima_2[-2:]))
+            play(ReplacementTransform(
+                sub_multiplica_pelo_de_cima_2[-1].copy(),
+                sub_fracoes[10]
+            ))
+            play(FadeOut(sub_divide_pelo_de_baixo_2, sub_multiplica_pelo_de_cima_2))
+            play(FadeIn(sub_fracoes[9]))
+            play(Write(sub_passos[3]))
+            play(FadeIn(sub_fracoes[13:]))
+
+            play(FadeOut(sub_label, sub_fracoes, sub_passos))
         
+        def multiplicacao():
+            play(Write(mult_label))
+            play(FadeIn(mult_fracoes[0]))
+            play(Write(mult_passos[0]))
+            play(FadeIn(mult_fracoes[1]))
+            play(FadeIn(mult_fracoes[2]))
+            play(FadeIn(mult_fracoes[3]))
+
+            play(FadeOut(mult_label, mult_fracoes, mult_passos))
+
+        def divisao():
+            play(Write(div_label))
+            play(FadeIn(div_fracoes[0]))
+            play(Write(div_passos))
+            play(FadeIn(div_fracoes[1]))
+            play(FadeIn(div_fracoes[2]))
+
+            play(FadeOut(div_label, div_fracoes, div_passos))
+
+        adicao()
+        subtracao()
+        multiplicacao()
+        divisao()
+
+        self.clear_cena()
 
     def reta_reais(self):
+        def play(*anim, play_time=2, wait_time=0):
+            self.play(*anim, run_time=play_time)
+            self.wait(wait_time)
+
+        introducao = Tex('\\ POdemos enxergar esse conjunto como uma reta, a ')\
+            .scale(Utils.scale.texto_normal)\
+            .shift(3*UP + 3*LEFT)
+
+        self.add(introducao)
+
+        
+
+    def intervalos(self):
         pass
 
-    def clear_scene(self):
+
+    def clear_cena(self):
         self.play(FadeOut(*[mob for mob in self.mobjects if type(mob) != Grade]))
 
 ARQ_NOME = Path(__file__).resolve()
