@@ -40,14 +40,14 @@ class Utils:
 
 class NumerosReais(Scene):
     def construct(self):
-        self.add(Grade())
-        # self.abertura()
-        # self.definicao()
-        # self.definicao_2()
-        # self.operacoes()
-        self.reta_reais()
-        # self.intervalos()
-        # self.fechamento()
+        # self.add(Grade())
+        self.abertura()
+        self.definicao()
+        self.definicao_2()
+        self.operacoes()
+        self.explicacao_reta_reais()
+        self.intervalos()
+        self.fechamento()
 
     def abertura(self):
         titulo = Tex('Geometria Analítica').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
@@ -211,7 +211,7 @@ class NumerosReais(Scene):
 
         ################# Subtração #################
 
-        sub_label = Tex('$\\bullet$ Adição')\
+        sub_label = Tex('$\\bullet$ Subtração')\
             .scale(Utils.scale.texto_normal)\
             .move_to(introducao.get_center() + 0.75*DOWN + 2*LEFT)
         sub_passos = Tex(
@@ -311,7 +311,7 @@ class NumerosReais(Scene):
                     ad_multiplica_pelo_de_cima_1[0]
             ))
             play(FadeIn(ad_passos[2]))
-            play(FadeIn(ad_multiplica_pelo_de_cima_1))
+            play(FadeIn(ad_multiplica_pelo_de_cima_1[1:]))
             play(
                 ad_fracoes[0].animate.scale(1.3).set_color(RED),
                 ad_multiplica_pelo_de_cima_1[2].animate.scale(1.3).set_color(RED)
@@ -480,22 +480,117 @@ class NumerosReais(Scene):
 
         self.clear_cena()
 
-    def reta_reais(self):
+    def explicacao_reta_reais(self):
         def play(*anim, play_time=2, wait_time=0):
             self.play(*anim, run_time=play_time)
             self.wait(wait_time)
 
-        introducao = Tex('\\ POdemos enxergar esse conjunto como uma reta, a ')\
+        introducao = Tex('\\ Podemos enxergar esse conjunto como uma reta, a reta dos reais')\
             .scale(Utils.scale.texto_normal)\
-            .shift(3*UP + 3*LEFT)
+            .shift(3*UP + LEFT)
+        reta_reais = NumberLine(
+            x_range=[-2.6, 2.6, 0.5], 
+            length=10.4, 
+            include_numbers=True,
+            font_size=30
+        )
+        obs = Tex(
+            '\\raggedright Perceba que existem valores quebrados na reta. Ou seja, podemos posicionar um ponto em qualquer lugar da reta'
+        ).scale(Utils.scale.texto_pequeno).shift(2*DOWN)
+        valor = Tex('0,00').scale(Utils.scale.texto_normal).shift(1.7*UP)
+        ponto = Dot(color=RED)
+        seta_ponto = Arrow(1.5*UP, 0.2*UP)
 
-        self.add(introducao)
+        play(Write(introducao))
+        play(Write(reta_reais))
+        play(Write(obs))
+        play(Write(ponto), Write(seta_ponto))
+        play(Write(valor))
 
+        def update_valor(mob: Tex, dt):
+            mob.become(Tex(f'{ponto.get_x()/2:.2f}').scale(Utils.scale.texto_normal).move_to(ponto.get_center() + 1.7*UP))
+
+        def update_ponto_direita(mob: Dot, dt):
+            mob.shift(dt*RIGHT)
+
+        def update_ponto_esquerda(mob, dt):
+            mob.shift(dt*LEFT)
+            
+        def update_seta_ponto(mob: Arrow, dt):
+            mob.become(Arrow(1.5*UP + ponto.get_x()*RIGHT, 0.2*UP + ponto.get_x()*RIGHT))
+
+        ponto.add_updater(update_ponto_direita)
+        valor.add_updater(update_valor)
+        seta_ponto.add_updater(update_seta_ponto)
+        self.wait(4.1)
+        ponto.remove_updater(update_ponto_direita)
+        valor.remove_updater(update_valor)
+        seta_ponto.remove_updater(update_seta_ponto)
+
+        self.wait(2)
+
+        ponto.add_updater(update_ponto_esquerda)
+        valor.add_updater(update_valor)
+        seta_ponto.add_updater(update_seta_ponto)
+        self.wait(6.3)
+        ponto.remove_updater(update_ponto_esquerda)
+        valor.remove_updater(update_valor)
+        seta_ponto.remove_updater(update_seta_ponto)
+
+        self.wait(2)
+
+        self.clear_cena()
         
 
     def intervalos(self):
-        pass
+        def play(*anim, play_time=2, wait_time=0):
+            self.play(*anim, run_time=play_time)
+            self.wait(wait_time)
 
+        introducao = Tex(
+            'Também podemos definir intervalos entre 2 valores'
+        ).scale(Utils.scale.texto_normal).shift(3*UP + LEFT)
+
+        reta_reais = NumberLine(
+            x_range=[-2.6, 2.6, 0.5],
+            length=10.4,
+            include_numbers=True,
+            font_size=30
+        )
+
+        valor_min = Tex('-1')\
+            .scale(Utils.scale.texto_normal)\
+            .move_to(reta_reais.n2p(-1) + UP)\
+            .set_color(RED)
+        valor_max = Tex('2')\
+            .scale(Utils.scale.texto_normal)\
+            .move_to(reta_reais.n2p(2) + UP)\
+            .set_color(RED)
+
+        delimitador = VGroup(
+            Line(2*LEFT + 0.5*UP, 4*RIGHT + 0.5*UP),
+            Line(0.3*UP, 0.7*UP).shift(2*LEFT),
+            Line(0.3*UP, 0.7*UP).shift(4*RIGHT)
+        ).set_color(RED)
+
+        intervalo = Tex(
+            r'\raggedright Escrevemos da seguinte forma\\ $I=\{x \in \mathbb{R} | -1 \leq x \leq 3\}$'
+        ).scale(Utils.scale.texto_pequeno).shift(2*DOWN + 2*LEFT)
+
+        intervalo_simples = Tex(
+            r'\raggedright Ou de forma mais simples\\I=[-1, 2]'
+        ).scale(Utils.scale.texto_pequeno).next_to(intervalo, RIGHT, buff=0.5)
+
+        play(Write(introducao))
+        play(Write(reta_reais))
+        play(Write(valor_min))
+        play(Write(valor_max))
+        play(Write(delimitador))
+        play(Write(intervalo))
+        play(Write(intervalo_simples))
+
+        self.clear_cena()
+        
 
     def clear_cena(self):
         self.play(FadeOut(*[mob for mob in self.mobjects if type(mob) != Grade]))
