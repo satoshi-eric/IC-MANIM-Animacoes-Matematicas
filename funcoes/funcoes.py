@@ -9,6 +9,7 @@ class Funcoes(Scene):
         self.definicao_formal()
         self.grafico_dominio_contradominio()
         self.condicao_existencia()
+        self.outras_funcoes()
         self.fechamento()
 
     def limpar_tela(self):
@@ -47,7 +48,7 @@ class Funcoes(Scene):
         introducao = Tex(
             r'\raggedright Funções é um tema extremamente importante na matemática.\
             Podemos defini-la como uma caixa que transforma coisas em outras.\
-            No caso, números em outros.'
+            No caso, número em outros números.'
         ).shift(UP * 3).scale(0.7)
 
         input_number = MathTex('1').shift(3*LEFT)
@@ -127,7 +128,7 @@ class Funcoes(Scene):
             \quad $\bullet$ Uma função é a relação entre 2 conjuntos A e B \\ \
             \quad $\bullet$ A é o domínio e B é o contradomínio. \\ \
             \quad $\bullet$ e o conjunto dos números de B correspondentes a A.\\',
-            r'\raggedright Talvez tenha ficado um pouco confuso, então vamos visualizar isso com Diagrama de Venn'
+            r'\raggedright Para facilitar, vamos visualizar isso com Diagrama de Venn'
         ).shift(2*UP).scale(0.7)
 
         dominio = VGroup(
@@ -176,12 +177,12 @@ class Funcoes(Scene):
 
         dominio = VGroup(
             Arrow(eixos.c2p(3, -2), eixos.c2p(1, 0), color=BLUE),
-            Tex('dominio', color=BLUE).scale(0.7).shift(eixos.c2p(3, -2) + 0.25*DOWN + 0.25*RIGHT)
+            Tex('domínio', color=BLUE).scale(0.7).shift(eixos.c2p(3, -2) + 0.25*DOWN + 0.25*RIGHT)
         )
 
         contradominio = VGroup(
             Arrow(eixos.c2p(-3, 3), eixos.c2p(0, 1), color=RED),
-            Tex('contradominio', color=RED).scale(0.7).shift(eixos.c2p(-3, 3) + 0.25*UP + 0.25*LEFT)
+            Tex('contradomínio', color=RED).scale(0.7).shift(eixos.c2p(-3, 3) + 0.25*UP + 0.25*LEFT)
         )
 
         imagem = VGroup(
@@ -203,7 +204,7 @@ class Funcoes(Scene):
             self.play(*anim, run_time=run_time)
             self.wait(wait_time)
         introducao = Tex(
-            r'\raggedright Para que essa relação seja uma função seja uma função,\
+            r'\raggedright Para que essa relação seja uma função,\
             não se pode ter mais de um valor de saída para cada entrada.\
             Ou seja, as seguintes situações não são consideradas funções.'
         ).scale(0.7).shift(3*UP)
@@ -248,3 +249,177 @@ class Funcoes(Scene):
         p(Write(grafico))
 
         self.limpar_tela()
+
+    def outras_funcoes(self):
+        def play(*anim, run_time: float = 3, wait_time: float = 3):
+            self.play(*anim, run_time=run_time)
+            self.wait(wait_time)
+        introducao = Tex('\\raggedright Até agora, vimos apenas a função linear. Agora, veremos algumas funções mais complexas.').shift(3*UP).scale(0.7)
+        text_funcao_quadratica = Tex('\\raggedright Função quadrática').shift(3*UP).scale(0.7)
+        text_funcao_cubica = Tex('\\raggedright Função cúbica').shift(3*UP).scale(0.7)
+        text_funcao_exponencial = Tex('\\raggedright Função exponencial').shift(3*UP).scale(0.7)
+        text_funcao_logaritmica = Tex('\\raggedright Função logarítmica').shift(3*UP).scale(0.7)
+        text_funcao_seno = Tex('\\raggedright Função seno').shift(3*UP).scale(0.7)
+        text_polinomio = Tex('\\raggedright Polinômio').shift(3*UP).scale(0.7)
+        text_funcoes_combinadas = Tex('\\raggedright Funções combinadas').shift(3*UP).scale(0.7)
+        text_funcoes_compostas = Tex('\\raggedright Funções compostas').shift(3*UP).scale(0.7)
+
+        fq = lambda x: x**2
+        fc = lambda x: x**3
+        fe = lambda x: 2**x
+        fl = lambda x: np.log2(x)
+        fs = lambda x: np.sin(x)
+        fp = lambda x: x**3 - x**2 - x + 1
+        fcb = lambda x: np.log2(x) + np.sin(x)
+        fcp = lambda x: np.sin(x**2 + 1)
+        
+        eixos = Axes(
+            x_range=[-3, 3, 1], 
+            y_range=[-1, 8, 1], 
+            x_length=8, 
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        grafico_quadratica = eixos.plot(fq, x_range=[-2.8, 2.8], color=BLUE)
+        funcao_quadratica = VGroup(
+            eixos, 
+            grafico_quadratica,
+            MathTex('f(x) = x^2', color=BLUE).shift(2.5*UP+3.5*RIGHT).scale(0.7)
+        )
+
+        eixos = Axes(
+            x_range=[-2, 2, 1], 
+            y_range=[-4, 4, 1], 
+            x_length=6,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_cubica = VGroup(
+            eixos,
+            eixos.plot(fc, x_range=[-1.5, 1.5], color=RED),
+            MathTex('f(x) = x^3', color=RED).shift(2*UP+3*RIGHT).scale(0.7)
+        ) 
+
+        eixos = Axes(
+            x_range=[-1, 3.2, 1], 
+            y_range=[-1, 10, 1], 
+            x_length=6,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_exponencial = VGroup(
+            eixos, 
+            eixos.plot(fe, color=YELLOW),
+            MathTex('f(x) = 2^x', color=YELLOW).shift(1.5*UP+2*RIGHT).scale(0.7)
+        )
+
+        eixos = Axes(
+            x_range=[-1, 9, 1], 
+            y_range=[-2, 4, 1], 
+            x_length=6,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_logaritmica = VGroup(
+            eixos, 
+            eixos.plot(fl, x_range=[0.25, 9, 0.01], color=GREEN),
+            MathTex('f(x) = log_2(x)', color=GREEN).shift(2*UP+2*RIGHT).scale(0.7)
+        )
+        
+        eixos = Axes(
+            x_range=[-10, 10, 1], 
+            y_range=[-3, 3, 1], 
+            x_length=10,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_seno = VGroup(
+            eixos, 
+            eixos.plot(fs, x_range=[-9, 9], color=PURPLE),
+            MathTex('f(x) = sen(x)', color=PURPLE).shift(UP+4*RIGHT).scale(0.7)
+        )
+
+        eixos = Axes(
+            x_range=[-1.5, 2.5, 1], 
+            y_range=[-3, 3, 1], 
+            x_length=6,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        polinomio = VGroup(
+            eixos,
+            eixos.plot(fp, x_range=[-1.5, 2.1], color=ORANGE),
+            MathTex('f(x) = x^3 - x^2 - x + 1', color=ORANGE).shift(UP+4*RIGHT).scale(0.7)
+        )
+
+        eixos = Axes(
+            x_range=[-1, 8, 1], 
+            y_range=[-2, 5, 1], 
+            x_length=8,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_combinada = VGroup(
+            eixos,
+            eixos.plot(fcb, x_range=[0.2, 7.5], color=BLUE),
+            MathTex('f(x) = log_2(x) + sen(x)', color=BLUE).shift(1.7*UP+2*RIGHT).scale(0.7)
+        )
+
+        eixos = Axes(
+            x_range=[-4, 4, 1], 
+            y_range=[-2, 2, 1], 
+            x_length=8,
+            y_length=5, 
+            x_axis_config={'include_ticks': False},
+            y_axis_config={'include_ticks': False}
+        ).shift(0.5*DOWN)
+        funcao_composta = VGroup(
+            eixos,
+            eixos.plot(fcp, x_range=[-3.5, 3.5], color=RED),
+            MathTex('f(x) = sen(x^2 + 1)', color=RED).shift(1.5*UP+2*RIGHT).scale(0.7)
+        )
+
+        play(Write(introducao), run_time=4)
+        play(FadeOut(introducao))
+
+        play(Write(text_funcao_quadratica))
+        play(Write(funcao_quadratica))
+        play(FadeOut(text_funcao_quadratica, funcao_quadratica))
+
+        play(Write(text_funcao_cubica))
+        play(Write(funcao_cubica))
+        play(FadeOut(text_funcao_cubica, funcao_cubica))
+
+        play(Write(text_funcao_exponencial))
+        play(Write(funcao_exponencial))
+        play(FadeOut(text_funcao_exponencial, funcao_exponencial))
+
+        play(Write(text_funcao_logaritmica))
+        play(Write(funcao_logaritmica))
+        play(FadeOut(text_funcao_logaritmica, funcao_logaritmica))
+
+        play(Write(text_funcao_seno))
+        play(Write(funcao_seno))
+        play(FadeOut(text_funcao_seno, funcao_seno))
+
+        play(Write(text_polinomio))
+        play(Write(polinomio))
+        play(FadeOut(text_polinomio, polinomio))
+
+        play(Write(text_funcoes_combinadas))
+        play(Write(funcao_combinada))
+        play(FadeOut(text_funcoes_combinadas, funcao_combinada))
+
+        play(Write(text_funcoes_compostas))
+        play(Write(funcao_composta))
+        play(FadeOut(text_funcoes_compostas, funcao_composta))
+
+        self.limpar_tela()
+
