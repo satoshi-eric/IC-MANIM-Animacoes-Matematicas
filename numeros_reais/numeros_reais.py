@@ -44,18 +44,17 @@ class NumerosReais(Scene):
         self.abertura()
         self.definicao()
         self.definicao_2()
-        self.operacoes()
+        # self.operacoes()
         self.explicacao_reta_reais()
         self.intervalos()
         self.fechamento()
 
     def abertura(self):
-        titulo = Tex('Geometria Analítica').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
-        subtitulo = Tex('Pontos, reta e as cônicas').scale(1.5).set_color('#43bfca').move_to(titulo.get_center() + 1.2*DOWN)
+        titulo = Tex('Números Reais').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
 
-        self.play(FadeIn(titulo, subtitulo))
+        self.play(FadeIn(titulo))
         self.wait(1.5)
-        self.play(FadeOut(titulo), FadeOut(subtitulo))
+        self.play(FadeOut(titulo))
         self.wait()
 
     def fechamento(self):
@@ -508,7 +507,7 @@ class NumerosReais(Scene):
         play(Write(valor))
 
         def update_valor(mob: Tex, dt):
-            mob.become(Tex(f'{ponto.get_x()/2:.2f}').scale(Utils.scale.texto_normal).move_to(ponto.get_center() + 1.7*UP))
+            mob.become(Tex(f'{ponto.get_x()/2:.2f}'.replace('.', ',')).scale(Utils.scale.texto_normal).move_to(ponto.get_center() + 1.7*UP))
 
         def update_ponto_direita(mob: Dot, dt):
             mob.shift(dt*RIGHT)
@@ -581,6 +580,31 @@ class NumerosReais(Scene):
             r'\raggedright Ou de forma mais simples\\I=[-1, 2]'
         ).scale(Utils.scale.texto_pequeno).next_to(intervalo, RIGHT, buff=0.5)
 
+        
+
+        valor_min2 = Tex('-2,5')\
+            .scale(Utils.scale.texto_normal)\
+            .move_to(reta_reais.n2p(-2.5) + UP)\
+            .set_color(RED)
+        valor_max2 = Tex('0,5')\
+            .scale(Utils.scale.texto_normal)\
+            .move_to(reta_reais.n2p(0.5) + UP)\
+            .set_color(RED)
+
+        delimitador2 = VGroup(
+            Line(5*LEFT + 0.5*UP, 1*RIGHT+0.5*UP),
+            Line(0.3*UP, 0.7*UP).shift(5*LEFT),
+            Line(0.3*UP, 0.7*UP).shift(1*RIGHT)
+        ).set_color(RED)
+
+        intervalo2 = Tex(
+            r'\raggedright $I=\{x \in \mathbb{R} | -2,5 \leq x \leq 0,5\}$'
+        ).scale(Utils.scale.texto_pequeno).shift(2*DOWN + 2*LEFT)
+
+        intervalo_simples2 = Tex(
+            r'\raggedright I=[-2,5; 0,5]'
+        ).scale(Utils.scale.texto_pequeno).next_to(intervalo, RIGHT, buff=0.5)
+
         play(Write(introducao))
         play(Write(reta_reais))
         play(Write(valor_min))
@@ -588,6 +612,12 @@ class NumerosReais(Scene):
         play(Write(delimitador))
         play(Write(intervalo))
         play(Write(intervalo_simples))
+        play(FadeOut(intervalo), FadeOut(intervalo_simples), FadeOut(valor_min), FadeOut(valor_max), FadeOut(delimitador))
+        play(Write(valor_min2))
+        play(Write(valor_max2))
+        play(Write(delimitador2))
+        play(Write(intervalo2))
+        play(Write(intervalo_simples2))
 
         self.clear_cena()
         
