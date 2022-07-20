@@ -41,7 +41,7 @@ class Conjuntos(Scene):
         self.add(grade)
 
     def construct(self):
-        self.debug()
+        # self.debug()
         self.abertura()
         self.introducao()
         self.explicacao_simbolos()
