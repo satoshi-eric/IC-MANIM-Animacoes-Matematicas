@@ -4,8 +4,49 @@ import os
 
 class Progressoes(Scene):
     def construct(self):
-        self.abertura()
-        self.fechamento()
+        # self.abertura()
+        self.intro()
+        # self.fechamento()
+
+    def intro(self):
+        def play(*anim, run=2, wait=2):
+            self.play(*anim, run_time=run)
+            self.wait(wait)
+        
+        introducao = Tex(r'\raggedright Na vida real, existem diversos padrões que são identificados pelo ser humano. As progressões são um desses padrões.'
+            ).scale(0.7).to_corner(UP)
+        exemplo_text = Tex(r'\raggedright Na imagem a seguir, podemos perceber um padrão se repetindo. O tamanho dos lados dos quadrados está aumentando'
+            ).scale(0.7).to_corner(UP)
+        quadrados = VGroup(*[
+            VGroup(
+                Square(0.2*i).next_to(DOWN, UP, buff=0).shift(6*LEFT + 1.24**i*RIGHT + i*0.05*RIGHT),
+                MathTex(f'{i}').scale(0.7).next_to(DOWN, DOWN, buff=0.3).shift(6*LEFT + 1.24**i*RIGHT + i*0.05*RIGHT),
+            )
+            for i in range(1, 8, 2)
+        ]).add(Tex('...').next_to(DOWN, UP, buff=0)).shift(4.5*LEFT + 1.24**8*RIGHT + 8*0.05*RIGHT)
+        definicao = Tex(r'\raggedright Podemos perceber que o lado dos quadrados está aumentando de 2 em 2. Essa é uma Progressão Aritmética (P.A.).'
+            ).scale(0.7).to_corner(UP)
+        explicacao = Tex(r'\raggedright Se listarmos os valores da progressão acima, temos:'
+            ).scale(0.7).to_corner(UP)
+        funcoes_exemplo = MathTex(r'f(1)=1\\f(2)=3\\f(3)=4\\f(4)=7').scale(0.7).shift(2*RIGHT)
+        funcao = MathTex('f(n) = 1 + 2n')
+
+
+        play(Write(introducao))
+        play(FadeOut(introducao))
+        play(Write(exemplo_text))
+        play(Write(quadrados))
+        play(FadeOut(exemplo_text))
+        play(Write(definicao))
+        play(FadeOut(definicao))
+        play(Write(explicacao))
+        play(quadrados.animate.shift(2*LEFT))
+        play(Write(funcoes_exemplo))
+        play()
+
+
+        
+
 
     def abertura(self):
         titulo = Tex('Progressões').scale(2.5).set_color("#dc6a40").move_to(0.5*UP)
