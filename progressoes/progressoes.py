@@ -4,12 +4,12 @@ import os
 
 class Progressoes(Scene):
     def construct(self):
-        # self.abertura()
-        # self.intro()
-        # self.definicao_intuitiva()
-        # self.somatorio()
+        self.abertura()
+        self.intro()
+        self.definicao_intuitiva()
+        self.somatorio()
         self.progressao_geometrica()
-        # self.fechamento()
+        self.fechamento()
 
     def limpar_cena(self):
         self.play(FadeOut(*[mob for mob in self.mobjects]))
