@@ -165,7 +165,7 @@ class Progressoes(Scene):
             self.play(*anim, run_time=run)
             self.wait(wait)
 
-        intro = Tex(r'\raggedright Para dar um exemplo, considere a PA $1 + 2n$. Se quisermos saber sua somatória de 1 à 999, podemos apenas somá-los. ', 'Mas isso daria muito trabalho, então aplicamos a fórmula do somatório para para obter o mesmo resultado de forma mais simples e rápida.').scale(0.6).to_corner(UP).shift(LEFT)
+        intro = Tex(r'\raggedright Para dar um exemplo, considere a PA $1 + 2n$. Se quisermos saber sua somatória de 1 à 99, podemos apenas somá-los. ', 'Mas isso daria muito trabalho, então aplicamos a fórmula do somatório para para obter o mesmo resultado de forma mais simples e rápida.').scale(0.6).to_corner(UP).shift(LEFT)
 
         str_somatorio = ' + '.join([
             f'{2*i + 1}' 
@@ -199,16 +199,16 @@ class Progressoes(Scene):
             for i in range(1, 4)
         ]).add(Tex('...').shift(3*RIGHT + 1.4*DOWN))
         formula_exemplo = MathTex(r'f(n) = 1 \cdot 4^{n-1}').scale(0.7).shift(3.5*RIGHT + DOWN)
-        explicacao_formula = Tex('Para calcular um elemento de qualquer progressão geométrica, usamos a seguinte fórmula.').scale(0.7).to_corner(UP)
+        explicacao_formula = Tex(r'\raggedright Para calcular um elemento de qualquer progressão geométrica, usamos a seguinte fórmula.').scale(0.7).to_corner(UP)
         formula = MathTex(r'a_{n} = a_{1} \cdot r^{n-1}')
         somatorio_label = Tex(r'Para calcular a soma dos números da PG, utilizamos a seguinte fórmula'
             ).scale(0.7).to_corner(UP)
-        somatorio = MathTex(r'\frac{a_{1} \cdot r^{n-1}}{1-r}')
+        somatorio = MathTex(r'S_{n} = \frac{a_{1} \cdot r^{n}-1}{r-1}')
 
         pg = lambda a1, r, n: a1 * r**(n - 1)
         somatorio_pg = lambda a1, r, n: a1 * (r**n - 1)/(r - 1)
 
-        somatorio_exemplo = Tex(r'Por exeplo, se considerarmos a PG $1 \cdot 2^{n - 1}$, podemos somar seus elementos de 1 a 20 manualmente. ', r'Mas isso novamente seria muito trabalho. Então podemos usar a fórmula.'
+        somatorio_exemplo = Tex(r'\raggedright Por exemplo, se considerarmos a PG $1 \cdot 2^{n - 1}$, podemos somar seus elementos de 1 a 20 manualmente. ', r'Mas isso novamente seria muito trabalho. Então podemos usar a fórmula.'
             ).scale(0.7).to_corner(UP)
         str_somatorio = ' + '.join([
             f'{pg(1, 2, i+1)}' 
@@ -217,7 +217,7 @@ class Progressoes(Scene):
             for i in range(0, 20)
         ]) + f' = {int(somatorio_pg(1, 2, 20))}'
         somatorio_manual = MathTex(str_somatorio).scale(0.7).shift(LEFT)
-        somatorio_formula = MathTex(r'\frac{a_{1} \cdot r^{n-1}}{1-r} = \frac{1 \cdot 2^{50 - 1}}{1 - 2} = ' + f'{pg(1, 2, 20)} ').scale(0.7).shift(2.5*DOWN + LEFT)
+        somatorio_formula = MathTex(r'\frac{a_{1} \cdot r^{n-1}}{1-r} = \frac{1 \cdot 2^{50 - 1}}{1 - 2} = ' + f'{int(somatorio_pg(1, 2, 20))} ').scale(0.7).shift(2.5*DOWN + LEFT)
 
 
         play(Write(introducao[0]))
