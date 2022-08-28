@@ -170,7 +170,7 @@ class CombinatoriaProbabilidade(Scene):
             MathTex(r'\cdot').move_to(numeros_permutacoes[0].get_center() + 0.5*RIGHT + i*RIGHT)
             for i in range(4)
         ]).add(Tex(' $ = 5! = 120$ combinações')
-            .move_to(numeros_permutacoes[-1].get_center() + 2.5*RIGHT)).shift(0.5*RIGHT).set_color(BLUE)
+            .move_to(numeros_permutacoes[-1].get_center() + 3*RIGHT)).set_color(BLUE)
 
         espacos_letras = VGroup(*[
             Line(ORIGIN, 0.8*RIGHT).shift(2.5*LEFT + i*RIGHT) for i in range(5)
