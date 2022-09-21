@@ -1,7 +1,7 @@
 Para representar pontos e curvas utilizamos o plano cartesiano.
 Representamos um ponto usando suas coordenadas.
 Podemos representar também um conjunto de pontos.
-Alguns desses pontos podem obedecer à uma relação.
+Também podemos representar pontos que obedecem a uma relação.
 Os pontos obedecem a uma equação, a equação da reta.
 Essa equação possui a seguinte forma:
 Além da reta, existem outras curvas. Por exemplo a Elipse.
@@ -13,6 +13,6 @@ Assim como a elipse, a parábola possui suas propriedades.
 Com isso, podemos definir a equação da parábola.
 Essa equação define a seguinte relação da parábola.
 O último curva que veremos é a hipérbole.
-Assim, como os outras curvas, a hipérbole também possui suas propriedades.
+Assim, como as outras curvas, a hipérbole também possui suas propriedades.
 Com isso, podemos definir a equação da hipérbole.
 Essa equação define a seguinte relação:
