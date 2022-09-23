@@ -207,7 +207,7 @@ class CombinatoriaProbabilidade(Scene):
             self.wait(wait)
 
         intro = Tex(
-            r'\raggedright Também existe o problema das combinações. Por exemplo, em uma sorveteria que vende 6 sabores de sorvetes, de quantas formas podemos montar uma casquinha de 3 sabores diferentes?',
+            r'\raggedright Também existe o problema das combinações. Por exemplo, em uma sorveteria que vende 6 sabores de sorvetes, de quantas formas podemos montar uma casquinha de 2 sabores diferentes?',
             r' Teríamos as seguintes combinações:'
         ).scale(0.7).to_corner(UP)
 
@@ -257,7 +257,7 @@ class CombinatoriaProbabilidade(Scene):
         ).scale(0.7).next_to(intro, DOWN, buff=1.2)
         
         definicao = Tex(r'\raggedright A probabilidade de ocorrer um evento A é dado por:').scale(0.7).to_corner(UP)
-        formula = MathTex(r'P(A)', '=', r'{n(A)', r'\over', r'n(\omega)}').next_to(definicao, DOWN, buff=1)
+        formula = MathTex(r'P(A)', '=', r'{n(A)', r'\over', r'n(\Omega)}').next_to(definicao, DOWN, buff=1)
         formula[0].set_color(YELLOW)
         formula[2].set_color(BLUE)
         formula[4].set_color(RED)
