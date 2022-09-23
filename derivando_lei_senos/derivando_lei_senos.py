@@ -21,7 +21,7 @@ class TrianguloData(VGroup):
         length_labels = ['a', 'b', 'c'],
         show_braces = True,
         **kwargs
-        ):
+    ):
         super().__init__(**kwargs)
 
         arestas = VGroup(
@@ -122,7 +122,7 @@ class Seta(Line):
 class DerivandoLeiSenos(Scene):
     def construct(self):
         
-        # self.abertura()
+        self.abertura()
         self.mostrar_lei_senos()
         self.revisao_algebra_linear()
         self.lei_senos()
@@ -319,8 +319,22 @@ class DerivandoLeiSenos(Scene):
         ]
 
 
-        definicao_raio = Tex('Para a lei dos senos, precisamos de mais uma definição:').move_to(interpretacao.get_center() + 1.5*LEFT + 0.5*DOWN).scale(0.5)
-        formula_raio = MathTex('R = {abc \\over 4 \\cdot A_{triângulo}').scale(0.5)
+        definicao_raio = Tex(
+            'Para a lei dos senos, precisamos de mais uma definação:'
+        ).to_corner(UP).scale(0.7)
+        formula_raio = MathTex('R = {abc \\over 4 \\cdot A_{\\text{\\textit{triângulo}}}').scale(0.7).shift(2*RIGHT)
+        definicao_r = Tex(
+            'onde R é o raio da circunferência circunscrita ao triângulo'
+        ).scale(0.7).shift(2.5*DOWN)
+        triangulo_circunscrito = VGroup(
+            Circle(radius=2.15, color=YELLOW).move_to(0.15*DOWN),
+            Line(start=(-2, -1, 0), end=(2, -1, 0), color=RED),
+            Line(start=(2, -1, 0), end=(0, 2, 0), color=GREEN),
+            Line(start=(0, 2, 0), end=(-2, -1, 0), color=BLUE),
+            MathTex('a').shift(1.25*UP + 1.25*LEFT).set_color(BLUE),
+            MathTex('b').shift(1.25*UP + 1.25*RIGHT).set_color(GREEN),
+            MathTex('c').shift(1.5*DOWN).set_color(RED),
+        ).shift(3*LEFT).scale(0.5)
 
         play(Write(titulo_interpretacao), t=2)
         self.wait(2)
@@ -387,10 +401,13 @@ class DerivandoLeiSenos(Scene):
         play(Write(definicao_raio), t=2)
         self.wait()
         play(Write(formula_raio), t=2)
-        self.wait()
+        self.wait(3)
+        play(Write(definicao_r), t=2)
+        self.wait(3)
+        play(Write(triangulo_circunscrito), t=2)
+        self.wait(3)
 
         play(FadeOut(*[mob for mob in self.mobjects]))
-        self.wait(2)
 
     def lei_senos(self):
         play = lambda *anim, t=1: self.play(*anim, run_time=t)
@@ -415,14 +432,14 @@ class DerivandoLeiSenos(Scene):
         ]
 
         formulas = [
-            MathTex('\\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = A_{triângulo}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = 2A_{triângulo}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('||\\vec{a}|| \\cdot ||\\vec{b}|| \\cdot sen(\\widehat{C}) = ||\\vec{a}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{B}) = ||\\vec{b}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{A}) = 2A_{triângulo}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('a \\cdot b \\cdot sen(\widehat{C}) = a \\cdot c \\cdot sen(\widehat{B}) = b \\cdot c \\cdot sen(\widehat{A}) = 2A_{triângulo}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('\\frac{ab \\cdot sen(\widehat{C})}{abc} = \\frac{ac \\cdot sen(\widehat{B})}{abc} = \\frac{bc \\cdot sen(\widehat{A})}{abc} = \\frac{2A_{triângulo}}{abc}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('\\frac{sen(\\widehat{C})}{c} = \\frac{sen(\\widehat{B})}{b} = \\frac{sen(\\widehat{A})}{a} = \\frac{2A_{triângulo}}{abc}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('R = \\frac{abc}{4 \\cdot A_{triângulo}} \\rightarrow 4 \\cdot A_{triângulo} = \\frac{abc}{R}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
-            MathTex('2 \\cdot A_{triângulo} = \\frac{abc}{2R} \\rightarrow \\frac{2 \\cdot A_{triângulo}}{abc} = \\frac{1}{2R}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('\\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('||\\vec{a}|| \\cdot ||\\vec{b}|| \\cdot sen(\\widehat{C}) = ||\\vec{a}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{B}) = ||\\vec{b}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{A}) = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('a \\cdot b \\cdot sen(\widehat{C}) = a \\cdot c \\cdot sen(\widehat{B}) = b \\cdot c \\cdot sen(\widehat{A}) = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('\\frac{ab \\cdot sen(\widehat{C})}{abc} = \\frac{ac \\cdot sen(\widehat{B})}{abc} = \\frac{bc \\cdot sen(\widehat{A})}{abc} = \\frac{2A_{\\text{\\textit{triângulo}}}}{abc}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('\\frac{sen(\\widehat{C})}{c} = \\frac{sen(\\widehat{B})}{b} = \\frac{sen(\\widehat{A})}{a} = \\frac{2A_{\\text{\\textit{triângulo}}}}{abc}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('R = \\frac{abc}{4 \\cdot A_{\\text{\\textit{triângulo}}}} \\rightarrow 4 \\cdot A_{\\text{\\textit{triângulo}}} = \\frac{abc}{R}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('2 \\cdot A_{\\text{\\textit{triângulo}}} = \\frac{abc}{2R} \\rightarrow \\frac{2 \\cdot A_{\\text{\\textit{triângulo}}}}{abc} = \\frac{1}{2R}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
             MathTex('\\frac{sen \\widehat{C}}{c} = \\frac{sen \\widehat{B}}{b} = \\frac{sen \\widehat{A}}{a} = \\frac{1}{2R}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
             MathTex('\\frac{c}{sen(\\widehat{C})} = \\frac{b}{sen(\\widehat{B})} = \\frac{a}{sen(\\widehat{A})} = 2R').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
         ]
