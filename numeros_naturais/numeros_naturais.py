@@ -125,15 +125,15 @@ class Lapis(VGroup):
 class NumerosNaturaisEInteiros(Scene):
     def construct(self):
         # self.add(Grade())
-        # self.abertura()
-        # self.introducao()
-        # self.conjunto_naturais()
-        # self.operacoes()
-        # self.relacoes()
-        # self.numeros_inteiros()
+        self.abertura()
+        self.introducao()
+        self.conjunto_naturais()
+        self.operacoes()
+        self.relacoes()
+        self.numeros_inteiros()
         self.reta_inteiros()
-        # self.conjuntos_pertence()
-        # self.fechamento()
+        self.conjuntos_pertence()
+        self.fechamento()
 
     def limpar_cena(self):
         self.play(FadeOut(*self.mobjects))
@@ -363,7 +363,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         introducao = Tex('Também podemos realizar \
             operações de relações entre eles.') \
-                .scale(0.7).move_to(3*UP + 3*LEFT)
+                .scale(0.7).move_to(3*UP + 2*LEFT)
         
         texto_maior = Tex(r'$\bullet$ Operador maior:') \
             .scale(0.7).move_to(2*UP + 4.5*LEFT)
@@ -430,7 +430,7 @@ class NumerosNaturaisEInteiros(Scene):
 
         introducao = Tex(
             '\\raggedright Número inteiros são números positivos \
-            ou negtivos sem casa decimal e pertencem ao conjunto dos \
+            ou negativos sem casa decimal e pertencem ao conjunto dos \
             inteiros chamado $\\mathbb{Z}$. Podemos \
             asssociar números positivos ao ganho e \
             números negativos à perda.'
