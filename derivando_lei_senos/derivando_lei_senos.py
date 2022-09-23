@@ -424,15 +424,15 @@ class DerivandoLeiSenos(Scene):
 
         titulo = Tex('Derivando a Lei dos Senos').scale(2)
         textos = [
-            Tex('Considerandpo um triângulos que é a soma dos vetores $\\vec{a}$, $\\vec{b}$ e $\\vec{c}$.').scale(0.5).move_to(3*UP),
+            Tex('Considerando um triângulos que é a soma dos vetores $\\vec{a}$, $\\vec{b}$ e $\\vec{c}$.').scale(0.5).move_to(3*UP),
             Tex('$||\\vec{a} \\wedge \\vec{b}||$ representa a área de um paralelograma').scale(0.5).move_to(3*UP),
-            Tex('$||\\vec{a} \\wedge \\vec{b}||$ representa a área do triângulo').scale(0.5).move_to(3*UP),
+            Tex('$\\frac{||\\vec{a} \\wedge \\vec{b}||}{2}$ representa a área do triângulo').scale(0.5).move_to(3*UP),
             Tex('Usando $||\\vec{u} \\wedge \\vec{v}|| = ||\\vec{u}|| \\cdot ||\\vec{v}|| \\cdot sen \\theta$, temos:').scale(0.5).move_to(3*UP),
             Tex('Se considerarmos $||\\vec{a}|| = a$, $||\\vec{b}|| = b$, $||\\vec{c}|| = c$, temos:').scale(0.5).move_to(3*UP),
         ]
 
         formulas = [
-            MathTex('\\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
+            MathTex('\\frac{||\\vec{a} \\wedge \\vec{b}||}{2} = \\frac{||\\vec{a} \\wedge \\vec{c}||}{2} = \\frac{||\\vec{b} \\wedge \\vec{c}||}{2} = A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
             MathTex('||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = ||\\vec{a} \\wedge \\vec{b}|| = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
             MathTex('||\\vec{a}|| \\cdot ||\\vec{b}|| \\cdot sen(\\widehat{C}) = ||\\vec{a}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{B}) = ||\\vec{b}|| \\cdot ||\\vec{c}|| \\cdot sen(\\widehat{A}) = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
             MathTex('a \\cdot b \\cdot sen(\widehat{C}) = a \\cdot c \\cdot sen(\widehat{B}) = b \\cdot c \\cdot sen(\widehat{A}) = 2A_{\\text{\\textit{triângulo}}}').scale(0.5).move_to(2.5*RIGHT + 2.5*UP),
