@@ -33,7 +33,7 @@ class Progressoes(Scene):
         
         introducao = Tex(r'\raggedright Na vida real, existem diversos padrões que são identificados pelo ser humano. As progressões numéricas são um desses padrões.'
             ).scale(0.7).to_corner(UP)
-        exemplo_text = Tex(r'\raggedright Na imagem mostrada, podemos perceber um padrão se repetindo. O tamanho dos lados dos quadrados está aumentando'
+        exemplo_text = Tex(r'\raggedright Na imagem mostrada, podemos perceber um padrão se repetindo. O tamanho dos lados dos quadrados está aumentando.'
             ).scale(0.7).to_corner(UP)
         quadrados = VGroup(*[
             VGroup(
@@ -44,27 +44,27 @@ class Progressoes(Scene):
         ]).add(Tex('...').next_to(DOWN, UP, buff=0)).shift(4.5*LEFT + 1.24**8*RIGHT + 8*0.05*RIGHT)
         definicao = Tex(r'\raggedright Podemos perceber que o lado dos quadrados está aumentando de 2 em 2. Essa é uma Progressão Aritmética (PA).'
             ).scale(0.7).to_corner(UP)
-        explicacao = Tex(r'\raggedright Se listarmos os valores da progressão acima, temos:'
+        explicacao = Tex(r'\raggedright Se listarmos os valores da progressão abaixo, temos:'
             ).scale(0.7).to_corner(UP)
-        explicacao_formula = Tex(r'\raggedright Com isso, podemos escrever uma função que calcule o tamanho do lado do n-ésimo quadrado dessa progressão. '
+        explicacao_formula = Tex(r'\raggedright Com isso, podemos escrever uma função que calcule o tamanho do lado do n-ésimo quadrado dessa progressão onde n=1, 2, 3, ... '
             ).scale(0.7).to_corner(UP)
-        funcoes_exemplo = MathTex(r'f(1)=1\\f(2)=3\\f(3)=4\\f(4)=7').scale(0.7).shift(1.5*RIGHT)
-        funcao = MathTex('f(n) = 1 + 2n').scale(0.7).shift(4*RIGHT)
+        funcoes_exemplo = MathTex(r'f(1)=1\\f(2)=3\\f(3)=5\\f(4)=7').scale(0.7).shift(1.5*RIGHT)
+        funcao = MathTex('f(n) = 1 + 2(n - 1)').scale(0.7).shift(4*RIGHT)
 
 
-        play(Write(introducao))
+        play(Write(introducao), run=4, wait=3)
         play(FadeOut(introducao))
-        play(Write(quadrados))
-        play(Write(exemplo_text))
+        play(Write(quadrados), run=4, wait=3)
+        play(Write(exemplo_text), run=4, wait=3)
         play(FadeOut(exemplo_text))
-        play(Write(definicao))
+        play(Write(definicao), run=4, wait=3)
         play(FadeOut(definicao))
-        play(Write(explicacao))
+        play(Write(explicacao), run=4, wait=3)
         play(quadrados.animate.shift(2*LEFT))
         play(FadeOut(explicacao))
-        play(Write(funcoes_exemplo))
-        play(Write(explicacao_formula))
-        play(Write(funcao))
+        play(Write(funcoes_exemplo), run=3, wait=3)
+        play(Write(explicacao_formula), run=3, wait=3)
+        play(Write(funcao), run=3)
         self.limpar_cena()
 
     def definicao_intuitiva(self):
@@ -89,7 +89,7 @@ class Progressoes(Scene):
         visualizar = VGroup(*numeros, *steps, *steps_number)
         explicacao = Tex(r'\raggedright A progressão começa em 1 e aumenta de 2 em 2, logo, temos a fórmula:'
             ).scale(0.7).to_corner(UP)
-        formula = MathTex(r'f(n) = 1 + 2n').scale(0.7).shift(0.5*UP)
+        formula = MathTex(r'f(n) = 1 + 2(n - 1)').scale(0.7).shift(0.5*UP)
         explicacao_formula = Tex(
             r'\raggedright Para escrever essa fórmula, precisamos do primeiro termo da progressão, no caso 1, e da diferença entre dois termos, no caso 2. Com isso, escrevemos a seguinte fórmula. ',
             'Usamos $n$-1 pois a progressão começa a partir da posição 0 em vez da 1.'
@@ -112,11 +112,11 @@ class Progressoes(Scene):
             Write(explicacao),
             visualizar.animate.shift(4*LEFT)
         )
-        play(Write(formula))
+        play(Write(formula), run=3, wait=3)
         play(FadeOut(explicacao))
-        play(Write(explicacao_formula))
-        play(Write(formula_geral))
-        play(Write(termos))
+        play(Write(explicacao_formula), run=6, wait=3)
+        play(Write(formula_geral), run=3, wait=3)
+        play(Write(termos), run=4, wait=3)
         self.limpar_cena()
 
     def def_somatorio(self):
@@ -126,7 +126,7 @@ class Progressoes(Scene):
 
         introducao = Tex(
             r'\raggedright Além de calcular qualquer termo, podemos calcular o somatório de todos os elementos de uma PA. ',
-            r'Considerando a $PA 2 + (n - 1)*1$, podemos representá-la da seguinte forma. ',
+            r'Considerando a PA $2 + (n - 1) \cdot 1$, podemos representá-la da seguinte forma. ',
             r'Podemos observar a formação de um trapézio. Ou seja, podemos calcular o somatório através de sua área. ',
             r'Dessa forma, temos a seguinte fórmula:'
         ).scale(0.7).to_corner(UP)
@@ -177,10 +177,10 @@ class Progressoes(Scene):
         formula = MathTex(r'\frac{a_1 + a_n}{2} \cdot n = \frac{1 + 99}{2} \cdot 50 = 2500').scale(0.6).shift(2.5*DOWN + LEFT)
         
 
-        play(Write(intro[0]))
-        play(Write(somatorio_manual))
-        play(Write(intro[1]))
-        play(Write(formula))
+        play(Write(intro[0]), run=4)
+        play(Write(somatorio_manual), run=4)
+        play(Write(intro[1]), run=4)
+        play(Write(formula), run=3)
         self.limpar_cena()
 
 
@@ -220,20 +220,20 @@ class Progressoes(Scene):
         somatorio_formula = MathTex(r'\frac{a_{1} \cdot r^{n-1}}{1-r} = \frac{1 \cdot 2^{50 - 1}}{1 - 2} = ' + f'{int(somatorio_pg(1, 2, 20))} ').scale(0.7).shift(2.5*DOWN + LEFT)
 
 
-        play(Write(introducao[0]))
-        play(Write(visualizacao_pg))
+        play(Write(introducao[0]), run=5, wait=3)
+        play(Write(visualizacao_pg), run=4, wait=3)
         play(Write(introducao[1]))
         play(visualizacao_pg.animate.shift(2.5*LEFT))
-        play(Write(formula_exemplo))
+        play(Write(formula_exemplo), wait=3)
         self.limpar_cena()
         play(Write(explicacao_formula))
         play(Write(formula))
         self.limpar_cena()
         play(Write(somatorio_label))
-        play(Write(somatorio))
+        play(Write(somatorio), wait=3)
         self.limpar_cena()
         play(Write(somatorio_exemplo[0]))
-        play(Write(somatorio_manual))
+        play(Write(somatorio_manual), run=3, wait=3)
         play(Write(somatorio_exemplo[1]))
         play(Write(somatorio_formula))
         self.limpar_cena()
